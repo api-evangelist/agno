@@ -55,6 +55,8 @@ apis:
         url: https://docs.agno.com/features/api
       - type: OpenAPI
         url: https://docs.agno.com/openapi.json
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/openapi/agno-agentos-api-openapi.yml
 common:
   - type: Website
     url: https://www.agno.com/
@@ -78,6 +80,12 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/rate-limits/agno-rate-limits.yml
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/finops/agno-finops.yml
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/vocabulary/agno-vocabulary.yml
+  - type: JSONLDContext
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/json-ld/agno-context.jsonld
+  - type: Examples
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/examples/agno-agentos-api-examples.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,31 @@
+{
+  "properties": {
+    "metrics": {
+      "items": {
+        "$ref": "#/components/schemas/DayAggregatedMetrics"
+      },
+      "type": "array",
+      "title": "Metrics",
+      "description": "List of daily aggregated metrics"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At",
+      "description": "Timestamp of the most recent metrics update"
+    }
+  },
+  "type": "object",
+  "required": [
+    "metrics"
+  ],
+  "title": "MetricsResponse",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

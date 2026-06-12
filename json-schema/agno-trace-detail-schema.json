@@ -1,0 +1,184 @@
+{
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "title": "Trace Id",
+      "description": "Unique trace identifier"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "description": "Trace name (usually root span name)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "description": "Overall status (OK, ERROR)"
+    },
+    "duration": {
+      "type": "string",
+      "title": "Duration",
+      "description": "Human-readable total duration"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Start Time",
+      "description": "Trace start time (Pydantic auto-serializes to ISO 8601)"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "End Time",
+      "description": "Trace end time (Pydantic auto-serializes to ISO 8601)"
+    },
+    "total_spans": {
+      "type": "integer",
+      "title": "Total Spans",
+      "description": "Total number of spans in this trace"
+    },
+    "error_count": {
+      "type": "integer",
+      "title": "Error Count",
+      "description": "Number of spans with errors"
+    },
+    "input": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Input",
+      "description": "Input to the agent/workflow"
+    },
+    "output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Output",
+      "description": "Output from the agent/workflow"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error",
+      "description": "Error message if status is ERROR"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Run Id",
+      "description": "Associated run ID"
+    },
+    "session_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Session Id",
+      "description": "Associated session ID"
+    },
+    "user_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "User Id",
+      "description": "Associated user ID"
+    },
+    "agent_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Agent Id",
+      "description": "Associated agent ID"
+    },
+    "team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Team Id",
+      "description": "Associated team ID"
+    },
+    "workflow_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Workflow Id",
+      "description": "Associated workflow ID"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At",
+      "description": "Time when trace was created (Pydantic auto-serializes to ISO 8601)"
+    },
+    "tree": {
+      "items": {
+        "$ref": "#/components/schemas/TraceNode"
+      },
+      "type": "array",
+      "title": "Tree",
+      "description": "Hierarchical tree of spans (root nodes)"
+    }
+  },
+  "type": "object",
+  "required": [
+    "trace_id",
+    "name",
+    "status",
+    "duration",
+    "start_time",
+    "end_time",
+    "total_spans",
+    "error_count",
+    "created_at",
+    "tree"
+  ],
+  "title": "TraceDetail",
+  "description": "Detailed trace information with hierarchical span tree",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

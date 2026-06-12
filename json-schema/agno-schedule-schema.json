@@ -1,0 +1,115 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "method": {
+      "type": "string",
+      "title": "Method"
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint"
+    },
+    "payload": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Payload"
+    },
+    "cron_expr": {
+      "type": "string",
+      "title": "Cron Expr"
+    },
+    "timezone": {
+      "type": "string",
+      "title": "Timezone"
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "title": "Timeout Seconds"
+    },
+    "max_retries": {
+      "type": "integer",
+      "title": "Max Retries"
+    },
+    "retry_delay_seconds": {
+      "type": "integer",
+      "title": "Retry Delay Seconds"
+    },
+    "enabled": {
+      "type": "boolean",
+      "title": "Enabled"
+    },
+    "next_run_at": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Next Run At"
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Created At"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "method",
+    "endpoint",
+    "cron_expr",
+    "timezone",
+    "timeout_seconds",
+    "max_retries",
+    "retry_delay_seconds",
+    "enabled"
+  ],
+  "title": "ScheduleResponse",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

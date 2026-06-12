@@ -1,0 +1,79 @@
+{
+  "properties": {
+    "component_id": {
+      "type": "string",
+      "title": "Component Id"
+    },
+    "component_type": {
+      "$ref": "#/components/schemas/ComponentType"
+    },
+    "name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Name"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "current_version": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Current Version"
+    },
+    "metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Metadata"
+    },
+    "created_at": {
+      "type": "integer",
+      "title": "Created At"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At"
+    }
+  },
+  "type": "object",
+  "required": [
+    "component_id",
+    "component_type",
+    "created_at"
+  ],
+  "title": "ComponentResponse",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

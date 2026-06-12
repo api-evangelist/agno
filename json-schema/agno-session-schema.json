@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "title": "Session Id",
+      "description": "Unique identifier for the session"
+    },
+    "session_name": {
+      "type": "string",
+      "title": "Session Name",
+      "description": "Human-readable name for the session"
+    },
+    "session_state": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Session State",
+      "description": "Current state data of the session"
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Created At",
+      "description": "Timestamp when session was created"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At",
+      "description": "Timestamp when session was last updated"
+    }
+  },
+  "type": "object",
+  "required": [
+    "session_id",
+    "session_name"
+  ],
+  "title": "SessionSchema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

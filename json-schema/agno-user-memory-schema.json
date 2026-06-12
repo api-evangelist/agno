@@ -1,0 +1,85 @@
+{
+  "properties": {
+    "memory_id": {
+      "type": "string",
+      "title": "Memory Id",
+      "description": "Unique identifier for the memory"
+    },
+    "memory": {
+      "type": "string",
+      "title": "Memory",
+      "description": "Memory content text"
+    },
+    "topics": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Topics",
+      "description": "Topics or tags associated with the memory"
+    },
+    "agent_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Agent Id",
+      "description": "Agent ID associated with this memory"
+    },
+    "team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Team Id",
+      "description": "Team ID associated with this memory"
+    },
+    "user_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "User Id",
+      "description": "User ID who owns this memory"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At",
+      "description": "Timestamp when memory was last updated"
+    }
+  },
+  "type": "object",
+  "required": [
+    "memory_id",
+    "memory"
+  ],
+  "title": "UserMemorySchema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,170 @@
+{
+  "properties": {
+    "user_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "User Id",
+      "description": "User ID associated with the session"
+    },
+    "agent_session_id": {
+      "type": "string",
+      "title": "Agent Session Id",
+      "description": "Unique agent session identifier"
+    },
+    "session_id": {
+      "type": "string",
+      "title": "Session Id",
+      "description": "Session identifier"
+    },
+    "session_name": {
+      "type": "string",
+      "title": "Session Name",
+      "description": "Human-readable session name"
+    },
+    "session_summary": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Session Summary",
+      "description": "Summary of session interactions"
+    },
+    "session_state": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Session State",
+      "description": "Current state of the session"
+    },
+    "agent_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Agent Id",
+      "description": "Agent ID used in this session"
+    },
+    "total_tokens": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Total Tokens",
+      "description": "Total tokens used in this session"
+    },
+    "agent_data": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Agent Data",
+      "description": "Agent-specific data"
+    },
+    "metrics": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Metrics",
+      "description": "Session metrics"
+    },
+    "metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Metadata",
+      "description": "Additional metadata"
+    },
+    "chat_history": {
+      "anyOf": [
+        {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Chat History",
+      "description": "Complete chat history"
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Created At",
+      "description": "Session creation timestamp"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At",
+      "description": "Last update timestamp"
+    }
+  },
+  "type": "object",
+  "required": [
+    "agent_session_id",
+    "session_id",
+    "session_name"
+  ],
+  "title": "AgentSessionDetailSchema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

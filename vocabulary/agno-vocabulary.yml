@@ -1,0 +1,216 @@
+title: Agno AgentOS API Vocabulary
+description: >-
+  Domain vocabulary for the Agno AgentOS API — a production agent runtime
+  exposing 89 RESTful endpoints for managing AI agents, teams, workflows,
+  sessions, memory, knowledge, traces, metrics, schedules, and approvals.
+version: 2.5.6
+source: https://raw.githubusercontent.com/agno-agi/docs/main/reference-api/openapi.yaml
+
+terms:
+
+  # Core agent entities
+  - term: Agent
+    definition: >-
+      A registered AI agent managed by AgentOS. Agents are addressable by ID
+      and can be invoked to create Runs. Each agent may have its own model,
+      tools, memory, and knowledge configuration.
+    relatedTerms: [AgentID, Run, Team, Workflow]
+
+  - term: AgentID
+    definition: >-
+      A string identifier for a specific agent within an AgentOS instance.
+      Used as a path parameter in most agent-scoped endpoints.
+
+  - term: Team
+    definition: >-
+      A multi-agent composition where multiple agents collaborate on a task.
+      Teams expose a /runs endpoint analogous to individual agents.
+
+  - term: Workflow
+    definition: >-
+      A deterministic or semi-deterministic sequence of agent invocations.
+      Workflows are first-class resources with their own session, run, and
+      history endpoints.
+
+  # Execution
+  - term: Run
+    definition: >-
+      A single execution of an agent, team, or workflow triggered by a user
+      message. A Run produces a stream of events (text, tool calls, reasoning)
+      and has a lifecycle of: created → running → completed | failed | cancelled.
+    relatedTerms: [RunID, RunStatus, Session]
+
+  - term: RunID
+    definition: Unique identifier for a single Run instance.
+
+  - term: RunStatus
+    definition: >-
+      Enumerated lifecycle state of a Run: one of running, completed, failed,
+      cancelled, or waiting (human-in-the-loop approval pending).
+
+  - term: Stream
+    definition: >-
+      Server-Sent Events (SSE) delivery mode where the agent response is
+      incrementally pushed to the client as tokens and events are produced.
+      Enabled by setting stream=true on a run request.
+
+  # Sessions
+  - term: Session
+    definition: >-
+      A persistent conversation context scoped to a user and agent. Sessions
+      retain message history and allow multi-turn interactions. Session IDs
+      are generated or supplied by the caller.
+    relatedTerms: [SessionID, SessionType, UserID]
+
+  - term: SessionID
+    definition: >-
+      Opaque string identifier for a Session. May be provided by the client
+      on run creation to continue an existing session.
+
+  - term: SessionType
+    definition: >-
+      Classification of a session: agent, team, or workflow.
+
+  - term: UserID
+    definition: >-
+      Caller-provided string that scopes sessions and memory to a specific
+      user within a multi-tenant AgentOS deployment.
+
+  # Memory
+  - term: Memory
+    definition: >-
+      Structured facts or summaries extracted from past sessions and stored
+      in a vector/keyword database for retrieval during future runs. Memory
+      is scoped per user and per agent.
+    relatedTerms: [MemoryID, UserMemory, OptimizeMemories]
+
+  - term: MemoryID
+    definition: UUID identifying a single memory entry.
+
+  - term: UserMemory
+    definition: >-
+      A memory record associated with a specific user, containing extracted
+      content, a topic, and metadata such as creation and update timestamps.
+
+  - term: OptimizeMemories
+    definition: >-
+      An asynchronous operation that deduplicates, consolidates, and refines
+      stored memories to improve retrieval quality.
+
+  # Knowledge
+  - term: Knowledge
+    definition: >-
+      A retrieval corpus attached to an agent or team, built from uploaded
+      files or remote URLs. Knowledge is chunked, embedded, and stored in a
+      vector database. Supports vector, keyword, and hybrid search.
+    relatedTerms: [KnowledgeID, Content, VectorSearch]
+
+  - term: Content
+    definition: >-
+      A single ingested document in the Knowledge base. Content has a lifecycle
+      (queued → processing → ready | failed) and can be a local file or a
+      remote URL.
+
+  - term: ContentStatus
+    definition: >-
+      Processing state of a Knowledge Content item: queued, processing,
+      ready, or failed.
+
+  - term: VectorSearch
+    definition: >-
+      Similarity-based retrieval over the Knowledge corpus using dense
+      embeddings. Also supports keyword (BM25) and hybrid modes.
+
+  # Traces & Observability
+  - term: Trace
+    definition: >-
+      Full observability record for a Run, capturing every span (LLM call,
+      tool invocation, retrieval) with timing, token counts, and inputs/outputs.
+    relatedTerms: [TraceID, TraceNode, Span]
+
+  - term: TraceNode
+    definition: >-
+      A single span within a Trace representing one atomic operation (e.g.,
+      a model call or tool execution). Nodes form a tree structure.
+
+  - term: Span
+    definition: >-
+      An individual timed unit of work within a Trace. Spans carry start/end
+      timestamps, input/output payloads, and status.
+
+  # Metrics
+  - term: Metrics
+    definition: >-
+      Daily aggregated usage statistics per agent/team/workflow: total runs,
+      token consumption (input/output/cache), latency percentiles, and error
+      rates.
+    relatedTerms: [DayAggregatedMetrics]
+
+  - term: DayAggregatedMetrics
+    definition: >-
+      A metrics roll-up record for a single calendar day, including total
+      runs, tokens used, and per-model breakdowns.
+
+  # Schedules
+  - term: Schedule
+    definition: >-
+      A recurring or one-shot trigger that invokes an agent run at a specified
+      time or cron interval without a human caller.
+    relatedTerms: [ScheduleID, ScheduleState]
+
+  - term: ScheduleID
+    definition: UUID identifying a Schedule.
+
+  - term: ScheduleState
+    definition: "Operational state of a Schedule: active or paused."
+
+  # Approvals (Human-in-the-loop)
+  - term: Approval
+    definition: >-
+      A human-in-the-loop gate that pauses a Run execution until a human
+      reviewer accepts or rejects a proposed action. Required for sensitive
+      tool calls when configured.
+    relatedTerms: [ApprovalID, ApprovalResolve]
+
+  - term: ApprovalID
+    definition: UUID identifying a pending Approval request.
+
+  - term: ApprovalResolve
+    definition: >-
+      The action taken by a human reviewer to either approve or reject an
+      Approval, which unblocks the paused Run.
+
+  # Components & Configuration
+  - term: Component
+    definition: >-
+      A reusable building block (model config, tool, embedder, etc.) that can
+      be attached to agents or teams via the Components API.
+
+  - term: Config
+    definition: >-
+      The AgentOS instance-level configuration object describing registered
+      agents, models, databases, interfaces, and feature toggles.
+
+  # Authentication
+  - term: BearerToken
+    definition: >-
+      JWT-based authentication credential passed in the Authorization header
+      as Bearer <token>. Required on all non-public endpoints.
+
+  - term: RBAC
+    definition: >-
+      Role-Based Access Control enforced by AgentOS. Roles govern which
+      agents, sessions, and operations a given token may access.
+
+  # Transport
+  - term: ServerSentEvents
+    definition: >-
+      HTTP streaming transport (text/event-stream) used by AgentOS to push
+      incremental run output to clients in real time.
+    synonym: SSE
+
+  - term: MultipartFormData
+    definition: >-
+      HTTP content type (multipart/form-data) used by AgentOS run creation
+      endpoints to combine text parameters, file uploads, and binary media
+      in a single request.

@@ -1,0 +1,26 @@
+{
+  "properties": {
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "description": "Health status of the service"
+    },
+    "instantiated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Instantiated At",
+      "description": "Timestamp when service was instantiated"
+    }
+  },
+  "type": "object",
+  "required": [
+    "status",
+    "instantiated_at"
+  ],
+  "title": "HealthResponse",
+  "example": {
+    "instantiated_at": "2025-06-10T12:00:00Z",
+    "status": "ok"
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

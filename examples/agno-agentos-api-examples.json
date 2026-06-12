@@ -1,0 +1,1830 @@
+{
+  "title": "Agno AgentOS API Examples",
+  "description": "Request and response examples extracted from the Agno AgentOS API OpenAPI specification.",
+  "version": "2.5.6",
+  "examples": {
+    "get_api_info_200_response": {
+      "path": "/",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "home": {
+          "summary": "Example home response",
+          "value": {
+            "name": "AgentOS API",
+            "id": "demo-os",
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    "health_check_200_response": {
+      "path": "/health",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "status": "ok",
+        "instantiated_at": "2025-06-10T12:00:00Z"
+      }
+    },
+    "get_config_200_response": {
+      "path": "/config",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "demo",
+        "description": "Example AgentOS configuration",
+        "available_models": [],
+        "databases": [
+          "9c884dc4-9066-448c-9074-ef49ec7eb73c"
+        ],
+        "session": {
+          "dbs": [
+            {
+              "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c",
+              "domain_config": {
+                "display_name": "Sessions"
+              }
+            }
+          ]
+        },
+        "metrics": {
+          "dbs": [
+            {
+              "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c",
+              "domain_config": {
+                "display_name": "Metrics"
+              }
+            }
+          ]
+        },
+        "memory": {
+          "dbs": [
+            {
+              "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c",
+              "domain_config": {
+                "display_name": "Memory"
+              }
+            }
+          ]
+        },
+        "knowledge": {
+          "dbs": [
+            {
+              "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c",
+              "domain_config": {
+                "display_name": "Knowledge"
+              }
+            }
+          ]
+        },
+        "evals": {
+          "dbs": [
+            {
+              "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c",
+              "domain_config": {
+                "display_name": "Evals"
+              }
+            }
+          ]
+        },
+        "agents": [
+          {
+            "id": "main-agent",
+            "name": "Main Agent",
+            "db_id": "9c884dc4-9066-448c-9074-ef49ec7eb73c"
+          }
+        ],
+        "teams": [],
+        "workflows": [],
+        "interfaces": []
+      }
+    },
+    "get_models_200_response": {
+      "path": "/models",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "id": "gpt-4",
+          "provider": "openai"
+        },
+        {
+          "id": "claude-3-sonnet",
+          "provider": "anthropic"
+        }
+      ]
+    },
+    "create_agent_run_200_response": {
+      "path": "/agents/{agent_id}/runs",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": {
+        "event_stream": {
+          "summary": "Example event stream response",
+          "value": "event: RunStarted\ndata: {\"content\": \"Hello!\", \"run_id\": \"123...\"}\n\n"
+        }
+      }
+    },
+    "continue_agent_run_200_response": {
+      "path": "/agents/{agent_id}/runs/{run_id}/continue",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: RunContent\ndata: {\"created_at\": 1757348314, \"run_id\": \"123...\"}\n\n"
+    },
+    "get_agents_200_response": {
+      "path": "/agents",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "id": "main-agent",
+          "name": "Main Agent",
+          "db_id": "c6bf0644-feb8-4930-a305-380dae5ad6aa",
+          "model": {
+            "name": "OpenAIChat",
+            "model": "gpt-4o",
+            "provider": "OpenAI"
+          },
+          "sessions": {
+            "session_table": "agno_sessions"
+          },
+          "knowledge": {
+            "knowledge_table": "main_knowledge"
+          },
+          "system_message": {
+            "markdown": true,
+            "add_datetime_to_context": true
+          }
+        }
+      ]
+    },
+    "get_agent_200_response": {
+      "path": "/agents/{agent_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "main-agent",
+        "name": "Main Agent",
+        "db_id": "9e064c70-6821-4840-a333-ce6230908a70",
+        "model": {
+          "name": "OpenAIChat",
+          "model": "gpt-4o",
+          "provider": "OpenAI"
+        },
+        "sessions": {
+          "session_table": "agno_sessions"
+        },
+        "knowledge": {
+          "knowledge_table": "main_knowledge"
+        },
+        "system_message": {
+          "markdown": true,
+          "add_datetime_to_context": true
+        }
+      }
+    },
+    "create_team_run_200_response": {
+      "path": "/teams/{team_id}/runs",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: RunStarted\ndata: {\"content\": \"Hello!\", \"run_id\": \"123...\"}\n\n"
+    },
+    "get_teams_200_response": {
+      "path": "/teams",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "team_id": "basic-team",
+          "name": "Basic Team",
+          "mode": "coordinate",
+          "model": {
+            "name": "OpenAIChat",
+            "model": "gpt-4o",
+            "provider": "OpenAI"
+          },
+          "tools": [
+            {
+              "name": "transfer_task_to_member",
+              "description": "Use this function to transfer a task to the selected team member.\nYou must provide a clear and concise description of the task the member should achieve AND the expected output.",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "member_id": {
+                    "type": "string",
+                    "description": "(str) The ID of the member to transfer the task to. Use only the ID of the member, not the ID of the team followed by the ID of the member."
+                  },
+                  "task_description": {
+                    "type": "string",
+                    "description": "(str) A clear and concise description of the task the member should achieve."
+                  },
+                  "expected_output": {
+                    "type": "string",
+                    "description": "(str) The expected output from the member (optional)."
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "member_id",
+                  "task_description"
+                ]
+              }
+            }
+          ],
+          "members": [
+            {
+              "agent_id": "basic-agent",
+              "name": "Basic Agent",
+              "model": {
+                "name": "OpenAIChat",
+                "model": "gpt-4o",
+                "provider": "OpenAI gpt-4o"
+              },
+              "memory": {
+                "app_name": "Memory",
+                "model": {
+                  "name": "OpenAIChat",
+                  "model": "gpt-4o",
+                  "provider": "OpenAI"
+                }
+              },
+              "session_table": "agno_sessions",
+              "memory_table": "agno_memories"
+            }
+          ],
+          "enable_agentic_context": false,
+          "memory": {
+            "app_name": "agno_memories",
+            "app_url": "/memory/1",
+            "model": {
+              "name": "OpenAIChat",
+              "model": "gpt-4o",
+              "provider": "OpenAI"
+            }
+          },
+          "async_mode": false,
+          "session_table": "agno_sessions",
+          "memory_table": "agno_memories"
+        }
+      ]
+    },
+    "get_team_200_response": {
+      "path": "/teams/{team_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "team_id": "basic-team",
+        "name": "Basic Team",
+        "mode": "coordinate",
+        "model": {
+          "name": "OpenAIChat",
+          "model": "gpt-4o",
+          "provider": "OpenAI"
+        },
+        "tools": [
+          {
+            "name": "transfer_task_to_member",
+            "description": "Use this function to transfer a task to the selected team member.\nYou must provide a clear and concise description of the task the member should achieve AND the expected output.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "member_id": {
+                  "type": "string",
+                  "description": "(str) The ID of the member to transfer the task to. Use only the ID of the member, not the ID of the team followed by the ID of the member."
+                },
+                "task_description": {
+                  "type": "string",
+                  "description": "(str) A clear and concise description of the task the member should achieve."
+                },
+                "expected_output": {
+                  "type": "string",
+                  "description": "(str) The expected output from the member (optional)."
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "member_id",
+                "task_description"
+              ]
+            }
+          }
+        ],
+        "members": [
+          {
+            "agent_id": "basic-agent",
+            "name": "Basic Agent",
+            "model": {
+              "name": "OpenAIChat",
+              "model": "gpt-4o",
+              "provider": "OpenAI gpt-4o"
+            },
+            "memory": {
+              "app_name": "Memory",
+              "model": {
+                "name": "OpenAIChat",
+                "model": "gpt-4o",
+                "provider": "OpenAI"
+              }
+            },
+            "session_table": "agno_sessions",
+            "memory_table": "agno_memories"
+          }
+        ],
+        "enable_agentic_context": false,
+        "memory": {
+          "app_name": "Memory",
+          "model": {
+            "name": "OpenAIChat",
+            "model": "gpt-4o",
+            "provider": "OpenAI"
+          }
+        },
+        "async_mode": false,
+        "session_table": "agno_sessions",
+        "memory_table": "agno_memories"
+      }
+    },
+    "get_workflows_200_response": {
+      "path": "/workflows",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "id": "content-creation-workflow",
+          "name": "Content Creation Workflow",
+          "description": "Automated content creation from blog posts to social media",
+          "db_id": "123"
+        }
+      ]
+    },
+    "get_workflow_200_response": {
+      "path": "/workflows/{workflow_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "content-creation-workflow",
+        "name": "Content Creation Workflow",
+        "description": "Automated content creation from blog posts to social media",
+        "db_id": "123"
+      }
+    },
+    "create_workflow_run_200_response": {
+      "path": "/workflows/{workflow_id}/runs",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: RunStarted\ndata: {\"content\": \"Hello!\", \"run_id\": \"123...\"}\n\n"
+    },
+    "run_message_agent_200_response": {
+      "path": "/a2a/agents/{id}/v1/message:send",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "jsonrpc": "2.0",
+        "id": "request-123",
+        "result": {
+          "task": {
+            "id": "task-456",
+            "context_id": "context-789",
+            "status": "completed",
+            "history": [
+              {
+                "message_id": "msg-1",
+                "role": "agent",
+                "parts": [
+                  {
+                    "kind": "text",
+                    "text": "Response from agent"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "stream_message_agent_200_response": {
+      "path": "/a2a/agents/{id}/v1/message:stream",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: TaskStatusUpdateEvent\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"taskId\":\"task-456\",\"status\":\"working\"}}\n\nevent: Message\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"messageId\":\"msg-1\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Response\"}]}}\n\n"
+    },
+    "run_message_team_200_response": {
+      "path": "/a2a/teams/{id}/v1/message:send",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "jsonrpc": "2.0",
+        "id": "request-123",
+        "result": {
+          "task": {
+            "id": "task-456",
+            "context_id": "context-789",
+            "status": "completed",
+            "history": [
+              {
+                "message_id": "msg-1",
+                "role": "agent",
+                "parts": [
+                  {
+                    "kind": "text",
+                    "text": "Response from agent"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "stream_message_team_200_response": {
+      "path": "/a2a/teams/{id}/v1/message:stream",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: TaskStatusUpdateEvent\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"taskId\":\"task-456\",\"status\":\"working\"}}\n\nevent: Message\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"messageId\":\"msg-1\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Response\"}]}}\n\n"
+    },
+    "run_message_workflow_200_response": {
+      "path": "/a2a/workflows/{id}/v1/message:send",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "jsonrpc": "2.0",
+        "id": "request-123",
+        "result": {
+          "task": {
+            "id": "task-456",
+            "context_id": "context-789",
+            "status": "completed",
+            "history": [
+              {
+                "message_id": "msg-1",
+                "role": "agent",
+                "parts": [
+                  {
+                    "kind": "text",
+                    "text": "Response from agent"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "stream_message_workflow_200_response": {
+      "path": "/a2a/workflows/{id}/v1/message:stream",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: TaskStatusUpdateEvent\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"taskId\":\"task-456\",\"status\":\"working\"}}\n\nevent: Message\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"messageId\":\"msg-1\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Response\"}]}}\n\n"
+    },
+    "send_message_200_response": {
+      "path": "/a2a/message/send",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "jsonrpc": "2.0",
+        "id": "request-123",
+        "result": {
+          "task": {
+            "id": "task-456",
+            "context_id": "context-789",
+            "status": "completed",
+            "history": [
+              {
+                "message_id": "msg-1",
+                "role": "agent",
+                "parts": [
+                  {
+                    "kind": "text",
+                    "text": "Response from agent"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "stream_message_200_response": {
+      "path": "/a2a/message/stream",
+      "method": "POST",
+      "status": "200",
+      "contentType": "text/event-stream",
+      "example": "event: TaskStatusUpdateEvent\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"taskId\":\"task-456\",\"status\":\"working\"}}\n\nevent: Message\ndata: {\"jsonrpc\":\"2.0\",\"id\":\"request-123\",\"result\":{\"messageId\":\"msg-1\",\"role\":\"agent\",\"parts\":[{\"kind\":\"text\",\"text\":\"Response\"}]}}\n\n"
+    },
+    "get_sessions_200_response": {
+      "path": "/sessions",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "session_example": {
+          "summary": "Example session response",
+          "value": {
+            "data": [
+              {
+                "session_id": "6f6cfbfd-9643-479a-ae47-b8f32eb4d710",
+                "session_name": "What tools do you have?",
+                "session_state": {},
+                "created_at": "2025-09-05T16:02:09Z",
+                "updated_at": "2025-09-05T16:02:09Z"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "create_session_201_response": {
+      "path": "/sessions",
+      "method": "POST",
+      "status": "201",
+      "contentType": "application/json",
+      "example": {
+        "agent_session_example": {
+          "summary": "Example created agent session",
+          "value": {
+            "user_id": "user-123",
+            "agent_session_id": "new-session-id",
+            "session_id": "new-session-id",
+            "session_name": "New Session",
+            "session_state": {
+              "key": "value"
+            },
+            "metadata": {
+              "key": "value"
+            },
+            "agent_id": "agent-1",
+            "created_at": "2025-10-21T12:00:00Z",
+            "updated_at": "2025-10-21T12:00:00Z"
+          }
+        }
+      }
+    },
+    "get_session_by_id_200_response": {
+      "path": "/sessions/{session_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "agent_session_example": {
+          "summary": "Example agent session response",
+          "value": {
+            "user_id": "123",
+            "agent_session_id": "6f6cfbfd-9643-479a-ae47-b8f32eb4d710",
+            "session_id": "6f6cfbfd-9643-479a-ae47-b8f32eb4d710",
+            "session_name": "What tools do you have?",
+            "session_summary": {
+              "summary": "The user and assistant engaged in a conversation about the tools the agent has available.",
+              "updated_at": "2025-09-05T18:02:12.269392"
+            },
+            "session_state": {},
+            "agent_id": "basic-agent",
+            "total_tokens": 160,
+            "agent_data": {
+              "name": "Basic Agent",
+              "agent_id": "basic-agent",
+              "model": {
+                "provider": "OpenAI",
+                "name": "OpenAIChat",
+                "id": "gpt-4o"
+              }
+            },
+            "metrics": {
+              "input_tokens": 134,
+              "output_tokens": 26,
+              "total_tokens": 160,
+              "audio_input_tokens": 0,
+              "audio_output_tokens": 0,
+              "audio_total_tokens": 0,
+              "cache_read_tokens": 0,
+              "cache_write_tokens": 0,
+              "reasoning_tokens": 0
+            },
+            "chat_history": [
+              {
+                "content": "<additional_information>\n- Use markdown to format your answers.\n- The current time is 2025-09-05 18:02:09.171627.\n</additional_information>\n\nYou have access to memories from previous interactions with the user that you can use:\n\n<memories_from_previous_interactions>\n- User really likes Digimon and Japan.\n- User really likes Japan.\n- User likes coffee.\n</memories_from_previous_interactions>\n\nNote: this information is from previous interactions and may be updated in this conversation. You should always prefer information from this conversation over the past memories.",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "system",
+                "created_at": 1757088129
+              },
+              {
+                "content": "What tools do you have?",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "user",
+                "created_at": 1757088129
+              },
+              {
+                "content": "I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "assistant",
+                "metrics": {
+                  "input_tokens": 134,
+                  "output_tokens": 26,
+                  "total_tokens": 160
+                },
+                "created_at": 1757088129
+              }
+            ],
+            "created_at": "2025-09-05T16:02:09Z",
+            "updated_at": "2025-09-05T16:02:09Z"
+          }
+        }
+      }
+    },
+    "update_session_200_response": {
+      "path": "/sessions/{session_id}",
+      "method": "PATCH",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "update_summary": {
+          "summary": "Update session summary",
+          "value": {
+            "summary": {
+              "summary": "The user discussed project planning with the agent.",
+              "updated_at": "2025-10-21T14:30:00Z"
+            }
+          }
+        },
+        "update_metadata": {
+          "summary": "Update session metadata",
+          "value": {
+            "metadata": {
+              "tags": [
+                "planning",
+                "project"
+              ],
+              "priority": "high"
+            }
+          }
+        },
+        "update_session_name": {
+          "summary": "Update session name",
+          "value": {
+            "session_name": "Updated Session Name"
+          }
+        },
+        "update_session_state": {
+          "summary": "Update session state",
+          "value": {
+            "session_state": {
+              "step": "completed",
+              "context": "Project planning finished",
+              "progress": 100
+            }
+          }
+        }
+      }
+    },
+    "get_session_runs_200_response": {
+      "path": "/sessions/{session_id}/runs",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "completed_run": {
+          "summary": "Example completed run",
+          "value": {
+            "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+            "parent_run_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0",
+            "agent_id": "basic-agent",
+            "user_id": "",
+            "run_input": "Which tools do you have access to?",
+            "content": "I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!",
+            "run_response_format": "text",
+            "reasoning_content": "",
+            "metrics": {
+              "input_tokens": 82,
+              "output_tokens": 56,
+              "total_tokens": 138,
+              "time_to_first_token": 0.047505500027909875,
+              "duration": 4.840060166025069
+            },
+            "messages": [
+              {
+                "content": "<additional_information>\n- Use markdown to format your answers.\n- The current time is 2025-09-08 17:52:10.101003.\n</additional_information>\n\nYou have the capability to retain memories from previous interactions with the user, but have not had any interactions with the user yet.",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "system",
+                "created_at": 1757346730
+              },
+              {
+                "content": "Which tools do you have access to?",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "user",
+                "created_at": 1757346730
+              },
+              {
+                "content": "I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "assistant",
+                "metrics": {
+                  "input_tokens": 82,
+                  "output_tokens": 56,
+                  "total_tokens": 138
+                },
+                "created_at": 1757346730
+              }
+            ],
+            "events": [
+              {
+                "created_at": 1757346730,
+                "event": "RunStarted",
+                "agent_id": "basic-agent",
+                "agent_name": "Basic Agent",
+                "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+                "session_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0",
+                "model": "gpt-4o",
+                "model_provider": "OpenAI"
+              },
+              {
+                "created_at": 1757346733,
+                "event": "MemoryUpdateStarted",
+                "agent_id": "basic-agent",
+                "agent_name": "Basic Agent",
+                "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+                "session_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0"
+              },
+              {
+                "created_at": 1757346734,
+                "event": "MemoryUpdateCompleted",
+                "agent_id": "basic-agent",
+                "agent_name": "Basic Agent",
+                "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+                "session_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0"
+              },
+              {
+                "created_at": 1757346734,
+                "event": "RunCompleted",
+                "agent_id": "basic-agent",
+                "agent_name": "Basic Agent",
+                "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+                "session_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0",
+                "content": "I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!",
+                "content_type": "str",
+                "metrics": {
+                  "input_tokens": 82,
+                  "output_tokens": 56,
+                  "total_tokens": 138,
+                  "time_to_first_token": 0.047505500027909875,
+                  "duration": 4.840060166025069
+                }
+              }
+            ],
+            "created_at": "2025-09-08T15:52:10Z"
+          }
+        }
+      }
+    },
+    "get_session_run_200_response": {
+      "path": "/sessions/{session_id}/runs/{run_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "agent_run": {
+          "summary": "Example agent run",
+          "value": {
+            "run_id": "fcdf50f0-7c32-4593-b2ef-68a558774340",
+            "parent_run_id": "80056af0-c7a5-4d69-b6a2-c3eba9f040e0",
+            "agent_id": "basic-agent",
+            "user_id": "user_123",
+            "run_input": "Which tools do you have access to?",
+            "content": "I don't have access to external tools.",
+            "created_at": 1728499200
+          }
+        }
+      }
+    },
+    "rename_session_200_response": {
+      "path": "/sessions/{session_id}/rename",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "agent_session_example": {
+          "summary": "Example agent session response",
+          "value": {
+            "user_id": "123",
+            "agent_session_id": "6f6cfbfd-9643-479a-ae47-b8f32eb4d710",
+            "session_id": "6f6cfbfd-9643-479a-ae47-b8f32eb4d710",
+            "session_name": "What tools do you have?",
+            "session_summary": {
+              "summary": "The user and assistant engaged in a conversation about the tools the agent has available.",
+              "updated_at": "2025-09-05T18:02:12.269392"
+            },
+            "session_state": {},
+            "agent_id": "basic-agent",
+            "total_tokens": 160,
+            "agent_data": {
+              "name": "Basic Agent",
+              "agent_id": "basic-agent",
+              "model": {
+                "provider": "OpenAI",
+                "name": "OpenAIChat",
+                "id": "gpt-4o"
+              }
+            },
+            "metrics": {
+              "input_tokens": 134,
+              "output_tokens": 26,
+              "total_tokens": 160,
+              "audio_input_tokens": 0,
+              "audio_output_tokens": 0,
+              "audio_total_tokens": 0,
+              "cache_read_tokens": 0,
+              "cache_write_tokens": 0,
+              "reasoning_tokens": 0
+            },
+            "chat_history": [
+              {
+                "content": "<additional_information>\n- Use markdown to format your answers.\n- The current time is 2025-09-05 18:02:09.171627.\n</additional_information>\n\nYou have access to memories from previous interactions with the user that you can use:\n\n<memories_from_previous_interactions>\n- User really likes Digimon and Japan.\n- User really likes Japan.\n- User likes coffee.\n</memories_from_previous_interactions>\n\nNote: this information is from previous interactions and may be updated in this conversation. You should always prefer information from this conversation over the past memories.",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "system",
+                "created_at": 1757088129
+              },
+              {
+                "content": "What tools do you have?",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "user",
+                "created_at": 1757088129
+              },
+              {
+                "content": "I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!",
+                "from_history": false,
+                "stop_after_tool_call": false,
+                "role": "assistant",
+                "metrics": {
+                  "input_tokens": 134,
+                  "output_tokens": 26,
+                  "total_tokens": 160
+                },
+                "created_at": 1757088129
+              }
+            ],
+            "created_at": "2025-09-05T16:02:09Z",
+            "updated_at": "2025-09-05T16:02:09Z"
+          }
+        }
+      }
+    },
+    "create_memory_200_response": {
+      "path": "/memories",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "memory_id": "mem-123",
+        "memory": "User prefers technical explanations with code examples",
+        "topics": [
+          "preferences",
+          "communication_style",
+          "technical"
+        ],
+        "user_id": "user-456",
+        "created_at": "2024-01-15T10:30:00Z",
+        "updated_at": "2024-01-15T10:30:00Z"
+      }
+    },
+    "get_memories_200_response": {
+      "path": "/memories",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "memory_id": "f9361a69-2997-40c7-ae4e-a5861d434047",
+            "memory": "User likes coffee.",
+            "topics": [
+              "preferences"
+            ],
+            "user_id": "123",
+            "updated_at": "2025-09-01T07:53:17Z"
+          }
+        ]
+      }
+    },
+    "get_memory_200_response": {
+      "path": "/memories/{memory_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "memory_id": "f9361a69-2997-40c7-ae4e-a5861d434047",
+        "memory": "User likes coffee.",
+        "topics": [
+          "preferences"
+        ],
+        "user_id": "123",
+        "updated_at": "2025-09-01T07:53:17Z"
+      }
+    },
+    "update_memory_200_response": {
+      "path": "/memories/{memory_id}",
+      "method": "PATCH",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "memory_id": "f9361a69-2997-40c7-ae4e-a5861d434047",
+        "memory": "User likes coffee.",
+        "topics": [
+          "preferences"
+        ],
+        "user_id": "123",
+        "updated_at": "2025-09-01T07:53:17Z"
+      }
+    },
+    "get_memory_topics_200_response": {
+      "path": "/memory_topics",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        "preferences",
+        "communication_style",
+        "technical",
+        "industry",
+        "compliance",
+        "code_examples",
+        "requirements",
+        "healthcare",
+        "finance"
+      ]
+    },
+    "get_user_memory_stats_200_response": {
+      "path": "/user_memory_stats",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "user_id": "123",
+            "total_memories": 3,
+            "last_memory_updated_at": "2025-09-01T07:53:17Z"
+          }
+        ]
+      }
+    },
+    "optimize_memories_200_response": {
+      "path": "/optimize-memories",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "memories": [
+          {
+            "memory_id": "f9361a69-2997-40c7-ae4e-a5861d434047",
+            "memory": "User has a 3-year-old golden retriever named Max who loves fetch and walks. Lives in San Francisco's Mission district, works as a product manager in tech. Enjoys hiking Bay Area trails, trying new restaurants (especially Japanese, Thai, Mexican), and learning piano for 1.5 years.",
+            "topics": [
+              "pets",
+              "location",
+              "work",
+              "hobbies",
+              "food_preferences"
+            ],
+            "user_id": "user2",
+            "updated_at": "2025-11-18T10:30:00Z"
+          }
+        ],
+        "memories_before": 4,
+        "memories_after": 1,
+        "tokens_before": 450,
+        "tokens_after": 180,
+        "tokens_saved": 270,
+        "reduction_percentage": 60
+      }
+    },
+    "get_eval_runs_200_response": {
+      "path": "/eval-runs",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "id": "a03fa2f4-900d-482d-afe0-470d4cd8d1f4",
+            "agent_id": "basic-agent",
+            "model_id": "gpt-4o",
+            "model_provider": "OpenAI",
+            "name": "Test ",
+            "eval_type": "reliability",
+            "eval_data": {
+              "eval_status": "PASSED",
+              "failed_tool_calls": [],
+              "passed_tool_calls": [
+                "multiply"
+              ]
+            },
+            "eval_input": {
+              "expected_tool_calls": [
+                "multiply"
+              ]
+            },
+            "created_at": "2025-08-27T15:41:59Z",
+            "updated_at": "2025-08-27T15:41:59Z"
+          }
+        ]
+      }
+    },
+    "run_eval_200_response": {
+      "path": "/eval-runs",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "f2b2d72f-e9e2-4f0e-8810-0a7e1ff58614",
+        "agent_id": "basic-agent",
+        "model_id": "gpt-4o",
+        "model_provider": "OpenAI",
+        "eval_type": "reliability",
+        "eval_data": {
+          "eval_status": "PASSED",
+          "failed_tool_calls": [],
+          "passed_tool_calls": [
+            "multiply"
+          ]
+        },
+        "created_at": "2025-08-27T15:41:59Z",
+        "updated_at": "2025-08-27T15:41:59Z"
+      }
+    },
+    "get_eval_run_200_response": {
+      "path": "/eval-runs/{eval_run_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "a03fa2f4-900d-482d-afe0-470d4cd8d1f4",
+        "agent_id": "basic-agent",
+        "model_id": "gpt-4o",
+        "model_provider": "OpenAI",
+        "name": "Test ",
+        "eval_type": "reliability",
+        "eval_data": {
+          "eval_status": "PASSED",
+          "failed_tool_calls": [],
+          "passed_tool_calls": [
+            "multiply"
+          ]
+        },
+        "eval_input": {
+          "expected_tool_calls": [
+            "multiply"
+          ]
+        },
+        "created_at": "2025-08-27T15:41:59Z",
+        "updated_at": "2025-08-27T15:41:59Z"
+      }
+    },
+    "update_eval_run_200_response": {
+      "path": "/eval-runs/{eval_run_id}",
+      "method": "PATCH",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "a03fa2f4-900d-482d-afe0-470d4cd8d1f4",
+        "agent_id": "basic-agent",
+        "model_id": "gpt-4o",
+        "model_provider": "OpenAI",
+        "name": "Test ",
+        "eval_type": "reliability",
+        "eval_data": {
+          "eval_status": "PASSED",
+          "failed_tool_calls": [],
+          "passed_tool_calls": [
+            "multiply"
+          ]
+        },
+        "eval_input": {
+          "expected_tool_calls": [
+            "multiply"
+          ]
+        },
+        "created_at": "2025-08-27T15:41:59Z",
+        "updated_at": "2025-08-27T15:41:59Z"
+      }
+    },
+    "get_metrics_200_response": {
+      "path": "/metrics",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "metrics": [
+          {
+            "id": "7bf39658-a00a-484c-8a28-67fd8a9ddb2a",
+            "agent_runs_count": 5,
+            "agent_sessions_count": 5,
+            "team_runs_count": 0,
+            "team_sessions_count": 0,
+            "workflow_runs_count": 0,
+            "workflow_sessions_count": 0,
+            "users_count": 1,
+            "token_metrics": {
+              "input_tokens": 448,
+              "output_tokens": 148,
+              "total_tokens": 596,
+              "audio_tokens": 0,
+              "input_audio_tokens": 0,
+              "output_audio_tokens": 0,
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "reasoning_tokens": 0
+            },
+            "model_metrics": [
+              {
+                "model_id": "gpt-4o",
+                "model_provider": "OpenAI",
+                "count": 5
+              }
+            ],
+            "date": "2025-07-31T00:00:00Z",
+            "created_at": "2025-07-31T12:38:52Z",
+            "updated_at": "2025-07-31T12:49:01Z"
+          }
+        ]
+      }
+    },
+    "refresh_metrics_200_response": {
+      "path": "/metrics/refresh",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "id": "e77c9531-818b-47a5-99cd-59fed61e5403",
+          "agent_runs_count": 2,
+          "agent_sessions_count": 2,
+          "team_runs_count": 0,
+          "team_sessions_count": 0,
+          "workflow_runs_count": 0,
+          "workflow_sessions_count": 0,
+          "users_count": 1,
+          "token_metrics": {
+            "input_tokens": 256,
+            "output_tokens": 441,
+            "total_tokens": 697,
+            "audio_total_tokens": 0,
+            "audio_input_tokens": 0,
+            "audio_output_tokens": 0,
+            "cache_read_tokens": 0,
+            "cache_write_tokens": 0,
+            "reasoning_tokens": 0
+          },
+          "model_metrics": [
+            {
+              "model_id": "gpt-4o",
+              "model_provider": "OpenAI",
+              "count": 2
+            }
+          ],
+          "date": "2025-08-12T00:00:00Z",
+          "created_at": "2025-08-12T08:01:47Z",
+          "updated_at": "2025-08-12T08:01:47Z"
+        }
+      ]
+    },
+    "upload_content_202_response": {
+      "path": "/knowledge/content",
+      "method": "POST",
+      "status": "202",
+      "contentType": "application/json",
+      "example": {
+        "id": "content-123",
+        "name": "example-document.pdf",
+        "description": "Sample document for processing",
+        "metadata": {
+          "category": "documentation",
+          "priority": "high"
+        },
+        "status": "processing"
+      }
+    },
+    "get_content_200_response": {
+      "path": "/knowledge/content",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "id": "3c2fc685-d451-4d47-b0c0-b9a544c672b7",
+            "name": "example.pdf",
+            "description": "",
+            "type": "application/pdf",
+            "size": "251261",
+            "metadata": {},
+            "access_count": 1,
+            "status": "completed",
+            "status_message": "",
+            "created_at": "2025-09-08T15:22:53Z",
+            "updated_at": "2025-09-08T15:22:54Z"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 20,
+          "total_pages": 1,
+          "total_count": 2
+        }
+      }
+    },
+    "upload_remote_content_202_response": {
+      "path": "/knowledge/remote-content",
+      "method": "POST",
+      "status": "202",
+      "contentType": "application/json",
+      "example": {
+        "id": "content-456",
+        "name": "reports/q1-2024.pdf",
+        "description": "Q1 Report from S3",
+        "metadata": {
+          "source": "s3-docs"
+        },
+        "status": "processing"
+      }
+    },
+    "update_content_200_response": {
+      "path": "/knowledge/content/{content_id}",
+      "method": "PATCH",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "3c2fc685-d451-4d47-b0c0-b9a544c672b7",
+        "name": "example.pdf",
+        "description": "",
+        "type": "application/pdf",
+        "size": "251261",
+        "metadata": {},
+        "access_count": 1,
+        "status": "completed",
+        "status_message": "",
+        "created_at": "2025-09-08T15:22:53Z",
+        "updated_at": "2025-09-08T15:22:54Z"
+      }
+    },
+    "get_content_by_id_200_response": {
+      "path": "/knowledge/content/{content_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "id": "3c2fc685-d451-4d47-b0c0-b9a544c672b7",
+        "name": "example.pdf",
+        "description": "",
+        "type": "application/pdf",
+        "size": "251261",
+        "metadata": {},
+        "access_count": 1,
+        "status": "completed",
+        "status_message": "",
+        "created_at": "2025-09-08T15:22:53Z",
+        "updated_at": "2025-09-08T15:22:54Z"
+      }
+    },
+    "get_content_status_200_response": {
+      "path": "/knowledge/content/{content_id}/status",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "completed": {
+          "summary": "Example completed content status",
+          "value": {
+            "status": "completed",
+            "status_message": ""
+          }
+        }
+      }
+    },
+    "search_knowledge_200_response": {
+      "path": "/knowledge/search",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "id": "doc_123",
+            "content": "Jordan Mitchell - Software Engineer with skills in JavaScript, React, Python",
+            "name": "cv_1",
+            "meta_data": {
+              "page": 1,
+              "chunk": 1
+            },
+            "usage": {
+              "total_tokens": 14
+            },
+            "reranking_score": 0.95,
+            "content_id": "content_456"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 20,
+          "total_pages": 2,
+          "total_count": 35
+        }
+      }
+    },
+    "get_knowledge_config_200_response": {
+      "path": "/knowledge/config",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "readers": {
+          "website": {
+            "id": "website",
+            "name": "WebsiteReader",
+            "description": "Reads website files",
+            "chunkers": [
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker",
+              "FixedSizeChunker"
+            ]
+          },
+          "firecrawl": {
+            "id": "firecrawl",
+            "name": "FirecrawlReader",
+            "description": "Reads firecrawl files",
+            "chunkers": [
+              "SemanticChunker",
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker"
+            ]
+          },
+          "youtube": {
+            "id": "youtube",
+            "name": "YoutubeReader",
+            "description": "Reads youtube files",
+            "chunkers": [
+              "RecursiveChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "SemanticChunker",
+              "FixedSizeChunker"
+            ]
+          },
+          "web_search": {
+            "id": "web_search",
+            "name": "WebSearchReader",
+            "description": "Reads web_search files",
+            "chunkers": [
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker",
+              "FixedSizeChunker"
+            ]
+          },
+          "arxiv": {
+            "id": "arxiv",
+            "name": "ArxivReader",
+            "description": "Reads arxiv files",
+            "chunkers": [
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker"
+            ]
+          },
+          "csv": {
+            "id": "csv",
+            "name": "CsvReader",
+            "description": "Reads csv files",
+            "chunkers": [
+              "RowChunker",
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker"
+            ]
+          },
+          "docx": {
+            "id": "docx",
+            "name": "DocxReader",
+            "description": "Reads docx files",
+            "chunkers": [
+              "DocumentChunker",
+              "FixedSizeChunker",
+              "SemanticChunker",
+              "AgenticChunker",
+              "RecursiveChunker"
+            ]
+          },
+          "gcs": {
+            "id": "gcs",
+            "name": "GcsReader",
+            "description": "Reads gcs files",
+            "chunkers": [
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker"
+            ]
+          },
+          "json": {
+            "id": "json",
+            "name": "JsonReader",
+            "description": "Reads json files",
+            "chunkers": [
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker"
+            ]
+          },
+          "markdown": {
+            "id": "markdown",
+            "name": "MarkdownReader",
+            "description": "Reads markdown files",
+            "chunkers": [
+              "MarkdownChunker",
+              "DocumentChunker",
+              "AgenticChunker",
+              "RecursiveChunker",
+              "SemanticChunker",
+              "FixedSizeChunker"
+            ]
+          },
+          "pdf": {
+            "id": "pdf",
+            "name": "PdfReader",
+            "description": "Reads pdf files",
+            "chunkers": [
+              "DocumentChunker",
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "SemanticChunker",
+              "RecursiveChunker"
+            ]
+          },
+          "text": {
+            "id": "text",
+            "name": "TextReader",
+            "description": "Reads text files",
+            "chunkers": [
+              "CodeChunker",
+              "FixedSizeChunker",
+              "AgenticChunker",
+              "DocumentChunker",
+              "RecursiveChunker",
+              "SemanticChunker"
+            ]
+          }
+        },
+        "readersForType": {
+          "url": [
+            "url",
+            "website",
+            "firecrawl",
+            "youtube",
+            "web_search",
+            "gcs"
+          ],
+          "youtube": [
+            "youtube"
+          ],
+          "text": [
+            "web_search"
+          ],
+          "topic": [
+            "arxiv"
+          ],
+          "file": [
+            "csv",
+            "gcs"
+          ],
+          ".csv": [
+            "csv",
+            "field_labeled_csv"
+          ],
+          ".xlsx": [
+            "excel"
+          ],
+          ".xls": [
+            "excel"
+          ],
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+            "excel"
+          ],
+          "application/vnd.ms-excel": [
+            "excel"
+          ],
+          ".docx": [
+            "docx"
+          ],
+          ".doc": [
+            "docx"
+          ],
+          ".json": [
+            "json"
+          ],
+          ".md": [
+            "markdown"
+          ],
+          ".pdf": [
+            "pdf"
+          ],
+          ".txt": [
+            "text"
+          ]
+        },
+        "chunkers": {
+          "AgenticChunker": {
+            "key": "AgenticChunker",
+            "name": "AgenticChunker",
+            "description": "Chunking strategy that uses an LLM to determine natural breakpoints in the text",
+            "metadata": {
+              "chunk_size": 5000
+            }
+          },
+          "CodeChunker": {
+            "key": "CodeChunker",
+            "name": "CodeChunker",
+            "description": "The CodeChunker splits code into chunks based on its structure, leveraging Abstract Syntax Trees (ASTs) to create contextually relevant segments",
+            "metadata": {
+              "chunk_size": 2048
+            }
+          },
+          "DocumentChunker": {
+            "key": "DocumentChunker",
+            "name": "DocumentChunker",
+            "description": "A chunking strategy that splits text based on document structure like paragraphs and sections",
+            "metadata": {
+              "chunk_size": 5000,
+              "chunk_overlap": 0
+            }
+          },
+          "FixedSizeChunker": {
+            "key": "FixedSizeChunker",
+            "name": "FixedSizeChunker",
+            "description": "Chunking strategy that splits text into fixed-size chunks with optional overlap",
+            "metadata": {
+              "chunk_size": 5000,
+              "chunk_overlap": 0
+            }
+          },
+          "MarkdownChunker": {
+            "key": "MarkdownChunker",
+            "name": "MarkdownChunker",
+            "description": "A chunking strategy that splits markdown based on structure like headers, paragraphs and sections",
+            "metadata": {
+              "chunk_size": 5000,
+              "chunk_overlap": 0
+            }
+          },
+          "RecursiveChunker": {
+            "key": "RecursiveChunker",
+            "name": "RecursiveChunker",
+            "description": "Chunking strategy that recursively splits text into chunks by finding natural break points",
+            "metadata": {
+              "chunk_size": 5000,
+              "chunk_overlap": 0
+            }
+          },
+          "RowChunker": {
+            "key": "RowChunker",
+            "name": "RowChunker",
+            "description": "RowChunking chunking strategy",
+            "metadata": {}
+          },
+          "SemanticChunker": {
+            "key": "SemanticChunker",
+            "name": "SemanticChunker",
+            "description": "Chunking strategy that splits text into semantic chunks using chonkie",
+            "metadata": {
+              "chunk_size": 5000
+            }
+          }
+        },
+        "vector_dbs": [
+          {
+            "id": "vector_db_1",
+            "name": "Vector DB 1",
+            "description": "Vector DB 1 description",
+            "search_types": [
+              "vector",
+              "keyword",
+              "hybrid"
+            ]
+          }
+        ],
+        "filters": [
+          "filter_tag_1",
+          "filter_tag2"
+        ]
+      }
+    },
+    "list_content_sources_200_response": {
+      "path": "/knowledge/{knowledge_id}/sources",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": [
+        {
+          "id": "company-s3",
+          "name": "Company Documents",
+          "type": "s3",
+          "prefix": "documents/"
+        }
+      ]
+    },
+    "list_source_files_200_response": {
+      "path": "/knowledge/{knowledge_id}/sources/{source_id}/files",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "source_id": "company-s3",
+        "source_name": "Company Documents",
+        "prefix": "reports/",
+        "folders": [
+          {
+            "prefix": "reports/2024/",
+            "name": "2024",
+            "is_empty": false
+          }
+        ],
+        "files": [
+          {
+            "key": "reports/annual-summary.pdf",
+            "name": "annual-summary.pdf",
+            "size": 102400,
+            "last_modified": "2024-01-15T10:30:00Z",
+            "content_type": "application/pdf"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 100,
+          "total_pages": 1,
+          "total_count": 1
+        }
+      }
+    },
+    "get_traces_200_response": {
+      "path": "/traces",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "trace_id": "a1b2c3d4",
+            "name": "Stock_Price_Agent.run",
+            "status": "OK",
+            "duration": "1.2s",
+            "start_time": "2025-11-19T10:30:00.000000+00:00",
+            "total_spans": 4,
+            "error_count": 0,
+            "input": "What is the stock price of NVDA?",
+            "run_id": "run123",
+            "session_id": "session456",
+            "user_id": "user789",
+            "agent_id": "agent_stock",
+            "created_at": "2025-11-19T10:30:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 20,
+          "total_pages": 5,
+          "total_count": 95
+        }
+      }
+    },
+    "get_trace_200_response": {
+      "path": "/traces/{trace_id}",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "full_trace": {
+          "summary": "Full trace with hierarchy (no span_id)",
+          "value": {
+            "trace_id": "a1b2c3d4",
+            "name": "Stock_Price_Agent.run",
+            "status": "OK",
+            "duration": "1.2s",
+            "start_time": "2025-11-19T10:30:00.000000+00:00",
+            "end_time": "2025-11-19T10:30:01.200000+00:00",
+            "total_spans": 4,
+            "error_count": 0,
+            "input": "What is Tesla stock price?",
+            "output": "The current price of Tesla (TSLA) is $245.67.",
+            "run_id": "run123",
+            "session_id": "session456",
+            "user_id": "user789",
+            "agent_id": "stock_agent",
+            "created_at": "2025-11-19T10:30:00+00:00",
+            "tree": [
+              {
+                "id": "span1",
+                "name": "Stock_Price_Agent.run",
+                "type": "AGENT",
+                "duration": "1.2s",
+                "status": "OK",
+                "spans": []
+              }
+            ]
+          }
+        },
+        "single_span": {
+          "summary": "Single span detail (with span_id)",
+          "value": {
+            "id": "span2",
+            "name": "gpt-4o-mini.invoke",
+            "type": "LLM",
+            "duration": "800ms",
+            "status": "OK",
+            "metadata": {
+              "model": "gpt-4o-mini",
+              "input_tokens": 120
+            }
+          }
+        }
+      }
+    },
+    "get_trace_stats_200_response": {
+      "path": "/trace_session_stats",
+      "method": "GET",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "data": [
+          {
+            "session_id": "37029bc6-1794-4ba8-a629-1efedc53dcad",
+            "user_id": "kaustubh@agno.com",
+            "agent_id": "hackernews-agent",
+            "total_traces": 5,
+            "first_trace_at": "2025-11-19T10:15:16+00:00",
+            "last_trace_at": "2025-11-19T10:21:30+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 20,
+          "total_pages": 3,
+          "total_count": 45
+        }
+      }
+    },
+    "migrate_all_databases_200_response": {
+      "path": "/databases/all/migrate",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "message": "All databases migrated successfully to version 3.0.0"
+      }
+    },
+    "migrate_database_200_response": {
+      "path": "/databases/{db_id}/migrate",
+      "method": "POST",
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "message": "Database migrated successfully to version 3.0.0"
+      }
+    }
+  }
+}

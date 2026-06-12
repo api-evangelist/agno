@@ -1,0 +1,183 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "agno": "https://www.agno.com/vocab#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+
+    "Agent": "agno:Agent",
+    "agentId": {
+      "@id": "agno:agentId",
+      "@type": "xsd:string"
+    },
+    "agentName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "agentDescription": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+
+    "Team": "agno:Team",
+    "Workflow": "agno:Workflow",
+
+    "Run": "agno:Run",
+    "runId": {
+      "@id": "agno:runId",
+      "@type": "xsd:string"
+    },
+    "runStatus": {
+      "@id": "agno:runStatus",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "Session": "agno:Session",
+    "sessionId": {
+      "@id": "agno:sessionId",
+      "@type": "xsd:string"
+    },
+    "sessionType": {
+      "@id": "agno:sessionType",
+      "@type": "xsd:string"
+    },
+    "userId": {
+      "@id": "agno:userId",
+      "@type": "xsd:string"
+    },
+
+    "Memory": "agno:Memory",
+    "memoryId": {
+      "@id": "agno:memoryId",
+      "@type": "xsd:string"
+    },
+    "memoryContent": {
+      "@id": "schema:text",
+      "@type": "xsd:string"
+    },
+    "memoryTopic": {
+      "@id": "agno:topic",
+      "@type": "xsd:string"
+    },
+
+    "Knowledge": "agno:Knowledge",
+    "Content": "agno:Content",
+    "contentId": {
+      "@id": "agno:contentId",
+      "@type": "xsd:string"
+    },
+    "contentStatus": {
+      "@id": "agno:contentStatus",
+      "@type": "xsd:string"
+    },
+    "sourceUrl": {
+      "@id": "schema:url",
+      "@type": "xsd:anyURI"
+    },
+
+    "Trace": "agno:Trace",
+    "traceId": {
+      "@id": "agno:traceId",
+      "@type": "xsd:string"
+    },
+    "TraceNode": "agno:TraceNode",
+    "spanName": {
+      "@id": "agno:spanName",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "agno:startTime",
+      "@type": "xsd:dateTime"
+    },
+    "endTime": {
+      "@id": "agno:endTime",
+      "@type": "xsd:dateTime"
+    },
+    "durationMs": {
+      "@id": "agno:durationMs",
+      "@type": "xsd:integer"
+    },
+
+    "Metrics": "agno:Metrics",
+    "totalRuns": {
+      "@id": "agno:totalRuns",
+      "@type": "xsd:integer"
+    },
+    "inputTokens": {
+      "@id": "agno:inputTokens",
+      "@type": "xsd:integer"
+    },
+    "outputTokens": {
+      "@id": "agno:outputTokens",
+      "@type": "xsd:integer"
+    },
+
+    "Schedule": "agno:Schedule",
+    "scheduleId": {
+      "@id": "agno:scheduleId",
+      "@type": "xsd:string"
+    },
+    "cronExpression": {
+      "@id": "agno:cronExpression",
+      "@type": "xsd:string"
+    },
+    "scheduleState": {
+      "@id": "agno:scheduleState",
+      "@type": "xsd:string"
+    },
+
+    "Approval": "agno:Approval",
+    "approvalId": {
+      "@id": "agno:approvalId",
+      "@type": "xsd:string"
+    },
+    "approvalStatus": {
+      "@id": "agno:approvalStatus",
+      "@type": "xsd:string"
+    },
+
+    "Component": "agno:Component",
+    "componentId": {
+      "@id": "agno:componentId",
+      "@type": "xsd:string"
+    },
+    "componentType": {
+      "@id": "agno:componentType",
+      "@type": "xsd:string"
+    },
+
+    "model": {
+      "@id": "agno:model",
+      "@type": "xsd:string"
+    },
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "schema:version",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "schema:text",
+      "@type": "xsd:string"
+    },
+    "role": {
+      "@id": "agno:role",
+      "@type": "xsd:string"
+    },
+    "stream": {
+      "@id": "agno:stream",
+      "@type": "xsd:boolean"
+    }
+  }
+}
