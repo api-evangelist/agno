@@ -1,0 +1,106 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+provider: Agno
+providerId: agno
+url: https://www.agno.com/pricing
+created: '2026-06-12'
+modified: '2026-06-12'
+description: >-
+  Agno's billing model combines a flat-rate SaaS subscription for the AgentOS
+  Control Plane (Pro at $150/month) with seat-based and connection-based
+  add-ons. Underlying LLM API costs are pass-through from the customer's chosen
+  model providers (OpenAI, Anthropic, Google, etc.), making total AI spend a
+  combination of Agno platform fees plus LLM provider costs. The BYOC
+  (Bring Your Own Cloud) deployment model means infrastructure costs are borne
+  by the customer directly on their AWS, GCP, or Railway account.
+billingModel:
+  type: hybrid
+  description: Flat monthly subscription plus seat/connection add-ons; LLM and infrastructure costs are external pass-through
+  components:
+    - name: Platform Subscription
+      type: flat-rate
+      description: Monthly fee for AgentOS Control Plane access (Pro tier)
+      amount: 150.00
+      currency: USD
+      cadence: monthly
+    - name: Seat Licenses
+      type: per-unit
+      description: Additional team member seats beyond the included 4
+      amount: 30.00
+      currency: USD
+      unit: seat
+      cadence: monthly
+    - name: Live Connections
+      type: per-unit
+      description: Additional live AgentOS production connections beyond the included 1
+      amount: 95.00
+      currency: USD
+      unit: connection
+      cadence: monthly
+    - name: LLM Provider Costs
+      type: pass-through
+      description: Token-based costs billed directly by LLM providers (OpenAI, Anthropic, Google, etc.) — not by Agno
+      notes: Varies by provider, model, and token usage
+    - name: Infrastructure (BYOC)
+      type: pass-through
+      description: Cloud infrastructure costs billed directly by AWS, GCP, or Railway — not by Agno
+      notes: Customer manages their own cloud spend
+focusColumns:
+  - ChargeCategory
+  - ChargeSubcategory
+  - ServiceName
+  - ServiceCategory
+  - ResourceType
+  - PricingUnit
+  - BilledCost
+  - EffectiveCost
+  - BillingPeriodStart
+  - BillingPeriodEnd
+meters:
+  - name: Platform Seat Hours
+    description: Monthly active seats on the AgentOS Control Plane
+    unit: seat/month
+    dimension: seats
+    granularity: monthly
+  - name: Live Connections
+    description: Active live connections to production AgentOS deployments
+    unit: connection/month
+    dimension: connections
+    granularity: monthly
+  - name: LLM Tokens (External)
+    description: Tokens consumed from upstream LLM providers; tracked by Agno metrics API but billed externally
+    unit: tokens
+    dimension: llm_provider
+    granularity: daily
+    notes: Agno provides daily aggregated token analytics via the /metrics endpoint
+  - name: Agent Runs
+    description: Total agent and team runs executed through AgentOS
+    unit: runs
+    dimension: agent_id
+    granularity: daily
+principles:
+  - name: Visibility
+    description: >-
+      Agno provides daily aggregated usage and token analytics through the
+      AgentOS /metrics API endpoint, enabling teams to track LLM token
+      consumption, run counts, and session activity. The Control Plane web
+      console surfaces session monitoring and system metrics for operational
+      visibility.
+    actions:
+      - Monitor token usage via the AgentOS metrics API (/metrics endpoint)
+      - Use session monitoring in the Control Plane for run-level visibility
+      - Track LLM provider costs separately through each provider's dashboard
+      - Use trace inspection to identify expensive or inefficient agent patterns
+  - name: Optimization
+    description: >-
+      Cost optimization in Agno involves right-sizing LLM model selection,
+      using fallback models to avoid expensive retry loops, and leveraging
+      caching for repeated LLM calls. The BYOC model allows customers to
+      optimize infrastructure costs independently.
+    actions:
+      - Use fallback models to automatically switch to lower-cost models on rate limits
+      - Implement LLM response caching to reduce redundant token usage
+      - Limit chat history context to control per-run token costs
+      - Use session summaries instead of full history to reduce context window usage
+      - Right-size the AgentOS deployment infrastructure (BYOC) for actual workload
+      - Monitor daily token analytics to identify high-cost agents or workflows

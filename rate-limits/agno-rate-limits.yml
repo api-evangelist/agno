@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Agno
+providerId: agno
+url: https://docs.agno.com/features/api
+created: '2026-06-12'
+modified: '2026-06-12'
+notes: >-
+  Agno's AgentOS API is a self-hosted FastAPI-based runtime deployed in the
+  customer's own cloud infrastructure. As a result, rate limits are determined
+  by the customer's deployment configuration rather than published centrally by
+  Agno. The framework includes built-in fallback model support that activates
+  when upstream LLM providers return rate limit errors (HTTP 429). Specific
+  rate limit headers and quotas depend on the underlying LLM provider (OpenAI,
+  Anthropic, Google, etc.) and the customer's AgentOS deployment settings.
+headers:
+  retryAfter: true
+  retryAfterHeader: Retry-After
+  rateLimitRemaining: false
+  rateLimitReset: false
+responseCodes:
+  throttled: 429
+  unauthorized: 401
+  forbidden: 403
+limits:
+  - scope: agent-runs
+    description: >-
+      Concurrent agent run limit depends on AgentOS deployment resources and
+      configuration. Agno supports background execution and streaming via
+      Server-Sent Events to handle long-running tasks without blocking.
+    metric: concurrent_runs
+    limit: varies
+    timeFrame: per-deployment
+    notes: Configurable per AgentOS deployment; no centrally published limit
+  - scope: llm-provider
+    description: >-
+      Rate limits from upstream LLM providers (OpenAI, Anthropic, Google Gemini,
+      etc.) are surfaced as 429 errors. Agno's fallback model feature
+      automatically switches to a configured backup model on rate limit errors,
+      outages, or context window overflows.
+    metric: requests
+    limit: varies
+    timeFrame: varies
+    notes: Depends on the LLM provider plan; Agno handles retries via fallback models
+  - scope: knowledge-uploads
+    description: >-
+      File and URL uploads to agent knowledge bases. Supports vector, keyword,
+      and hybrid search. Limits depend on storage configuration in the customer's
+      cloud deployment.
+    metric: uploads
+    limit: varies
+    timeFrame: per-deployment
+    notes: Configurable per AgentOS deployment
+fallbackBehavior:
+  description: >-
+    Agno supports fallback models that activate automatically when the primary
+    model fails due to rate limits, outages, or context window overflows. This
+    is configured at the agent or team level in the framework.
+  documentation: https://www.agno.com/changelog

@@ -1,0 +1,83 @@
+aid: agno
+name: Agno
+description: >-
+  Agno (formerly Phidata) is a high-performance open-source Python framework for
+  building multi-modal, multi-agent systems with memory, knowledge, tools, and
+  reasoning capabilities. It provides both an agent development SDK and AgentOS,
+  a production runtime that transforms agents into managed APIs with 50+
+  endpoints for runs, sessions, memory, knowledge, traces, evaluations, and
+  scheduling. AgentOS supports RBAC, per-user session isolation, streaming via
+  Server-Sent Events, background execution, and human-in-the-loop approval
+  flows. The platform supports 30+ LLM providers and can be deployed on AWS,
+  GCP, Railway, or air-gapped environments with data remaining in the
+  customer's cloud.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI Agents
+  - Multi-Agent Systems
+  - Python Framework
+  - LLM
+  - Machine Learning
+  - Agentic AI
+  - Open Source
+  - Agent Runtime
+url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+apis:
+  - aid: agno:agentos-api
+    name: AgentOS Agent API
+    description: >-
+      The AgentOS Agent API provides 50+ RESTful endpoints for managing agents
+      in production. Endpoints cover runs (create, list, cancel, resume),
+      sessions (user-scoped with full history), memory (CRUD with search and
+      filtering), knowledge (file and URL uploads with vector/keyword/hybrid
+      search), evaluations, traces (full span trees with filtering DSL), metrics
+      (daily aggregated usage and token analytics), schedules (recurring agent
+      tasks), and approvals (human-in-the-loop gating). Authentication uses JWT
+      Bearer tokens with role-based access control. The API is FastAPI-based with
+      live docs at /docs and an OpenAPI spec at /openapi.json. Multipart
+      form-data supports combined text, files, and media in a single call.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.agno.com/features/api
+    baseURL: https://api.agno.com
+    tags:
+      - AI Agents
+      - Agent Runtime
+      - Multi-Agent
+      - Sessions
+      - Memory
+      - Knowledge
+    properties:
+      - type: Documentation
+        url: https://docs.agno.com/features/api
+      - type: OpenAPI
+        url: https://docs.agno.com/openapi.json
+common:
+  - type: Website
+    url: https://www.agno.com/
+  - type: Documentation
+    url: https://docs.agno.com/
+  - type: GitHubOrganization
+    url: https://github.com/agno-agi
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/agno-agi
+  - type: X
+    url: https://x.com/AgnoAgi
+  - type: Blog
+    url: https://www.agno.com/blog
+  - type: Changelog
+    url: https://www.agno.com/changelog
+  - type: Pricing
+    url: https://www.agno.com/pricing
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/plans/agno-plans-pricing.yml
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/rate-limits/agno-rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/finops/agno-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
