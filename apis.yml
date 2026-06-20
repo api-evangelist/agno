@@ -12,7 +12,7 @@ description: >-
   GCP, Railway, or air-gapped environments with data remaining in the
   customer's cloud.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - AI Agents
   - Multi-Agent Systems
@@ -40,7 +40,7 @@ apis:
       Bearer tokens with role-based access control. The API is FastAPI-based with
       live docs at /docs and an OpenAPI spec at /openapi.json. Multipart
       form-data supports combined text, files, and media in a single call.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.agno.com/features/api
     baseURL: https://api.agno.com
     tags:
