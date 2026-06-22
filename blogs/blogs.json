@@ -2,6 +2,14 @@
   "repo": "agno",
   "feeds": [
     {
+      "source": "https://www.agno.com/blog",
+      "feed_url": "https://www.agno.com/blog",
+      "title": "Agno Blog",
+      "saved": 0,
+      "method": "html-scrape",
+      "note": "No RSS/Atom feed resolved (rss.xml, /feed, /feed.xml, feed.xml all 404). HTML scrape surfaced posts; newest is 2026-06-01, all older than prior fetched cutoff 2026-06-14T20:42:17Z."
+    },
+    {
       "source": "https://x.com/AgnoAgi",
       "feed_url": "https://x.com/AgnoAgi",
       "title": "",
@@ -10,5 +18,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-21T17:00:00Z"
 }
