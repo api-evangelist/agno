@@ -58,6 +58,8 @@ apis:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/openapi/agno-agentos-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/agno-agentic-access.yml
   - type: DomainSecurity
     url: security/agno-domain-security.yml
   - type: Authentication
