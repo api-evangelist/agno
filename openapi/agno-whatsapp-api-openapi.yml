@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Whatsapp API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Whatsapp
+paths:
+  /whatsapp/status:
+    get:
+      tags:
+      - Whatsapp
+      summary: Status
+      operationId: status_whatsapp_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /whatsapp/webhook:
+    get:
+      tags:
+      - Whatsapp
+      summary: Verify Webhook
+      description: Handle WhatsApp webhook verification
+      operationId: verify_webhook_whatsapp_webhook_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+    post:
+      tags:
+      - Whatsapp
+      summary: Webhook
+      description: Handle incoming WhatsApp messages
+      operationId: webhook_whatsapp_webhook_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

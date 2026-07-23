@@ -1,0 +1,1153 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Components API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Components
+paths:
+  /components:
+    get:
+      tags:
+      - Components
+      summary: List Components
+      description: Retrieve a paginated list of components with optional filtering by type.
+      operationId: list_components
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/ComponentType'
+          - type: 'null'
+          description: 'Filter by type: agent, team, workflow'
+          title: Component Type
+        description: 'Filter by type: agent, team, workflow'
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          description: Page number
+          default: 1
+          title: Page
+        description: Page number
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          description: Items per page
+          default: 20
+          title: Limit
+        description: Items per page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ComponentResponse_'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    post:
+      tags:
+      - Components
+      summary: Create Component
+      description: Create a new component (agent, team, or workflow) with initial config.
+      operationId: create_component
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /components/{component_id}:
+    get:
+      tags:
+      - Components
+      summary: Get Component
+      description: Retrieve a component by ID.
+      operationId: get_component
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    patch:
+      tags:
+      - Components
+      summary: Update Component
+      description: Partially update a component by ID.
+      operationId: update_component
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentUpdate'
+              description: Component fields to update
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    delete:
+      tags:
+      - Components
+      summary: Delete Component
+      description: Delete a component by ID.
+      operationId: delete_component
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /components/{component_id}/configs:
+    get:
+      tags:
+      - Components
+      summary: List Configs
+      description: List all configs for a component.
+      operationId: list_configs
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      - name: include_config
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Include full config blob
+          default: true
+          title: Include Config
+        description: Include full config blob
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponentConfigResponse'
+                title: Response List Configs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    post:
+      tags:
+      - Components
+      summary: Create Config Version
+      description: Create a new config version for a component.
+      operationId: create_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigCreate'
+              description: Config data
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentConfigResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /components/{component_id}/configs/{version}:
+    patch:
+      tags:
+      - Components
+      summary: Update Draft Config
+      description: Update an existing draft config. Cannot update published configs.
+      operationId: update_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+          description: Version number
+          title: Version
+        description: Version number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigUpdate'
+              description: Config fields to update
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentConfigResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    get:
+      tags:
+      - Components
+      summary: Get Config Version
+      description: Get a specific config version by number.
+      operationId: get_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+          description: Version number
+          title: Version
+        description: Version number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentConfigResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+    delete:
+      tags:
+      - Components
+      summary: Delete Config Version
+      description: Delete a specific draft config version. Cannot delete published or current configs.
+      operationId: delete_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+          description: Version number
+          title: Version
+        description: Version number
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /components/{component_id}/configs/current:
+    get:
+      tags:
+      - Components
+      summary: Get Current Config
+      description: Get the current config version for a component.
+      operationId: get_current_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentConfigResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /components/{component_id}/configs/{version}/set-current:
+    post:
+      tags:
+      - Components
+      summary: Set Current Config Version
+      description: Set a published config version as current (for rollback).
+      operationId: set_current_config
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: component_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Component ID
+          title: Component Id
+        description: Component ID
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: integer
+          description: Version number
+          title: Version
+        description: Version number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+components:
+  schemas:
+    ComponentType:
+      type: string
+      enum:
+      - agent
+      - team
+      - workflow
+      title: ComponentType
+    ConfigUpdate:
+      properties:
+        config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Config
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        links:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Links
+      type: object
+      title: ConfigUpdate
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    ComponentCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Display name
+        component_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Component Id
+          description: Unique identifier for the entity. Auto-generated from name if not provided.
+        component_type:
+          $ref: '#/components/schemas/ComponentType'
+          description: 'Type of entity: agent, team, or workflow'
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Optional description
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Optional metadata
+        config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Config
+          description: Optional configuration
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+          description: Optional label (e.g., 'stable')
+        stage:
+          type: string
+          title: Stage
+          description: 'Stage: ''draft'' or ''published'''
+          default: draft
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+          description: Optional notes
+        set_current:
+          type: boolean
+          title: Set Current
+          description: Set as current version
+          default: true
+      type: object
+      required:
+      - name
+      - component_type
+      title: ComponentCreate
+    ComponentUpdate:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        component_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Component Type
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+      type: object
+      title: ComponentUpdate
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    ComponentResponse:
+      properties:
+        component_id:
+          type: string
+          title: Component Id
+        component_type:
+          $ref: '#/components/schemas/ComponentType'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        created_at:
+          type: integer
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - component_id
+      - component_type
+      - created_at
+      title: ComponentResponse
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    ComponentConfigResponse:
+      properties:
+        component_id:
+          type: string
+          title: Component Id
+        version:
+          type: integer
+          title: Version
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        stage:
+          type: string
+          title: Stage
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        created_at:
+          type: integer
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - component_id
+      - version
+      - stage
+      - config
+      - created_at
+      title: ComponentConfigResponse
+    PaginatedResponse_ComponentResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ComponentResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ComponentResponse]
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    ConfigCreate:
+      properties:
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+          description: The configuration data
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+          description: Optional version number
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+          description: Optional label (e.g., 'stable')
+        stage:
+          type: string
+          title: Stage
+          description: 'Stage: ''draft'' or ''published'''
+          default: draft
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+          description: Optional notes
+        links:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Links
+          description: Optional links to child components
+        set_current:
+          type: boolean
+          title: Set Current
+          description: Set as current version
+          default: true
+      type: object
+      required:
+      - config
+      title: ConfigCreate
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

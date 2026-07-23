@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Health API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Health
+paths:
+  /health:
+    get:
+      tags:
+      - Health
+      summary: Health Check
+      description: Check the health status of the AgentOS API. Returns a simple status indicator.
+      operationId: health_check
+      responses:
+        '200':
+          description: API is healthy and operational
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: ok
+                instantiated_at: '2025-06-10T12:00:00Z'
+components:
+  schemas:
+    HealthResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          description: Health status of the service
+        instantiated_at:
+          type: string
+          format: date-time
+          title: Instantiated At
+          description: Timestamp when service was instantiated
+      type: object
+      required:
+      - status
+      - instantiated_at
+      title: HealthResponse
+      example:
+        instantiated_at: '2025-06-10T12:00:00Z'
+        status: ok
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,885 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Workflows API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Workflows
+paths:
+  /workflows:
+    get:
+      tags:
+      - Workflows
+      summary: List All Workflows
+      description: 'Retrieve a comprehensive list of all workflows configured in this OS instance.
+
+
+        **Return Information:**
+
+        - Workflow metadata (ID, name, description)
+
+        - Input schema requirements
+
+        - Step sequence and execution flow
+
+        - Associated agents and teams'
+      operationId: get_workflows
+      responses:
+        '200':
+          description: List of workflows retrieved successfully
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WorkflowSummaryResponse'
+                type: array
+                title: Response Get Workflows
+              example:
+              - id: content-creation-workflow
+                name: Content Creation Workflow
+                description: Automated content creation from blog posts to social media
+                db_id: '123'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+      security:
+      - HTTPBearer: []
+  /workflows/{workflow_id}:
+    get:
+      tags:
+      - Workflows
+      summary: Get Workflow Details
+      description: Retrieve detailed configuration and step information for a specific workflow.
+      operationId: get_workflow
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workflow_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workflow Id
+      responses:
+        '200':
+          description: Workflow details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+              example:
+                id: content-creation-workflow
+                name: Content Creation Workflow
+                description: Automated content creation from blog posts to social media
+                db_id: '123'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /workflows/{workflow_id}/runs:
+    post:
+      tags:
+      - Workflows
+      summary: Execute Workflow
+      description: 'Execute a workflow with the provided input data. Workflows can run in streaming or batch mode.
+
+
+        **Execution Modes:**
+
+        - **Streaming (`stream=true`)**: Real-time step-by-step execution updates via SSE
+
+        - **Non-Streaming (`stream=false`)**: Complete workflow execution with final result
+
+
+        **Workflow Execution Process:**
+
+        1. Input validation against workflow schema
+
+        2. Sequential or parallel step execution based on workflow design
+
+        3. Data flow between steps with transformation
+
+        4. Error handling and automatic retries where configured
+
+        5. Final result compilation and response
+
+
+        **Session Management:**
+
+        Workflows support session continuity for stateful execution across multiple runs.'
+      operationId: create_workflow_run
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workflow_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workflow Id
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_create_workflow_run'
+      responses:
+        '200':
+          description: Workflow executed successfully
+          content:
+            application/json:
+              schema: {}
+            text/event-stream:
+              example: 'event: RunStarted
+
+                data: {"content": "Hello!", "run_id": "123..."}
+
+
+                '
+        '400':
+          description: Invalid input data or workflow configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Workflow execution error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /workflows/{workflow_id}/runs/{run_id}/cancel:
+    post:
+      tags:
+      - Workflows
+      summary: Cancel Workflow Run
+      description: 'Cancel a currently executing workflow run, stopping all active steps and cleanup.
+
+        **Note:** Complex workflows with multiple parallel steps may take time to fully cancel.'
+      operationId: cancel_workflow_run
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workflow_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workflow Id
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Workflow or run not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Failed to cancel workflow run
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+  /workflows/{workflow_id}/runs/{run_id}:
+    get:
+      tags:
+      - Workflows
+      summary: Get Workflow Run
+      description: 'Retrieve the status and output of a workflow run. Use this to poll for run completion.
+
+
+        Requires the `session_id` that was returned when the run was created.'
+      operationId: get_workflow_run
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: workflow_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workflow Id
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      - name: session_id
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Session ID for the run
+          title: Session Id
+        description: Session ID for the run
+      responses:
+        '200':
+          description: Run output retrieved successfully
+          content:
+            application/json:
+              schema: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedResponse'
+        '404':
+          description: Workflow or run not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+components:
+  schemas:
+    WorkflowResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: Unique identifier for the workflow
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the workflow
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+          description: Database identifier
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the workflow
+        input_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input Schema
+          description: Input schema for the workflow
+        steps:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Steps
+          description: List of workflow steps
+        agent:
+          anyOf:
+          - $ref: '#/components/schemas/AgentResponse'
+          - type: 'null'
+          description: Agent configuration if used
+        team:
+          anyOf:
+          - $ref: '#/components/schemas/TeamResponse'
+          - type: 'null'
+          description: Team configuration if used
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Additional metadata
+        workflow_agent:
+          type: boolean
+          title: Workflow Agent
+          description: Whether this workflow uses a WorkflowAgent
+          default: false
+        is_component:
+          type: boolean
+          title: Is Component
+          description: Whether this workflow was created via Builder
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+          description: Current published version number
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+          description: Stage of the loaded config (draft/published)
+      type: object
+      title: WorkflowResponse
+    AgentResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Role
+        model:
+          anyOf:
+          - $ref: '#/components/schemas/ModelResponse'
+          - type: 'null'
+        tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Tools
+        sessions:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Sessions
+        knowledge:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Knowledge
+        memory:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Memory
+        reasoning:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Reasoning
+        default_tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Default Tools
+        system_message:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: System Message
+        extra_messages:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra Messages
+        response_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Response Settings
+        introduction:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Introduction
+        streaming:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Streaming
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        input_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input Schema
+        is_component:
+          type: boolean
+          title: Is Component
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+      type: object
+      title: AgentResponse
+    ModelResponse:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the model
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model identifier
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          description: Model provider name
+      type: object
+      title: ModelResponse
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    WorkflowSummaryResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: Unique identifier for the workflow
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the workflow
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the workflow
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+          description: Database identifier
+        is_component:
+          type: boolean
+          title: Is Component
+          description: Whether this workflow was created via Builder
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+          description: Current published version number
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+          description: Stage of the loaded config (draft/published)
+      type: object
+      title: WorkflowSummaryResponse
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    Body_create_workflow_run:
+      properties:
+        message:
+          type: string
+          title: Message
+        stream:
+          type: boolean
+          title: Stream
+          default: true
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+      type: object
+      required:
+      - message
+      title: Body_create_workflow_run
+    TeamResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Role
+        mode:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mode
+        model:
+          anyOf:
+          - $ref: '#/components/schemas/ModelResponse'
+          - type: 'null'
+        tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Tools
+        sessions:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Sessions
+        knowledge:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Knowledge
+        memory:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Memory
+        reasoning:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Reasoning
+        default_tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Default Tools
+        system_message:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: System Message
+        response_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Response Settings
+        introduction:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Introduction
+        streaming:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Streaming
+        members:
+          anyOf:
+          - items:
+              anyOf:
+              - $ref: '#/components/schemas/AgentResponse'
+              - $ref: '#/components/schemas/TeamResponse'
+            type: array
+          - type: 'null'
+          title: Members
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        input_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input Schema
+        is_component:
+          type: boolean
+          title: Is Component
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+      type: object
+      title: TeamResponse
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

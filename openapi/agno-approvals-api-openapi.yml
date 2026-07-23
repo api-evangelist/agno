@@ -1,0 +1,573 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Approvals API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Approvals
+paths:
+  /approvals:
+    get:
+      tags:
+      - Approvals
+      summary: List Approvals
+      operationId: list_approvals_approvals_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - enum:
+            - pending
+            - approved
+            - rejected
+            - expired
+            - cancelled
+            type: string
+          - type: 'null'
+          title: Status
+      - name: source_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Type
+      - name: approval_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - enum:
+            - required
+            - audit
+            type: string
+          - type: 'null'
+          title: Approval Type
+      - name: pause_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pause Type
+      - name: agent_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+      - name: team_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      - name: workflow_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Workflow Id
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+      - name: schedule_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schedule Id
+      - name: run_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Run Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 1
+          default: 100
+          title: Limit
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+          title: Page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ApprovalResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /approvals/count:
+    get:
+      tags:
+      - Approvals
+      summary: Get Approval Count
+      operationId: get_approval_count_approvals_count_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalCountResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /approvals/{approval_id}/status:
+    get:
+      tags:
+      - Approvals
+      summary: Get Approval Status
+      operationId: get_approval_status_approvals__approval_id__status_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: approval_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Approval Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalStatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /approvals/{approval_id}:
+    get:
+      tags:
+      - Approvals
+      summary: Get Approval
+      operationId: get_approval_approvals__approval_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: approval_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Approval Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Approvals
+      summary: Delete Approval
+      operationId: delete_approval_approvals__approval_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: approval_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Approval Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /approvals/{approval_id}/resolve:
+    post:
+      tags:
+      - Approvals
+      summary: Resolve Approval
+      operationId: resolve_approval_approvals__approval_id__resolve_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: approval_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Approval Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalResolve'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ApprovalResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        run_id:
+          type: string
+          title: Run Id
+        session_id:
+          type: string
+          title: Session Id
+        status:
+          type: string
+          title: Status
+        source_type:
+          type: string
+          title: Source Type
+        approval_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Approval Type
+        pause_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pause Type
+        tool_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tool Name
+        tool_args:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Tool Args
+        expires_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Expires At
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        workflow_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Workflow Id
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        schedule_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schedule Id
+        schedule_run_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schedule Run Id
+        source_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Name
+        requirements:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Requirements
+        context:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Context
+        resolution_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Resolution Data
+        resolved_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resolved By
+        resolved_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Resolved At
+        created_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+        run_status:
+          anyOf:
+          - $ref: '#/components/schemas/RunStatus'
+          - type: 'null'
+      type: object
+      required:
+      - id
+      - run_id
+      - session_id
+      - status
+      - source_type
+      title: ApprovalResponse
+      description: Response model for a single approval.
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    RunStatus:
+      type: string
+      enum:
+      - PENDING
+      - RUNNING
+      - COMPLETED
+      - PAUSED
+      - CANCELLED
+      - ERROR
+      title: RunStatus
+      description: State of the main run response
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ApprovalStatusResponse:
+      properties:
+        approval_id:
+          type: string
+          title: Approval Id
+        status:
+          type: string
+          title: Status
+        run_id:
+          type: string
+          title: Run Id
+        resolved_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Resolved At
+        resolved_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resolved By
+      type: object
+      required:
+      - approval_id
+      - status
+      - run_id
+      title: ApprovalStatusResponse
+      description: Lightweight response model for polling approval status.
+    ApprovalCountResponse:
+      properties:
+        count:
+          type: integer
+          title: Count
+      type: object
+      required:
+      - count
+      title: ApprovalCountResponse
+      description: Response model for pending approval count.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ApprovalResolve:
+      properties:
+        status:
+          type: string
+          pattern: ^(approved|rejected)$
+          title: Status
+        resolved_by:
+          anyOf:
+          - type: string
+            maxLength: 255
+          - type: 'null'
+          title: Resolved By
+        resolution_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Resolution Data
+      type: object
+      required:
+      - status
+      title: ApprovalResolve
+      description: Request body for resolving (approve/reject) an approval.
+    PaginatedResponse_ApprovalResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ApprovalResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ApprovalResponse]
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,737 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Schedules API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Schedules
+paths:
+  /schedules:
+    get:
+      tags:
+      - Schedules
+      summary: List Schedules
+      operationId: list_schedules_schedules_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: enabled
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 1
+          default: 100
+          title: Limit
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+          title: Page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ScheduleResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Schedules
+      summary: Create Schedule
+      operationId: create_schedule_schedules_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}:
+    get:
+      tags:
+      - Schedules
+      summary: Get Schedule
+      operationId: get_schedule_schedules__schedule_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+      - Schedules
+      summary: Update Schedule
+      operationId: update_schedule_schedules__schedule_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Schedules
+      summary: Delete Schedule
+      operationId: delete_schedule_schedules__schedule_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}/enable:
+    post:
+      tags:
+      - Schedules
+      summary: Enable Schedule
+      operationId: enable_schedule_schedules__schedule_id__enable_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleStateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}/disable:
+    post:
+      tags:
+      - Schedules
+      summary: Disable Schedule
+      operationId: disable_schedule_schedules__schedule_id__disable_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleStateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}/trigger:
+    post:
+      tags:
+      - Schedules
+      summary: Trigger Schedule
+      operationId: trigger_schedule_schedules__schedule_id__trigger_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleRunResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}/runs:
+    get:
+      tags:
+      - Schedules
+      summary: List Schedule Runs
+      operationId: list_schedule_runs_schedules__schedule_id__runs_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 1
+          default: 100
+          title: Limit
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+          title: Page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ScheduleRunResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /schedules/{schedule_id}/runs/{run_id}:
+    get:
+      tags:
+      - Schedules
+      summary: Get Schedule Run
+      operationId: get_schedule_run_schedules__schedule_id__runs__run_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: schedule_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Schedule Id
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleRunResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    PaginatedResponse_ScheduleResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ScheduleResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ScheduleResponse]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ScheduleRunResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        schedule_id:
+          type: string
+          title: Schedule Id
+        attempt:
+          type: integer
+          title: Attempt
+        triggered_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Triggered At
+        completed_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Completed At
+        status:
+          type: string
+          title: Status
+        status_code:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Status Code
+        run_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Run Id
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        input:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input
+        output:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Output
+        requirements:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Requirements
+        created_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Created At
+      type: object
+      required:
+      - id
+      - schedule_id
+      - attempt
+      - status
+      title: ScheduleRunResponse
+    ScheduleCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          title: Name
+        cron_expr:
+          type: string
+          maxLength: 128
+          title: Cron Expr
+        endpoint:
+          type: string
+          maxLength: 512
+          title: Endpoint
+        method:
+          type: string
+          maxLength: 10
+          title: Method
+          default: POST
+        description:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Description
+        payload:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Payload
+        timezone:
+          type: string
+          maxLength: 64
+          title: Timezone
+          default: UTC
+        timeout_seconds:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          title: Timeout Seconds
+          default: 3600
+        max_retries:
+          type: integer
+          maximum: 10
+          minimum: 0
+          title: Max Retries
+          default: 0
+        retry_delay_seconds:
+          type: integer
+          maximum: 3600
+          minimum: 1
+          title: Retry Delay Seconds
+          default: 60
+      type: object
+      required:
+      - name
+      - cron_expr
+      - endpoint
+      title: ScheduleCreate
+    PaginatedResponse_ScheduleRunResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ScheduleRunResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ScheduleRunResponse]
+    ScheduleResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        method:
+          type: string
+          title: Method
+        endpoint:
+          type: string
+          title: Endpoint
+        payload:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Payload
+        cron_expr:
+          type: string
+          title: Cron Expr
+        timezone:
+          type: string
+          title: Timezone
+        timeout_seconds:
+          type: integer
+          title: Timeout Seconds
+        max_retries:
+          type: integer
+          title: Max Retries
+        retry_delay_seconds:
+          type: integer
+          title: Retry Delay Seconds
+        enabled:
+          type: boolean
+          title: Enabled
+        next_run_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Next Run At
+        created_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - id
+      - name
+      - method
+      - endpoint
+      - cron_expr
+      - timezone
+      - timeout_seconds
+      - max_retries
+      - retry_delay_seconds
+      - enabled
+      title: ScheduleResponse
+    ScheduleUpdate:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 255
+          - type: 'null'
+          title: Name
+        cron_expr:
+          anyOf:
+          - type: string
+            maxLength: 128
+          - type: 'null'
+          title: Cron Expr
+        endpoint:
+          anyOf:
+          - type: string
+            maxLength: 512
+          - type: 'null'
+          title: Endpoint
+        method:
+          anyOf:
+          - type: string
+            maxLength: 10
+          - type: 'null'
+          title: Method
+        description:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Description
+        payload:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Payload
+        timezone:
+          anyOf:
+          - type: string
+            maxLength: 64
+          - type: 'null'
+          title: Timezone
+        timeout_seconds:
+          anyOf:
+          - type: integer
+            maximum: 86400
+            minimum: 1
+          - type: 'null'
+          title: Timeout Seconds
+        max_retries:
+          anyOf:
+          - type: integer
+            maximum: 10
+            minimum: 0
+          - type: 'null'
+          title: Max Retries
+        retry_delay_seconds:
+          anyOf:
+          - type: integer
+            maximum: 3600
+            minimum: 1
+          - type: 'null'
+          title: Retry Delay Seconds
+      type: object
+      title: ScheduleUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ScheduleStateResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        enabled:
+          type: boolean
+          title: Enabled
+        next_run_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Next Run At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - id
+      - name
+      - enabled
+      title: ScheduleStateResponse
+      description: Trimmed response for state-changing operations (enable/disable).
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

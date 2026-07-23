@@ -1,0 +1,40 @@
+openapi: 3.1.0
+info:
+  title: Agno API Reference A2A Home API
+  description: The all-in-one, private, secure agent platform that runs in your cloud.
+  version: 2.5.6
+tags:
+- name: Home
+paths:
+  /:
+    get:
+      tags:
+      - Home
+      summary: API Information
+      description: 'Get basic information about this AgentOS API instance, including:
+
+
+        - API metadata and version
+
+        - Available capabilities overview
+
+        - Links to key endpoints and documentation'
+      operationId: get_api_info
+      responses:
+        '200':
+          description: API information retrieved successfully
+          content:
+            application/json:
+              schema: {}
+              examples:
+                home:
+                  summary: Example home response
+                  value:
+                    name: AgentOS API
+                    id: demo-os
+                    version: 1.0.0
+components:
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
