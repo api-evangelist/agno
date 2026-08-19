@@ -11,7 +11,9 @@ paths:
       tags:
       - Sessions
       summary: List Sessions
-      description: Retrieve paginated list of sessions with filtering and sorting options. Supports filtering by session type (agent, team, workflow), component, user, and name. Sessions represent conversation histories and execution contexts.
+      description: Retrieve paginated list of sessions with filtering and sorting options. Supports filtering
+        by session type (agent, team, workflow), component, user, and name. Sessions represent conversation
+        histories and execution contexts.
       operationId: get_sessions
       security:
       - HTTPBearer: []
@@ -171,7 +173,9 @@ paths:
       tags:
       - Sessions
       summary: Create New Session
-      description: Create a new empty session with optional configuration. Useful for pre-creating sessions with specific session_state, metadata, or other properties before running any agent/team/workflow interactions. The session can later be used by providing its session_id in run requests.
+      description: Create a new empty session with optional configuration. Useful for pre-creating sessions
+        with specific session_state, metadata, or other properties before running any agent/team/workflow
+        interactions. The session can later be used by providing its session_id in run requests.
       operationId: create_session
       security:
       - HTTPBearer: []
@@ -261,7 +265,8 @@ paths:
       tags:
       - Sessions
       summary: Delete Multiple Sessions
-      description: Delete multiple sessions by their IDs in a single operation. This action cannot be undone and will permanently remove all specified sessions and their runs.
+      description: Delete multiple sessions by their IDs in a single operation. This action cannot be
+        undone and will permanently remove all specified sessions and their runs.
       operationId: delete_sessions
       security:
       - HTTPBearer: []
@@ -340,7 +345,8 @@ paths:
       tags:
       - Sessions
       summary: Get Session by ID
-      description: Retrieve detailed information about a specific session including metadata, configuration, and run history. Response schema varies based on session type (agent, team, or workflow).
+      description: Retrieve detailed information about a specific session including metadata, configuration,
+        and run history. Response schema varies based on session type (agent, team, or workflow).
       operationId: get_session_by_id
       security:
       - HTTPBearer: []
@@ -411,7 +417,8 @@ paths:
                     session_id: 6f6cfbfd-9643-479a-ae47-b8f32eb4d710
                     session_name: What tools do you have?
                     session_summary:
-                      summary: The user and assistant engaged in a conversation about the tools the agent has available.
+                      summary: The user and assistant engaged in a conversation about the tools the agent
+                        has available.
                       updated_at: '2025-09-05T18:02:12.269392'
                     session_state: {}
                     agent_id: basic-agent
@@ -443,7 +450,8 @@ paths:
                         </additional_information>
 
 
-                        You have access to memories from previous interactions with the user that you can use:
+                        You have access to memories from previous interactions with the user that you
+                        can use:
 
 
                         <memories_from_previous_interactions>
@@ -457,7 +465,9 @@ paths:
                         </memories_from_previous_interactions>
 
 
-                        Note: this information is from previous interactions and may be updated in this conversation. You should always prefer information from this conversation over the past memories.'
+                        Note: this information is from previous interactions and may be updated in this
+                        conversation. You should always prefer information from this conversation over
+                        the past memories.'
                       from_history: false
                       stop_after_tool_call: false
                       role: system
@@ -467,7 +477,10 @@ paths:
                       stop_after_tool_call: false
                       role: user
                       created_at: 1757088129
-                    - content: I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!
+                    - content: I don't have access to external tools or the internet. However, I can assist
+                        you with a wide range of topics by providing information, answering questions,
+                        and offering suggestions based on the knowledge I've been trained on. If there's
+                        anything specific you need help with, feel free to ask!
                       from_history: false
                       stop_after_tool_call: false
                       role: assistant
@@ -512,7 +525,8 @@ paths:
       tags:
       - Sessions
       summary: Delete Session
-      description: Permanently delete a specific session and all its associated runs. This action cannot be undone and will remove all conversation history.
+      description: Permanently delete a specific session and all its associated runs. This action cannot
+        be undone and will remove all conversation history.
       operationId: delete_session
       security:
       - HTTPBearer: []
@@ -592,7 +606,9 @@ paths:
       tags:
       - Sessions
       summary: Update Session
-      description: Update session properties such as session_name, session_state, metadata, or summary. Use this endpoint to modify the session name, update state, add metadata, or update the session summary.
+      description: Update session properties such as session_name, session_state, metadata, or summary.
+        Use this endpoint to modify the session name, update state, add metadata, or update the session
+        summary.
       operationId: update_session
       security:
       - HTTPBearer: []
@@ -722,7 +738,9 @@ paths:
       tags:
       - Sessions
       summary: Get Session Runs
-      description: Retrieve all runs (executions) for a specific session with optional timestamp filtering. Runs represent individual interactions or executions within a session. Response schema varies based on session type.
+      description: Retrieve all runs (executions) for a specific session with optional timestamp filtering.
+        Runs represent individual interactions or executions within a session. Response schema varies
+        based on session type.
       operationId: get_session_runs
       security:
       - HTTPBearer: []
@@ -815,7 +833,10 @@ paths:
                     agent_id: basic-agent
                     user_id: ''
                     run_input: Which tools do you have access to?
-                    content: I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!
+                    content: I don't have access to external tools or the internet. However, I can assist
+                      you with a wide range of topics by providing information, answering questions, and
+                      offering suggestions based on the knowledge I've been trained on. If there's anything
+                      specific you need help with, feel free to ask!
                     run_response_format: text
                     reasoning_content: ''
                     metrics:
@@ -834,7 +855,8 @@ paths:
                         </additional_information>
 
 
-                        You have the capability to retain memories from previous interactions with the user, but have not had any interactions with the user yet.'
+                        You have the capability to retain memories from previous interactions with the
+                        user, but have not had any interactions with the user yet.'
                       from_history: false
                       stop_after_tool_call: false
                       role: system
@@ -844,7 +866,10 @@ paths:
                       stop_after_tool_call: false
                       role: user
                       created_at: 1757346730
-                    - content: I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!
+                    - content: I don't have access to external tools or the internet. However, I can assist
+                        you with a wide range of topics by providing information, answering questions,
+                        and offering suggestions based on the knowledge I've been trained on. If there's
+                        anything specific you need help with, feel free to ask!
                       from_history: false
                       stop_after_tool_call: false
                       role: assistant
@@ -880,7 +905,10 @@ paths:
                       agent_name: Basic Agent
                       run_id: fcdf50f0-7c32-4593-b2ef-68a558774340
                       session_id: 80056af0-c7a5-4d69-b6a2-c3eba9f040e0
-                      content: I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!
+                      content: I don't have access to external tools or the internet. However, I can assist
+                        you with a wide range of topics by providing information, answering questions,
+                        and offering suggestions based on the knowledge I've been trained on. If there's
+                        anything specific you need help with, feel free to ask!
                       content_type: str
                       metrics:
                         input_tokens: 82
@@ -924,7 +952,8 @@ paths:
       tags:
       - Sessions
       summary: Get Run by ID
-      description: Retrieve a specific run by its ID from a session. Response schema varies based on the run type (agent run, team run, or workflow run).
+      description: Retrieve a specific run by its ID from a session. Response schema varies based on the
+        run type (agent run, team run, or workflow run).
       operationId: get_session_run
       security:
       - HTTPBearer: []
@@ -1040,7 +1069,8 @@ paths:
       tags:
       - Sessions
       summary: Rename Session
-      description: Update the name of an existing session. Useful for organizing and categorizing sessions with meaningful names for better identification and management.
+      description: Update the name of an existing session. Useful for organizing and categorizing sessions
+        with meaningful names for better identification and management.
       operationId: rename_session
       security:
       - HTTPBearer: []
@@ -1117,7 +1147,8 @@ paths:
                     session_id: 6f6cfbfd-9643-479a-ae47-b8f32eb4d710
                     session_name: What tools do you have?
                     session_summary:
-                      summary: The user and assistant engaged in a conversation about the tools the agent has available.
+                      summary: The user and assistant engaged in a conversation about the tools the agent
+                        has available.
                       updated_at: '2025-09-05T18:02:12.269392'
                     session_state: {}
                     agent_id: basic-agent
@@ -1149,7 +1180,8 @@ paths:
                         </additional_information>
 
 
-                        You have access to memories from previous interactions with the user that you can use:
+                        You have access to memories from previous interactions with the user that you
+                        can use:
 
 
                         <memories_from_previous_interactions>
@@ -1163,7 +1195,9 @@ paths:
                         </memories_from_previous_interactions>
 
 
-                        Note: this information is from previous interactions and may be updated in this conversation. You should always prefer information from this conversation over the past memories.'
+                        Note: this information is from previous interactions and may be updated in this
+                        conversation. You should always prefer information from this conversation over
+                        the past memories.'
                       from_history: false
                       stop_after_tool_call: false
                       role: system
@@ -1173,7 +1207,10 @@ paths:
                       stop_after_tool_call: false
                       role: user
                       created_at: 1757088129
-                    - content: I don't have access to external tools or the internet. However, I can assist you with a wide range of topics by providing information, answering questions, and offering suggestions based on the knowledge I've been trained on. If there's anything specific you need help with, feel free to ask!
+                    - content: I don't have access to external tools or the internet. However, I can assist
+                        you with a wide range of topics by providing information, answering questions,
+                        and offering suggestions based on the knowledge I've been trained on. If there's
+                        anything specific you need help with, feel free to ask!
                       from_history: false
                       stop_after_tool_call: false
                       role: assistant
@@ -2342,3 +2379,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

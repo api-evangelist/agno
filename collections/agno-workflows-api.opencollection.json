@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Workflows API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/workflows",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a comprehensive list of all workflows configured in this OS instance.\n\n**Return Information:**\n- Workflow metadata (ID, name, description)\n- Input schema requirements\n- Step sequence and execution flow\n- Associated agents and teams"
+        },
+        {
+          "info": {
+            "name": "Get Workflow Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/workflows/:workflow_id",
+            "params": [
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed configuration and step information for a specific workflow."
+        },
+        {
+          "info": {
+            "name": "Execute Workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/workflows/:workflow_id/runs",
+            "params": [
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Execute a workflow with the provided input data. Workflows can run in streaming or batch mode.\n\n**Execution Modes:**\n- **Streaming (`stream=true`)**: Real-time step-by-step execution updates via SSE\n- **Non-Streaming (`stream=false`)**: Complete workflow execution with final result\n\n**Workflow Execution Process:**\n1. Input validation against workflow schema\n2. Sequential or parallel step execution based on workflow design\n3. Data flow between steps with transformation\n4. Error handling and autom"
+        },
+        {
+          "info": {
+            "name": "Cancel Workflow Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/workflows/:workflow_id/runs/:run_id/cancel",
+            "params": [
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a currently executing workflow run, stopping all active steps and cleanup.\n**Note:** Complex workflows with multiple parallel steps may take time to fully cancel."
+        },
+        {
+          "info": {
+            "name": "Get Workflow Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/workflows/:workflow_id/runs/:run_id",
+            "params": [
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "query",
+                "description": "Session ID for the run"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the status and output of a workflow run. Use this to poll for run completion.\n\nRequires the `session_id` that was returned when the run was created."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

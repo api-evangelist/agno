@@ -11,7 +11,8 @@ paths:
       tags:
       - Knowledge
       summary: Upload Content
-      description: Upload content to the knowledge base. Supports file uploads, text content, or URLs. Content is processed asynchronously in the background. Supports custom readers and chunking strategies.
+      description: Upload content to the knowledge base. Supports file uploads, text content, or URLs.
+        Content is processed asynchronously in the background. Supports custom readers and chunking strategies.
       operationId: upload_content
       security:
       - HTTPBearer: []
@@ -90,7 +91,8 @@ paths:
       tags:
       - Knowledge
       summary: List Content
-      description: Retrieve paginated list of all content in the knowledge base with filtering and sorting options. Filter by status, content type, or metadata properties.
+      description: Retrieve paginated list of all content in the knowledge base with filtering and sorting
+        options. Filter by status, content type, or metadata properties.
       operationId: get_content
       security:
       - HTTPBearer: []
@@ -220,7 +222,8 @@ paths:
       tags:
       - Knowledge
       summary: Delete All Content
-      description: Permanently remove all content from the knowledge base. This is a destructive operation that cannot be undone. Use with extreme caution.
+      description: Permanently remove all content from the knowledge base. This is a destructive operation
+        that cannot be undone. Use with extreme caution.
       operationId: delete_all_content
       security:
       - HTTPBearer: []
@@ -286,7 +289,8 @@ paths:
       tags:
       - Knowledge
       summary: Upload Remote Content
-      description: Upload content from a remote source (S3, GCS, SharePoint, GitHub) to the knowledge base. Content is processed asynchronously in the background.
+      description: Upload content from a remote source (S3, GCS, SharePoint, GitHub) to the knowledge
+        base. Content is processed asynchronously in the background.
       operationId: upload_remote_content
       security:
       - HTTPBearer: []
@@ -366,7 +370,8 @@ paths:
       tags:
       - Knowledge
       summary: Update Content
-      description: Update content properties such as name, description, metadata, or processing configuration. Allows modification of existing content without re-uploading.
+      description: Update content properties such as name, description, metadata, or processing configuration.
+        Allows modification of existing content without re-uploading.
       operationId: update_content
       security:
       - HTTPBearer: []
@@ -457,7 +462,8 @@ paths:
       tags:
       - Knowledge
       summary: Get Content by ID
-      description: Retrieve detailed information about a specific content item including processing status and metadata.
+      description: Retrieve detailed information about a specific content item including processing status
+        and metadata.
       operationId: get_content_by_id
       security:
       - HTTPBearer: []
@@ -541,7 +547,8 @@ paths:
       tags:
       - Knowledge
       summary: Delete Content by ID
-      description: Permanently remove a specific content item from the knowledge base. This action cannot be undone.
+      description: Permanently remove a specific content item from the knowledge base. This action cannot
+        be undone.
       operationId: delete_content_by_id
       security:
       - HTTPBearer: []
@@ -614,7 +621,8 @@ paths:
       tags:
       - Knowledge
       summary: Get Content Status
-      description: Retrieve the current processing status of a content item. Useful for monitoring asynchronous content processing progress and identifying any processing errors.
+      description: Retrieve the current processing status of a content item. Useful for monitoring asynchronous
+        content processing progress and identifying any processing errors.
       operationId: get_content_status
       security:
       - HTTPBearer: []
@@ -754,7 +762,8 @@ paths:
       tags:
       - Knowledge
       summary: Get Config
-      description: Retrieve available readers, chunkers, and configuration options for content processing. This endpoint provides metadata about supported file types, processing strategies, and filters.
+      description: Retrieve available readers, chunkers, and configuration options for content processing.
+        This endpoint provides metadata about supported file types, processing strategies, and filters.
       operationId: get_knowledge_config
       security:
       - HTTPBearer: []
@@ -954,40 +963,46 @@ paths:
                   AgenticChunker:
                     key: AgenticChunker
                     name: AgenticChunker
-                    description: Chunking strategy that uses an LLM to determine natural breakpoints in the text
+                    description: Chunking strategy that uses an LLM to determine natural breakpoints in
+                      the text
                     metadata:
                       chunk_size: 5000
                   CodeChunker:
                     key: CodeChunker
                     name: CodeChunker
-                    description: The CodeChunker splits code into chunks based on its structure, leveraging Abstract Syntax Trees (ASTs) to create contextually relevant segments
+                    description: The CodeChunker splits code into chunks based on its structure, leveraging
+                      Abstract Syntax Trees (ASTs) to create contextually relevant segments
                     metadata:
                       chunk_size: 2048
                   DocumentChunker:
                     key: DocumentChunker
                     name: DocumentChunker
-                    description: A chunking strategy that splits text based on document structure like paragraphs and sections
+                    description: A chunking strategy that splits text based on document structure like
+                      paragraphs and sections
                     metadata:
                       chunk_size: 5000
                       chunk_overlap: 0
                   FixedSizeChunker:
                     key: FixedSizeChunker
                     name: FixedSizeChunker
-                    description: Chunking strategy that splits text into fixed-size chunks with optional overlap
+                    description: Chunking strategy that splits text into fixed-size chunks with optional
+                      overlap
                     metadata:
                       chunk_size: 5000
                       chunk_overlap: 0
                   MarkdownChunker:
                     key: MarkdownChunker
                     name: MarkdownChunker
-                    description: A chunking strategy that splits markdown based on structure like headers, paragraphs and sections
+                    description: A chunking strategy that splits markdown based on structure like headers,
+                      paragraphs and sections
                     metadata:
                       chunk_size: 5000
                       chunk_overlap: 0
                   RecursiveChunker:
                     key: RecursiveChunker
                     name: RecursiveChunker
-                    description: Chunking strategy that recursively splits text into chunks by finding natural break points
+                    description: Chunking strategy that recursively splits text into chunks by finding
+                      natural break points
                     metadata:
                       chunk_size: 5000
                       chunk_overlap: 0
@@ -1048,7 +1063,8 @@ paths:
       tags:
       - Knowledge
       summary: List Content Sources
-      description: List all registered content sources (S3, GCS, SharePoint, GitHub) for the knowledge base.
+      description: List all registered content sources (S3, GCS, SharePoint, GitHub) for the knowledge
+        base.
       operationId: list_content_sources
       security:
       - HTTPBearer: []
@@ -1121,7 +1137,8 @@ paths:
       tags:
       - Knowledge
       summary: List Files in Source
-      description: List available files and folders in a specific content source. Supports pagination and folder navigation.
+      description: List available files and folders in a specific content source. Supports pagination
+        and folder navigation.
       operationId: list_source_files
       security:
       - HTTPBearer: []
@@ -2083,3 +2100,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

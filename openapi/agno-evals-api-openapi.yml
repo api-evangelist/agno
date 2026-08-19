@@ -11,7 +11,8 @@ paths:
       tags:
       - Evals
       summary: List Evaluation Runs
-      description: Retrieve paginated evaluation runs with filtering and sorting options. Filter by agent, team, workflow, model, or evaluation type.
+      description: Retrieve paginated evaluation runs with filtering and sorting options. Filter by agent,
+        team, workflow, model, or evaluation type.
       operationId: get_eval_runs
       security:
       - HTTPBearer: []
@@ -271,7 +272,8 @@ paths:
       tags:
       - Evals
       summary: Execute Evaluation
-      description: Run evaluation tests on agents or teams. Supports accuracy, agent-as-judge, performance, and reliability evaluations. Requires either agent_id or team_id, but not both.
+      description: Run evaluation tests on agents or teams. Supports accuracy, agent-as-judge, performance,
+        and reliability evaluations. Requires either agent_id or team_id, but not both.
       operationId: run_eval
       security:
       - HTTPBearer: []
@@ -927,3 +929,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

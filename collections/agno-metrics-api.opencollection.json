@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Metrics API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get AgentOS Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/metrics",
+            "params": [
+              {
+                "name": "starting_date",
+                "value": "",
+                "type": "query",
+                "description": "Starting date for metrics range (YYYY-MM-DD format)"
+              },
+              {
+                "name": "ending_date",
+                "value": "",
+                "type": "query",
+                "description": "Ending date for metrics range (YYYY-MM-DD format)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query metrics from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "The database table to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve AgentOS metrics and analytics data for a specified date range. If no date range is specified, returns all available metrics."
+        },
+        {
+          "info": {
+            "name": "Refresh Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/metrics/refresh",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for metrics calculation"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for metrics calculation"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Manually trigger recalculation of system metrics from raw data. This operation analyzes system activity logs and regenerates aggregated metrics. Useful for ensuring metrics are up-to-date or after system maintenance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

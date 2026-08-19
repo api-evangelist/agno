@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Slack API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Slack",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Slack Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/slack/events",
+            "headers": [
+              {
+                "name": "X-Slack-Request-Timestamp",
+                "value": ""
+              },
+              {
+                "name": "X-Slack-Signature",
+                "value": ""
+              },
+              {
+                "name": "X-Slack-Retry-Num",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Receives incoming Slack events (messages, mentions, thread starts).\n\n**URL Verification:** On first setup, Slack sends a `url_verification` challenge. The endpoint echoes back the challenge string.\n\n**Event Processing:** Normal events are acknowledged immediately with `{\"status\": \"ok\"}` and processed in the background. This prevents Slack's 3-second retry timeout.\n\n**Retry Handling:** Events with `X-Slack-Retry-Num` header are duplicates and return 200 without reprocessing.\n\n**Setup:** Configure"
+        },
+        {
+          "info": {
+            "name": "Slack Interactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/slack/interactions",
+            "headers": [
+              {
+                "name": "X-Slack-Request-Timestamp",
+                "value": ""
+              },
+              {
+                "name": "X-Slack-Signature",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "payload",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Handles Slack interactive components for Human-in-the-Loop (HITL) workflows.\n\n**Supported Actions:**\n- `row_approve` - Approve a pending tool call\n- `row_reject` - Reject a pending tool call\n- `submit_pause` - Submit form data for a paused workflow\n\n**Setup:** Configure this URL in your [Slack App](https://api.slack.com/apps) under **Interactivity & Shortcuts > Request URL**.\n\nSee the [setup guide](/agent-os/interfaces/slack/setup) for step-by-step instructions or the [HITL guide](/agent-os/inte"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

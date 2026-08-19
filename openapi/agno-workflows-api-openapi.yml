@@ -134,7 +134,8 @@ paths:
       tags:
       - Workflows
       summary: Execute Workflow
-      description: 'Execute a workflow with the provided input data. Workflows can run in streaming or batch mode.
+      description: 'Execute a workflow with the provided input data. Workflows can run in streaming or
+        batch mode.
 
 
         **Execution Modes:**
@@ -883,3 +884,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

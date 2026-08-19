@@ -1,0 +1,478 @@
+{
+  "item": [
+    {
+      "id": "953231f0-c4ef-4db6-9134-b8196da177b3",
+      "name": "Slack",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a4301a8-956f-497f-8e29-72b70682658c",
+          "name": "Slack Events",
+          "request": {
+            "name": "Slack Events",
+            "description": {
+              "content": "Receives incoming Slack events (messages, mentions, thread starts).\n\n**URL Verification:** On first setup, Slack sends a `url_verification` challenge. The endpoint echoes back the challenge string.\n\n**Event Processing:** Normal events are acknowledged immediately with `{\"status\": \"ok\"}` and processed in the background. This prevents Slack's 3-second retry timeout.\n\n**Retry Handling:** Events with `X-Slack-Retry-Num` header are duplicates and return 200 without reprocessing.\n\n**Setup:** Configure this URL in your [Slack App](https://api.slack.com/apps) under **Event Subscriptions > Request URL**.\n\nSee the [setup guide](/agent-os/interfaces/slack/setup) for creating a Slack App or use the [manifest](/agent-os/interfaces/slack/setup#2-create-the-slack-app) for quick setup.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "slack",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Unix timestamp when Slack sent the request",
+                "key": "X-Slack-Request-Timestamp",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) HMAC signature for request verification (v0=hash)",
+                "key": "X-Slack-Signature",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Retry attempt number (present on retried events)",
+                "key": "X-Slack-Retry-Num",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7ea047a-4760-4f6a-ad10-1fa05f40d9fe",
+              "name": "Event processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Retry attempt number (present on retried events)",
+                    "key": "X-Slack-Retry-Num",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"challenge\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67136679-1ace-4145-8e2f-f7011a97ede2",
+              "name": "Missing required Slack headers (X-Slack-Request-Timestamp or X-Slack-Signature)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Retry attempt number (present on retried events)",
+                    "key": "X-Slack-Retry-Num",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8a594848-2676-4e4d-a09d-8135f1412edc",
+              "name": "Invalid Slack signature - signing secret mismatch",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Retry attempt number (present on retried events)",
+                    "key": "X-Slack-Retry-Num",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c2d8ddf-48f0-4378-88b9-ddb253b24f8d",
+          "name": "Slack Interactions",
+          "request": {
+            "name": "Slack Interactions",
+            "description": {
+              "content": "Handles Slack interactive components for Human-in-the-Loop (HITL) workflows.\n\n**Supported Actions:**\n- `row_approve` - Approve a pending tool call\n- `row_reject` - Reject a pending tool call\n- `submit_pause` - Submit form data for a paused workflow\n\n**Setup:** Configure this URL in your [Slack App](https://api.slack.com/apps) under **Interactivity & Shortcuts > Request URL**.\n\nSee the [setup guide](/agent-os/interfaces/slack/setup) for step-by-step instructions or the [HITL guide](/agent-os/interfaces/slack/hitl) for approval workflows.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "slack",
+                "interactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Unix timestamp when Slack sent the request",
+                "key": "X-Slack-Request-Timestamp",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) HMAC signature for request verification (v0=hash)",
+                "key": "X-Slack-Signature",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "payload",
+                  "value": "<string>",
+                  "description": "(Required) URL-encoded JSON interaction payload (Slack sends interactive component data as a single form field)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "11c83fb7-5937-4c4b-9ca0-a16553ad6029",
+              "name": "Interaction accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL-encoded JSON interaction payload (Slack sends interactive component data as a single form field)",
+                        "type": "text/plain"
+                      },
+                      "key": "payload",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a4e6fdc-a672-479d-a0f2-315d0d7f9db4",
+              "name": "Malformed interaction payload or missing payload field",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL-encoded JSON interaction payload (Slack sends interactive component data as a single form field)",
+                        "type": "text/plain"
+                      },
+                      "key": "payload",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "433ef8cd-283d-4dce-aaa0-bbaba680e8a5",
+              "name": "Invalid Slack signature - signing secret mismatch",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "slack",
+                    "interactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unix timestamp when Slack sent the request",
+                    "key": "X-Slack-Request-Timestamp",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC signature for request verification (v0=hash)",
+                    "key": "X-Slack-Signature",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL-encoded JSON interaction payload (Slack sends interactive component data as a single form field)",
+                        "type": "text/plain"
+                      },
+                      "key": "payload",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agno.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9ffc452d-216a-47d9-9ee3-0f89fa38cd28",
+    "name": "Agno API Reference A2A Slack API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The all-in-one, private, secure agent platform that runs in your cloud.",
+      "type": "text/plain"
+    }
+  }
+}

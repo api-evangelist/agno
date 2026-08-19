@@ -166,7 +166,8 @@ paths:
       tags:
       - Teams
       summary: Cancel Team Run
-      description: 'Cancel a currently executing team run. This will attempt to stop the team''s execution gracefully.
+      description: 'Cancel a currently executing team run. This will attempt to stop the team''s execution
+        gracefully.
 
 
         **Note:** Cancellation may not be immediate for all operations.'
@@ -262,16 +263,19 @@ paths:
                 - name: transfer_task_to_member
                   description: 'Use this function to transfer a task to the selected team member.
 
-                    You must provide a clear and concise description of the task the member should achieve AND the expected output.'
+                    You must provide a clear and concise description of the task the member should achieve
+                    AND the expected output.'
                   parameters:
                     type: object
                     properties:
                       member_id:
                         type: string
-                        description: (str) The ID of the member to transfer the task to. Use only the ID of the member, not the ID of the team followed by the ID of the member.
+                        description: (str) The ID of the member to transfer the task to. Use only the
+                          ID of the member, not the ID of the team followed by the ID of the member.
                       task_description:
                         type: string
-                        description: (str) A clear and concise description of the task the member should achieve.
+                        description: (str) A clear and concise description of the task the member should
+                          achieve.
                       expected_output:
                         type: string
                         description: (str) The expected output from the member (optional).
@@ -372,16 +376,19 @@ paths:
                 - name: transfer_task_to_member
                   description: 'Use this function to transfer a task to the selected team member.
 
-                    You must provide a clear and concise description of the task the member should achieve AND the expected output.'
+                    You must provide a clear and concise description of the task the member should achieve
+                    AND the expected output.'
                   parameters:
                     type: object
                     properties:
                       member_id:
                         type: string
-                        description: (str) The ID of the member to transfer the task to. Use only the ID of the member, not the ID of the team followed by the ID of the member.
+                        description: (str) The ID of the member to transfer the task to. Use only the
+                          ID of the member, not the ID of the team followed by the ID of the member.
                       task_description:
                         type: string
-                        description: (str) A clear and concise description of the task the member should achieve.
+                        description: (str) A clear and concise description of the task the member should
+                          achieve.
                       expected_output:
                         type: string
                         description: (str) The expected output from the member (optional).
@@ -449,7 +456,8 @@ paths:
       tags:
       - Teams
       summary: Get Team Run
-      description: 'Retrieve the status and output of a team run. Use this to poll for background run completion.
+      description: 'Retrieve the status and output of a team run. Use this to poll for background run
+        completion.
 
 
         Requires the `session_id` that was returned when the run was created.'
@@ -936,3 +944,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

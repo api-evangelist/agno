@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Evals API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Evals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Evaluation Runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/eval-runs",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Agent ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Team ID"
+              },
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "query",
+                "description": "Workflow ID"
+              },
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "query",
+                "description": "Model ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter type"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of eval runs to return"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (asc or desc)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the database to use"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "The database table to use"
+              },
+              {
+                "name": "eval_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated eval types (accuracy,agent_as_judge,performance,reliability)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve paginated evaluation runs with filtering and sorting options. Filter by agent, team, workflow, model, or evaluation type."
+        },
+        {
+          "info": {
+            "name": "Execute Evaluation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/eval-runs",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for evaluation"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for evaluation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Run evaluation tests on agents or teams. Supports accuracy, agent-as-judge, performance, and reliability evaluations. Requires either agent_id or team_id, but not both."
+        },
+        {
+          "info": {
+            "name": "Delete Evaluation Runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/eval-runs",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for deletion"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for deletion"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete multiple evaluation runs by their IDs. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get Evaluation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/eval-runs/:eval_run_id",
+            "params": [
+              {
+                "name": "eval_run_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the database to use"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query eval run from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed results and metrics for a specific evaluation run."
+        },
+        {
+          "info": {
+            "name": "Update Evaluation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/eval-runs/:eval_run_id",
+            "params": [
+              {
+                "name": "eval_run_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the database to use"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for rename operation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the name or other properties of an existing evaluation run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

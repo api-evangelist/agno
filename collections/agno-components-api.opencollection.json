@@ -1,0 +1,344 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Components API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Components",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Components",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/components",
+            "params": [
+              {
+                "name": "component_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by type: agent, team, workflow"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of components with optional filtering by type."
+        },
+        {
+          "info": {
+            "name": "Create Component",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/components",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new component (agent, team, or workflow) with initial config."
+        },
+        {
+          "info": {
+            "name": "Get Component",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/components/:component_id",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a component by ID."
+        },
+        {
+          "info": {
+            "name": "Update Component",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/components/:component_id",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Partially update a component by ID."
+        },
+        {
+          "info": {
+            "name": "Delete Component",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/components/:component_id",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a component by ID."
+        },
+        {
+          "info": {
+            "name": "List Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/components/:component_id/configs",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              },
+              {
+                "name": "include_config",
+                "value": "",
+                "type": "query",
+                "description": "Include full config blob"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all configs for a component."
+        },
+        {
+          "info": {
+            "name": "Create Config Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/components/:component_id/configs",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new config version for a component."
+        },
+        {
+          "info": {
+            "name": "Get Config Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/components/:component_id/configs/:version",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a specific config version by number."
+        },
+        {
+          "info": {
+            "name": "Update Draft Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/components/:component_id/configs/:version",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an existing draft config. Cannot update published configs."
+        },
+        {
+          "info": {
+            "name": "Delete Config Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/components/:component_id/configs/:version",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a specific draft config version. Cannot delete published or current configs."
+        },
+        {
+          "info": {
+            "name": "Get Current Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/components/:component_id/configs/current",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the current config version for a component."
+        },
+        {
+          "info": {
+            "name": "Set Current Config Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/components/:component_id/configs/:version/set-current",
+            "params": [
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set a published config version as current (for rollback)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

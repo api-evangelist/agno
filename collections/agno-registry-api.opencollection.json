@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Registry API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Registry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/registry",
+            "params": [
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by resource type"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (partial match)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all resources in the registry with optional filtering."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Database API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Database",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Migrate All Databases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/databases/all/migrate",
+            "params": [
+              {
+                "name": "target_version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Migrate all database schemas to the given target version. If a target version is not provided, all databases will be migrated to the latest version."
+        },
+        {
+          "info": {
+            "name": "Migrate Database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/databases/:db_id/migrate",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "target_version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Migrate the given database schema to the given target version. If a target version is not provided, the database will be migrated to the latest version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

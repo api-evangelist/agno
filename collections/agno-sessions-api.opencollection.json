@@ -1,0 +1,469 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Sessions API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/sessions",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of sessions to retrieve (agent, team, or workflow)"
+              },
+              {
+                "name": "component_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by component ID (agent/team/workflow ID)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by user ID"
+              },
+              {
+                "name": "session_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by name (partial match)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of sessions to return per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort sessions by"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (asc or desc)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query sessions from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "The database table to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve paginated list of sessions with filtering and sorting options. Supports filtering by session type (agent, team, workflow), component, user, and name. Sessions represent conversation histories and execution contexts."
+        },
+        {
+          "info": {
+            "name": "Create New Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/sessions",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of session to create (agent, team, or workflow)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to create session in"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new empty session with optional configuration. Useful for pre-creating sessions with specific session_state, metadata, or other properties before running any agent/team/workflow interactions. The session can later be used by providing its session_id in run requests."
+        },
+        {
+          "info": {
+            "name": "Delete Multiple Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/sessions",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to scope deletion to"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for deletion"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for deletion"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete multiple sessions by their IDs in a single operation. This action cannot be undone and will permanently remove all specified sessions and their runs."
+        },
+        {
+          "info": {
+            "name": "Get Session by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to retrieve"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Session type (agent, team, or workflow)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to query session from"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query session from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query session from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific session including metadata, configuration, and run history. Response schema varies based on session type (agent, team, or workflow)."
+        },
+        {
+          "info": {
+            "name": "Update Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to update"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Session type (agent, team, or workflow)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for update operation"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for update operation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update session properties such as session_name, session_state, metadata, or summary. Use this endpoint to modify the session name, update state, add metadata, or update the session summary."
+        },
+        {
+          "info": {
+            "name": "Delete Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to delete"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to scope deletion to"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for deletion"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for deletion"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete a specific session and all its associated runs. This action cannot be undone and will remove all conversation history."
+        },
+        {
+          "info": {
+            "name": "Get Session Runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/sessions/:session_id/runs",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to get runs from"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Session type (agent, team, or workflow)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to query runs from"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs created after this Unix timestamp (epoch time in seconds)"
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs created before this Unix timestamp (epoch time in seconds)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query runs from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query runs from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all runs (executions) for a specific session with optional timestamp filtering. Runs represent individual interactions or executions within a session. Response schema varies based on session type."
+        },
+        {
+          "info": {
+            "name": "Get Run by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/sessions/:session_id/runs/:run_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to get run from"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path",
+                "description": "Run ID to retrieve"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Session type (agent, team, or workflow)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to query run from"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query run from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query run from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a specific run by its ID from a session. Response schema varies based on the run type (agent run, team run, or workflow run)."
+        },
+        {
+          "info": {
+            "name": "Rename Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/sessions/:session_id/rename",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID to rename"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Session type (agent, team, or workflow)"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to scope rename to"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for rename operation"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for rename operation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the name of an existing session. Useful for organizing and categorizing sessions with meaningful names for better identification and management."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

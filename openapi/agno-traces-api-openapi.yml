@@ -125,9 +125,11 @@ paths:
           anyOf:
           - type: string
           - type: 'null'
-          description: Filter traces starting after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
+          description: Filter traces starting after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z'
+            or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
           title: Start Time
-        description: Filter traces starting after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
+        description: Filter traces starting after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z'
+          or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
       - name: end_time
         in: query
         required: false
@@ -135,9 +137,11 @@ paths:
           anyOf:
           - type: string
           - type: 'null'
-          description: Filter traces ending before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
+          description: Filter traces ending before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z'
+            or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
           title: End Time
-        description: Filter traces ending before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
+        description: Filter traces ending before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z'
+          or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
       - name: page
         in: query
         required: false
@@ -287,7 +291,17 @@ paths:
       tags:
       - Traces
       summary: Get Trace or Span Detail
-      description: "Retrieve detailed trace information with hierarchical span tree, or a specific span within the trace.\n\n**Without span_id parameter:**\nReturns the full trace with hierarchical span tree:\n- Trace metadata (ID, status, duration, context)\n- Hierarchical tree of all spans\n- Each span includes timing, status, and type-specific metadata\n\n**With span_id parameter:**\nReturns details for a specific span within the trace:\n- Span metadata (ID, name, type, timing)\n- Status and error information\n- Type-specific attributes (model, tokens, tool params, etc.)\n\n**Span Hierarchy (full trace):**\nThe `tree` field contains root spans, each with potential `children`.\nThis recursive structure represents the execution flow:\n```\nAgent.run (root)\n  ├─ LLM.invoke\n  ├─ Tool.execute\n  │   └─ LLM.invoke (nested)\n  └─ LLM.invoke\n```\n\n**Span Types:**\n- `AGENT`: Agent execution with input/output\n- `LLM`: Model invocations with tokens and prompts\n- `TOOL`: Tool calls with parameters and results"
+      description: "Retrieve detailed trace information with hierarchical span tree, or a specific span\
+        \ within the trace.\n\n**Without span_id parameter:**\nReturns the full trace with hierarchical\
+        \ span tree:\n- Trace metadata (ID, status, duration, context)\n- Hierarchical tree of all spans\n\
+        - Each span includes timing, status, and type-specific metadata\n\n**With span_id parameter:**\n\
+        Returns details for a specific span within the trace:\n- Span metadata (ID, name, type, timing)\n\
+        - Status and error information\n- Type-specific attributes (model, tokens, tool params, etc.)\n\
+        \n**Span Hierarchy (full trace):**\nThe `tree` field contains root spans, each with potential\
+        \ `children`.\nThis recursive structure represents the execution flow:\n```\nAgent.run (root)\n\
+        \  ├─ LLM.invoke\n  ├─ Tool.execute\n  │   └─ LLM.invoke (nested)\n  └─ LLM.invoke\n```\n\n**Span\
+        \ Types:**\n- `AGENT`: Agent execution with input/output\n- `LLM`: Model invocations with tokens\
+        \ and prompts\n- `TOOL`: Tool calls with parameters and results"
       operationId: get_trace
       security:
       - HTTPBearer: []
@@ -489,9 +503,13 @@ paths:
           anyOf:
           - type: string
           - type: 'null'
-          description: Filter sessions with traces created after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
+          description: Filter sessions with traces created after this time (ISO 8601 format with timezone,
+            e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for
+            comparison.
           title: Start Time
-        description: Filter sessions with traces created after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison.
+        description: Filter sessions with traces created after this time (ISO 8601 format with timezone,
+          e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for
+          comparison.
       - name: end_time
         in: query
         required: false
@@ -499,9 +517,13 @@ paths:
           anyOf:
           - type: string
           - type: 'null'
-          description: Filter sessions with traces created before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
+          description: Filter sessions with traces created before this time (ISO 8601 format with timezone,
+            e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for
+            comparison.
           title: End Time
-        description: Filter sessions with traces created before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison.
+        description: Filter sessions with traces created before this time (ISO 8601 format with timezone,
+          e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for
+          comparison.
       - name: page
         in: query
         required: false
@@ -587,7 +609,17 @@ paths:
       tags:
       - Traces
       summary: Search Traces with Advanced Filters
-      description: "Search traces using the FilterExpr DSL for complex, composable queries.\n\n**Group By Mode:**\n- `run` (default): Returns `PaginatedResponse[TraceDetail]` with full span trees\n- `session`: Returns `PaginatedResponse[TraceSessionStats]` with aggregated session stats\n\n**Supported Operators:**\n- Comparison: `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`\n- Inclusion: `IN`\n- String matching: `CONTAINS` (case-insensitive substring), `STARTSWITH` (prefix)\n- Logical: `AND`, `OR`, `NOT`\n\n**Filterable Fields:**\ntrace_id, name, status, start_time, end_time, duration_ms, run_id, session_id, user_id, agent_id, team_id, workflow_id, created_at\n\n**Example Request Body (runs):**\n```json\n{\n  \"filter\": {\"op\": \"EQ\", \"key\": \"status\", \"value\": \"OK\"},\n  \"group_by\": \"run\",\n  \"page\": 1,\n  \"limit\": 20\n}\n```\n\n**Example Request Body (sessions):**\n```json\n{\n  \"filter\": {\"op\": \"CONTAINS\", \"key\": \"agent_id\", \"value\": \"stock\"},\n  \"group_by\": \"session\",\n  \"page\": 1,\n  \"limit\": 20\n}\n```"
+      description: "Search traces using the FilterExpr DSL for complex, composable queries.\n\n**Group\
+        \ By Mode:**\n- `run` (default): Returns `PaginatedResponse[TraceDetail]` with full span trees\n\
+        - `session`: Returns `PaginatedResponse[TraceSessionStats]` with aggregated session stats\n\n\
+        **Supported Operators:**\n- Comparison: `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`\n- Inclusion: `IN`\n\
+        - String matching: `CONTAINS` (case-insensitive substring), `STARTSWITH` (prefix)\n- Logical:\
+        \ `AND`, `OR`, `NOT`\n\n**Filterable Fields:**\ntrace_id, name, status, start_time, end_time,\
+        \ duration_ms, run_id, session_id, user_id, agent_id, team_id, workflow_id, created_at\n\n**Example\
+        \ Request Body (runs):**\n```json\n{\n  \"filter\": {\"op\": \"EQ\", \"key\": \"status\", \"value\"\
+        : \"OK\"},\n  \"group_by\": \"run\",\n  \"page\": 1,\n  \"limit\": 20\n}\n```\n\n**Example Request\
+        \ Body (sessions):**\n```json\n{\n  \"filter\": {\"op\": \"CONTAINS\", \"key\": \"agent_id\",\
+        \ \"value\": \"stock\"},\n  \"group_by\": \"session\",\n  \"page\": 1,\n  \"limit\": 20\n}\n```"
       operationId: search_traces
       security:
       - HTTPBearer: []
@@ -1087,10 +1119,12 @@ components:
             type: object
           - type: 'null'
           title: Filter
-          description: 'FilterExpr DSL as JSON dict. Supports operators: EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH, AND, OR, NOT.'
+          description: 'FilterExpr DSL as JSON dict. Supports operators: EQ, NEQ, GT, GTE, LT, LTE, IN,
+            CONTAINS, STARTSWITH, AND, OR, NOT.'
         group_by:
           $ref: '#/components/schemas/TraceSearchGroupBy'
-          description: 'Grouping mode: ''run'' returns individual TraceDetail, ''session'' returns aggregated TraceSessionStats.'
+          description: 'Grouping mode: ''run'' returns individual TraceDetail, ''session'' returns aggregated
+            TraceSessionStats.'
           default: run
         page:
           type: integer
@@ -1107,7 +1141,16 @@ components:
           default: 20
       type: object
       title: TraceSearchRequest
-      description: "Request body for POST /traces/search with advanced filtering.\n\nThe filter field accepts a FilterExpr DSL dict supporting composable queries\nwith AND/OR/NOT logic and operators like EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH.\n\nExample for run grouping (default):\n    {\n        \"filter\": {\n            \"op\": \"AND\",\n            \"conditions\": [\n                {\"op\": \"EQ\", \"key\": \"status\", \"value\": \"OK\"},\n                {\"op\": \"CONTAINS\", \"key\": \"user_id\", \"value\": \"admin\"}\n            ]\n        },\n        \"group_by\": \"run\",\n        \"page\": 1,\n        \"limit\": 20\n    }\n\nExample for session grouping:\n    {\n        \"filter\": {\"op\": \"EQ\", \"key\": \"agent_id\", \"value\": \"my-agent\"},\n        \"group_by\": \"session\",\n        \"page\": 1,\n        \"limit\": 20\n    }"
+      description: "Request body for POST /traces/search with advanced filtering.\n\nThe filter field\
+        \ accepts a FilterExpr DSL dict supporting composable queries\nwith AND/OR/NOT logic and operators\
+        \ like EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH.\n\nExample for run grouping (default):\n\
+        \    {\n        \"filter\": {\n            \"op\": \"AND\",\n            \"conditions\": [\n \
+        \               {\"op\": \"EQ\", \"key\": \"status\", \"value\": \"OK\"},\n                {\"\
+        op\": \"CONTAINS\", \"key\": \"user_id\", \"value\": \"admin\"}\n            ]\n        },\n \
+        \       \"group_by\": \"run\",\n        \"page\": 1,\n        \"limit\": 20\n    }\n\nExample\
+        \ for session grouping:\n    {\n        \"filter\": {\"op\": \"EQ\", \"key\": \"agent_id\", \"\
+        value\": \"my-agent\"},\n        \"group_by\": \"session\",\n        \"page\": 1,\n        \"\
+        limit\": 20\n    }"
     UnauthenticatedResponse:
       properties:
         detail:
@@ -1272,8 +1315,12 @@ components:
       required:
       - fields
       title: FilterSchemaResponse
-      description: Response for the filter schema endpoint. Tells the FE what fields, operators, and values are available.
+      description: Response for the filter schema endpoint. Tells the FE what fields, operators, and values
+        are available.
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

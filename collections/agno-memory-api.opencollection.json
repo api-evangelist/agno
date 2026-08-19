@@ -1,0 +1,403 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Memory API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Memory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Memories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/memories",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter memories by user ID"
+              },
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter memories by agent ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter memories by team ID"
+              },
+              {
+                "name": "search_content",
+                "value": "",
+                "type": "query",
+                "description": "Fuzzy search within memory content"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of memories to return per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort memories by"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (asc or desc)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query memories from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "The database table to use"
+              },
+              {
+                "name": "topics",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of topics to filter by"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve paginated list of user memories with filtering and search capabilities. Filter by user, agent, team, topics, or search within memory content."
+        },
+        {
+          "info": {
+            "name": "Create Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/memories",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for memory storage"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for memory storage"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new user memory with content and associated topics. Memories are used to store contextual information for users across conversations."
+        },
+        {
+          "info": {
+            "name": "Delete Multiple Memories",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/memories",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for deletion"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for deletion"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete multiple user memories by their IDs in a single operation. This action cannot be undone and all specified memories will be permanently removed."
+        },
+        {
+          "info": {
+            "name": "Get Memory by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/memories/:memory_id",
+            "params": [
+              {
+                "name": "memory_id",
+                "value": "",
+                "type": "path",
+                "description": "Memory ID to retrieve"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to query memory for"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query memory from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query memory from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific user memory by its ID."
+        },
+        {
+          "info": {
+            "name": "Update Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/memories/:memory_id",
+            "params": [
+              {
+                "name": "memory_id",
+                "value": "",
+                "type": "path",
+                "description": "Memory ID to update"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for update"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an existing user memory's content and topics. Replaces the entire memory content and topic list with the provided values."
+        },
+        {
+          "info": {
+            "name": "Delete Memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/memories/:memory_id",
+            "params": [
+              {
+                "name": "memory_id",
+                "value": "",
+                "type": "path",
+                "description": "Memory ID to delete"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to delete memory for"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for deletion"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for deletion"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete a specific user memory. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get Memory Topics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/memory_topics",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to filter topics for"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query topics from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query topics from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all unique topics associated with memories in the system. Useful for filtering and categorizing memories by topic."
+        },
+        {
+          "info": {
+            "name": "Get User Memory Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/user_memory_stats",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of user statistics to return per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to filter statistics for"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query statistics from"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to query statistics from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve paginated statistics about memory usage by user. Provides insights into user engagement and memory distribution across users."
+        },
+        {
+          "info": {
+            "name": "Optimize User Memories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/optimize-memories",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for optimization"
+              },
+              {
+                "name": "table",
+                "value": "",
+                "type": "query",
+                "description": "Table to use for optimization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Optimize all memories for a given user using the default summarize strategy. This operation combines all memories into a single comprehensive summary, achieving maximum token reduction while preserving all key information. To use a custom model, specify the model parameter in 'provider:model_id' format (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022'). If not specified, uses MemoryManager's default model (gpt-4o). Set apply=false to preview optimization results without saving "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

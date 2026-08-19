@@ -1,0 +1,443 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Knowledge API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Knowledge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/content",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of content entries to return"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (asc or desc)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve paginated list of all content in the knowledge base with filtering and sorting options. Filter by status, content type, or metadata properties."
+        },
+        {
+          "info": {
+            "name": "Upload Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/knowledge/content",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for content storage"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to upload to"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload content to the knowledge base. Supports file uploads, text content, or URLs. Content is processed asynchronously in the background. Supports custom readers and chunking strategies."
+        },
+        {
+          "info": {
+            "name": "Delete All Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/knowledge/content",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently remove all content from the knowledge base. This is a destructive operation that cannot be undone. Use with extreme caution."
+        },
+        {
+          "info": {
+            "name": "Upload Remote Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/knowledge/remote-content",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use for content storage"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to upload to"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload content from a remote source (S3, GCS, SharePoint, GitHub) to the knowledge base. Content is processed asynchronously in the background."
+        },
+        {
+          "info": {
+            "name": "Get Content by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/content/:content_id",
+            "params": [
+              {
+                "name": "content_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific content item including processing status and metadata."
+        },
+        {
+          "info": {
+            "name": "Update Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.agno.com/knowledge/content/:content_id",
+            "params": [
+              {
+                "name": "content_id",
+                "value": "",
+                "type": "path",
+                "description": "Content ID"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update content properties such as name, description, metadata, or processing configuration. Allows modification of existing content without re-uploading."
+        },
+        {
+          "info": {
+            "name": "Delete Content by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.agno.com/knowledge/content/:content_id",
+            "params": [
+              {
+                "name": "content_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently remove a specific content item from the knowledge base. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get Content Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/content/:content_id/status",
+            "params": [
+              {
+                "name": "content_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the current processing status of a content item. Useful for monitoring asynchronous content processing progress and identifying any processing errors."
+        },
+        {
+          "info": {
+            "name": "Search Knowledge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/knowledge/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search the knowledge base for relevant documents using query, filters and search type."
+        },
+        {
+          "info": {
+            "name": "Get Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/config",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to use"
+              },
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "query",
+                "description": "Knowledge base ID to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve available readers, chunkers, and configuration options for content processing. This endpoint provides metadata about supported file types, processing strategies, and filters."
+        },
+        {
+          "info": {
+            "name": "List Content Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/:knowledge_id/sources",
+            "params": [
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the knowledge base"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the database to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all registered content sources (S3, GCS, SharePoint, GitHub) for the knowledge base."
+        },
+        {
+          "info": {
+            "name": "List Files in Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/knowledge/:knowledge_id/sources/:source_id/files",
+            "params": [
+              {
+                "name": "knowledge_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the knowledge base"
+              },
+              {
+                "name": "source_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the content source"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "query",
+                "description": "Path prefix to filter files"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of files per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "delimiter",
+                "value": "",
+                "type": "query",
+                "description": "Folder delimiter (enables folder grouping)"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the database to use"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List available files and folders in a specific content source. Supports pagination and folder navigation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A AGUI API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AGUI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/agui",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Run Agent"
+        },
+        {
+          "info": {
+            "name": "Get Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/status"
+          },
+          "docs": "Get Status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

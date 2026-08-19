@@ -1,0 +1,274 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "A2A",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Agent Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/a2a/agents/:id/.well-known/agent-card.json",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Agent Card"
+        },
+        {
+          "info": {
+            "name": "Run Message Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/agents/:id/v1/message:send",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Send a message to an Agno Agent (non-streaming). The Agent is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata."
+        },
+        {
+          "info": {
+            "name": "Get Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/agents/:id/v1/tasks:get",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status and result of an agent task by ID."
+        },
+        {
+          "info": {
+            "name": "Cancel Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/agents/:id/v1/tasks:cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a running agent task."
+        },
+        {
+          "info": {
+            "name": "Stream Message Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/agents/:id/v1/message:stream",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stream a message to an Agno Agent (streaming). The Agent is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON)."
+        },
+        {
+          "info": {
+            "name": "Get Team Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/a2a/teams/:id/.well-known/agent-card.json",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Team Card"
+        },
+        {
+          "info": {
+            "name": "Run Message Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/teams/:id/v1/message:send",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Send a message to an Agno Team (non-streaming). The Team is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata."
+        },
+        {
+          "info": {
+            "name": "Get Team Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/teams/:id/v1/tasks:get",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status and result of a team task by ID."
+        },
+        {
+          "info": {
+            "name": "Cancel Team Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/teams/:id/v1/tasks:cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a running team task."
+        },
+        {
+          "info": {
+            "name": "Stream Message Team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/teams/:id/v1/message:stream",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stream a message to an Agno Team (streaming). The Team is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON)."
+        },
+        {
+          "info": {
+            "name": "Get Workflow Card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/a2a/workflows/:id/.well-known/agent-card.json",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Workflow Card"
+        },
+        {
+          "info": {
+            "name": "Run Message Workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/workflows/:id/v1/message:send",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Send a message to an Agno Workflow (non-streaming). The Workflow is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata."
+        },
+        {
+          "info": {
+            "name": "Stream Message Workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/workflows/:id/v1/message:stream",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stream a message to an Agno Workflow (streaming). The Workflow is identified via the path parameter '{id}'. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON)."
+        },
+        {
+          "info": {
+            "name": "Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/message/send"
+          },
+          "docs": "[DEPRECATED] Send a message to an Agno Agent, Team, or Workflow. The Agent, Team or Workflow is identified via the 'agentId' field in params.message or X-Agent-ID header. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata."
+        },
+        {
+          "info": {
+            "name": "Stream Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/a2a/message/stream"
+          },
+          "docs": "[DEPRECATED] Stream a message to an Agno Agent, Team, or Workflow. The Agent, Team or Workflow is identified via the 'agentId' field in params.message or X-Agent-ID header. Optional: Pass user ID via X-User-ID header (recommended) or 'userId' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

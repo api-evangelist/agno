@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Core API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Core",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OS Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/config",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the complete configuration of the AgentOS instance, including:\n\n- Available models and databases\n- Registered agents, teams, and workflows\n- Chat, session, memory, knowledge, and evaluation configurations\n- Available interfaces and their routes"
+        },
+        {
+          "info": {
+            "name": "Get Available Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a list of all unique models currently used by agents and teams in this OS instance. This includes the model ID and provider information for each model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

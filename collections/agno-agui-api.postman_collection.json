@@ -1,0 +1,230 @@
+{
+  "item": [
+    {
+      "id": "de344358-589c-401c-954c-343fce84e896",
+      "name": "AGUI",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2cd5c527-a69e-4467-b7b8-c152503cb15b",
+          "name": "Run Agent",
+          "request": {
+            "name": "Run Agent",
+            "description": {},
+            "url": {
+              "path": [
+                "agui"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"threadId\": \"<string>\",\n  \"runId\": \"<string>\",\n  \"state\": {},\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"content\": \"<string>\",\n      \"role\": \"developer\",\n      \"name\": \"<string>\",\n      \"encryptedValue\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"content\": \"<string>\",\n      \"role\": \"developer\",\n      \"name\": \"<string>\",\n      \"encryptedValue\": \"<string>\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {}\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {}\n    }\n  ],\n  \"context\": [\n    {\n      \"description\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"forwardedProps\": {},\n  \"parentRunId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aac9e204-6948-4b8f-8f8c-dae00e38b2e3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agui"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threadId\": \"<string>\",\n  \"runId\": \"<string>\",\n  \"state\": {},\n  \"messages\": [\n    {\n      \"id\": \"string\",\n      \"content\": \"string\",\n      \"role\": \"developer\",\n      \"name\": \"string\",\n      \"encryptedValue\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"content\": \"string\",\n      \"role\": \"developer\",\n      \"name\": \"string\",\n      \"encryptedValue\": \"string\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": {}\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": {}\n    }\n  ],\n  \"context\": [\n    {\n      \"description\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"forwardedProps\": {},\n  \"parentRunId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c21af08-6d41-4153-8664-c6a74ad98438",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agui"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"threadId\": \"<string>\",\n  \"runId\": \"<string>\",\n  \"state\": {},\n  \"messages\": [\n    {\n      \"id\": \"string\",\n      \"content\": \"string\",\n      \"role\": \"developer\",\n      \"name\": \"string\",\n      \"encryptedValue\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"content\": \"string\",\n      \"role\": \"developer\",\n      \"name\": \"string\",\n      \"encryptedValue\": \"string\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": {}\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": {}\n    }\n  ],\n  \"context\": [\n    {\n      \"description\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"forwardedProps\": {},\n  \"parentRunId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "213f0f9a-1ce6-4f81-b221-7ca6b41c5896",
+          "name": "Get Status",
+          "request": {
+            "name": "Get Status",
+            "description": {},
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd0c798f-94cc-442d-87ed-c70d05ba2f55",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.agno.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8817a1fb-ba86-45c0-8a67-ae56724c224a",
+    "name": "Agno API Reference A2A AGUI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The all-in-one, private, secure agent platform that runs in your cloud.",
+      "type": "text/plain"
+    }
+  }
+}

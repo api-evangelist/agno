@@ -104,7 +104,8 @@ paths:
       tags:
       - Core
       summary: Get Available Models
-      description: Retrieve a list of all unique models currently used by agents and teams in this OS instance. This includes the model ID and provider information for each model.
+      description: Retrieve a list of all unique models currently used by agents and teams in this OS
+        instance. This includes the model ID and provider information for each model.
       operationId: get_models
       responses:
         '200':
@@ -848,3 +849,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

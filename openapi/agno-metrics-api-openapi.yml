@@ -11,7 +11,8 @@ paths:
       tags:
       - Metrics
       summary: Get AgentOS Metrics
-      description: Retrieve AgentOS metrics and analytics data for a specified date range. If no date range is specified, returns all available metrics.
+      description: Retrieve AgentOS metrics and analytics data for a specified date range. If no date
+        range is specified, returns all available metrics.
       operationId: get_metrics
       security:
       - HTTPBearer: []
@@ -127,7 +128,9 @@ paths:
       tags:
       - Metrics
       summary: Refresh Metrics
-      description: Manually trigger recalculation of system metrics from raw data. This operation analyzes system activity logs and regenerates aggregated metrics. Useful for ensuring metrics are up-to-date or after system maintenance.
+      description: Manually trigger recalculation of system metrics from raw data. This operation analyzes
+        system activity logs and regenerates aggregated metrics. Useful for ensuring metrics are up-to-date
+        or after system maintenance.
       operationId: refresh_metrics
       security:
       - HTTPBearer: []
@@ -423,3 +426,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

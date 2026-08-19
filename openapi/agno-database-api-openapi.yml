@@ -11,7 +11,8 @@ paths:
       tags:
       - Database
       summary: Migrate All Databases
-      description: Migrate all database schemas to the given target version. If a target version is not provided, all databases will be migrated to the latest version.
+      description: Migrate all database schemas to the given target version. If a target version is not
+        provided, all databases will be migrated to the latest version.
       operationId: migrate_all_databases
       security:
       - HTTPBearer: []
@@ -67,7 +68,8 @@ paths:
       tags:
       - Database
       summary: Migrate Database
-      description: Migrate the given database schema to the given target version. If a target version is not provided, the database will be migrated to the latest version.
+      description: Migrate the given database schema to the given target version. If a target version
+        is not provided, the database will be migrated to the latest version.
       operationId: migrate_database
       security:
       - HTTPBearer: []
@@ -225,3 +227,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

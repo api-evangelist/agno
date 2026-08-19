@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Whatsapp API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Whatsapp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/whatsapp/status"
+          },
+          "docs": "Status"
+        },
+        {
+          "info": {
+            "name": "Verify Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/whatsapp/webhook"
+          },
+          "docs": "Handle WhatsApp webhook verification"
+        },
+        {
+          "info": {
+            "name": "Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/whatsapp/webhook"
+          },
+          "docs": "Handle incoming WhatsApp messages"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

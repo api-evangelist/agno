@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Traces API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Traces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Traces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/traces",
+            "params": [
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by run ID"
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by session ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID"
+              },
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by agent ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by team ID"
+              },
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (OK, ERROR)"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter traces starting after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison."
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter traces ending before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of traces per page"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query traces from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of execution traces with optional filtering.\n\n**Traces provide observability into:**\n- Agent execution flows\n- Model invocations and token usage\n- Tool calls and their results\n- Errors and performance bottlenecks\n\n**Filtering Options:**\n- By run, session, user, or agent ID\n- By status (OK, ERROR)\n- By time range\n\n**Pagination:**\n- Use `page` (1-indexed) and `limit` parameters\n- Response includes pagination metadata (total_pages, total_count, etc.)\n\n**Response Format:**\n"
+        },
+        {
+          "info": {
+            "name": "Get Trace Filter Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/traces/filter-schema",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the available filterable fields, their types, valid operators, and enum values.\n\nThe frontend uses this to dynamically build the filter bar UI:\n- Field dropdown populated from `fields[].key`\n- Operator dropdown changes per field type\n- Value input shows autocomplete for enum fields (e.g., status)\n- Logical operators (AND, OR) for combining clauses"
+        },
+        {
+          "info": {
+            "name": "Get Trace or Span Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/traces/:trace_id",
+            "params": [
+              {
+                "name": "trace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "span_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional: Span ID to retrieve specific span"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional: Run ID to retrieve trace for"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query trace from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed trace information with hierarchical span tree, or a specific span within the trace.\n\n**Without span_id parameter:**\nReturns the full trace with hierarchical span tree:\n- Trace metadata (ID, status, duration, context)\n- Hierarchical tree of all spans\n- Each span includes timing, status, and type-specific metadata\n\n**With span_id parameter:**\nReturns details for a specific span within the trace:\n- Span metadata (ID, name, type, timing)\n- Status and error information\n- Type-specif"
+        },
+        {
+          "info": {
+            "name": "Get Trace Statistics by Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/trace_session_stats",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID"
+              },
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by agent ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by team ID"
+              },
+              {
+                "name": "workflow_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow ID"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions with traces created after this time (ISO 8601 format with timezone, e.g., '2025-11-19T10:00:00Z' or '2025-11-19T15:30:00+05:30'). Times are converted to UTC for comparison."
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions with traces created before this time (ISO 8601 format with timezone, e.g., '2025-11-19T11:00:00Z' or '2025-11-19T16:30:00+05:30'). Times are converted to UTC for comparison."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of sessions per page"
+              },
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query statistics from"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve aggregated trace statistics grouped by session ID with pagination.\n\n**Provides insights into:**\n- Total traces per session\n- First and last trace timestamps per session\n- Associated user and agent information\n\n**Filtering Options:**\n- By user ID\n- By agent ID\n\n**Use Cases:**\n- Monitor session-level activity\n- Track conversation flows\n- Identify high-activity sessions\n- Analyze user engagement patterns"
+        },
+        {
+          "info": {
+            "name": "Search Traces with Advanced Filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.agno.com/traces/search",
+            "params": [
+              {
+                "name": "db_id",
+                "value": "",
+                "type": "query",
+                "description": "Database ID to query traces from"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search traces using the FilterExpr DSL for complex, composable queries.\n\n**Group By Mode:**\n- `run` (default): Returns `PaginatedResponse[TraceDetail]` with full span trees\n- `session`: Returns `PaginatedResponse[TraceSessionStats]` with aggregated session stats\n\n**Supported Operators:**\n- Comparison: `EQ`, `NEQ`, `GT`, `GTE`, `LT`, `LTE`\n- Inclusion: `IN`\n- String matching: `CONTAINS` (case-insensitive substring), `STARTSWITH` (prefix)\n- Logical: `AND`, `OR`, `NOT`\n\n**Filterable Fields:**\ntrace"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

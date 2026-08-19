@@ -11,7 +11,8 @@ paths:
       tags:
       - Memory
       summary: Create Memory
-      description: Create a new user memory with content and associated topics. Memories are used to store contextual information for users across conversations.
+      description: Create a new user memory with content and associated topics. Memories are used to store
+        contextual information for users across conversations.
       operationId: create_memory
       security:
       - HTTPBearer: []
@@ -93,7 +94,8 @@ paths:
       tags:
       - Memory
       summary: Delete Multiple Memories
-      description: Delete multiple user memories by their IDs in a single operation. This action cannot be undone and all specified memories will be permanently removed.
+      description: Delete multiple user memories by their IDs in a single operation. This action cannot
+        be undone and all specified memories will be permanently removed.
       operationId: delete_memories
       security:
       - HTTPBearer: []
@@ -161,7 +163,8 @@ paths:
       tags:
       - Memory
       summary: List Memories
-      description: Retrieve paginated list of user memories with filtering and search capabilities. Filter by user, agent, team, topics, or search within memory content.
+      description: Retrieve paginated list of user memories with filtering and search capabilities. Filter
+        by user, agent, team, topics, or search within memory content.
       operationId: get_memories
       security:
       - HTTPBearer: []
@@ -507,7 +510,8 @@ paths:
       tags:
       - Memory
       summary: Update Memory
-      description: Update an existing user memory's content and topics. Replaces the entire memory content and topic list with the provided values.
+      description: Update an existing user memory's content and topics. Replaces the entire memory content
+        and topic list with the provided values.
       operationId: update_memory
       security:
       - HTTPBearer: []
@@ -595,7 +599,8 @@ paths:
       tags:
       - Memory
       summary: Get Memory Topics
-      description: Retrieve all unique topics associated with memories in the system. Useful for filtering and categorizing memories by topic.
+      description: Retrieve all unique topics associated with memories in the system. Useful for filtering
+        and categorizing memories by topic.
       operationId: get_memory_topics
       security:
       - HTTPBearer: []
@@ -685,7 +690,8 @@ paths:
       tags:
       - Memory
       summary: Get User Memory Statistics
-      description: Retrieve paginated statistics about memory usage by user. Provides insights into user engagement and memory distribution across users.
+      description: Retrieve paginated statistics about memory usage by user. Provides insights into user
+        engagement and memory distribution across users.
       operationId: get_user_memory_stats
       security:
       - HTTPBearer: []
@@ -791,7 +797,12 @@ paths:
       tags:
       - Memory
       summary: Optimize User Memories
-      description: Optimize all memories for a given user using the default summarize strategy. This operation combines all memories into a single comprehensive summary, achieving maximum token reduction while preserving all key information. To use a custom model, specify the model parameter in 'provider:model_id' format (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022'). If not specified, uses MemoryManager's default model (gpt-4o). Set apply=false to preview optimization results without saving to database.
+      description: Optimize all memories for a given user using the default summarize strategy. This operation
+        combines all memories into a single comprehensive summary, achieving maximum token reduction while
+        preserving all key information. To use a custom model, specify the model parameter in 'provider:model_id'
+        format (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022'). If not specified,
+        uses MemoryManager's default model (gpt-4o). Set apply=false to preview optimization results without
+        saving to database.
       operationId: optimize_memories
       security:
       - HTTPBearer: []
@@ -832,7 +843,10 @@ paths:
               example:
                 memories:
                 - memory_id: f9361a69-2997-40c7-ae4e-a5861d434047
-                  memory: User has a 3-year-old golden retriever named Max who loves fetch and walks. Lives in San Francisco's Mission district, works as a product manager in tech. Enjoys hiking Bay Area trails, trying new restaurants (especially Japanese, Thai, Mexican), and learning piano for 1.5 years.
+                  memory: User has a 3-year-old golden retriever named Max who loves fetch and walks.
+                    Lives in San Francisco's Mission district, works as a product manager in tech. Enjoys
+                    hiking Bay Area trails, trying new restaurants (especially Japanese, Thai, Mexican),
+                    and learning piano for 1.5 years.
                   topics:
                   - pets
                   - location
@@ -1108,11 +1122,14 @@ components:
           - type: string
           - type: 'null'
           title: Model
-          description: Model to use for optimization in format 'provider:model_id' (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022', 'google:gemini-2.0-flash-exp'). If not specified, uses MemoryManager's default model (gpt-4o).
+          description: Model to use for optimization in format 'provider:model_id' (e.g., 'openai:gpt-4o-mini',
+            'anthropic:claude-3-5-sonnet-20241022', 'google:gemini-2.0-flash-exp'). If not specified,
+            uses MemoryManager's default model (gpt-4o).
         apply:
           type: boolean
           title: Apply
-          description: If True, apply optimization changes to database. If False, return preview only without saving.
+          description: If True, apply optimization changes to database. If False, return preview only
+            without saving.
           default: true
       type: object
       required:
@@ -1240,3 +1257,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

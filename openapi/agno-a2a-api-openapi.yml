@@ -36,7 +36,9 @@ paths:
       tags:
       - A2A
       summary: Run Message Agent
-      description: 'Send a message to an Agno Agent (non-streaming). The Agent is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata.'
+      description: 'Send a message to an Agno Agent (non-streaming). The Agent is identified via the path
+        parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in
+        params.message.metadata.'
       operationId: run_message_agent
       parameters:
       - name: id
@@ -133,7 +135,9 @@ paths:
       tags:
       - A2A
       summary: Stream Message Agent
-      description: 'Stream a message to an Agno Agent (streaming). The Agent is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
+      description: 'Stream a message to an Agno Agent (streaming). The Agent is identified via the path
+        parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in
+        params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
       operationId: stream_message_agent
       parameters:
       - name: id
@@ -200,7 +204,9 @@ paths:
       tags:
       - A2A
       summary: Run Message Team
-      description: 'Send a message to an Agno Team (non-streaming). The Team is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata.'
+      description: 'Send a message to an Agno Team (non-streaming). The Team is identified via the path
+        parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in
+        params.message.metadata.'
       operationId: run_message_team
       parameters:
       - name: id
@@ -297,7 +303,9 @@ paths:
       tags:
       - A2A
       summary: Stream Message Team
-      description: 'Stream a message to an Agno Team (streaming). The Team is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
+      description: 'Stream a message to an Agno Team (streaming). The Team is identified via the path
+        parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in
+        params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
       operationId: stream_message_team
       parameters:
       - name: id
@@ -364,7 +372,9 @@ paths:
       tags:
       - A2A
       summary: Run Message Workflow
-      description: 'Send a message to an Agno Workflow (non-streaming). The Workflow is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata.'
+      description: 'Send a message to an Agno Workflow (non-streaming). The Workflow is identified via
+        the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId''
+        in params.message.metadata.'
       operationId: run_message_workflow
       parameters:
       - name: id
@@ -409,7 +419,9 @@ paths:
       tags:
       - A2A
       summary: Stream Message Workflow
-      description: 'Stream a message to an Agno Workflow (streaming). The Workflow is identified via the path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
+      description: 'Stream a message to an Agno Workflow (streaming). The Workflow is identified via the
+        path parameter ''{id}''. Optional: Pass user ID via X-User-ID header (recommended) or ''userId''
+        in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
       operationId: stream_message_workflow
       parameters:
       - name: id
@@ -451,7 +463,9 @@ paths:
       tags:
       - A2A
       summary: Send Message
-      description: '[DEPRECATED] Send a message to an Agno Agent, Team, or Workflow. The Agent, Team or Workflow is identified via the ''agentId'' field in params.message or X-Agent-ID header. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata.'
+      description: '[DEPRECATED] Send a message to an Agno Agent, Team, or Workflow. The Agent, Team or
+        Workflow is identified via the ''agentId'' field in params.message or X-Agent-ID header. Optional:
+        Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata.'
       operationId: send_message
       responses:
         '200':
@@ -483,7 +497,10 @@ paths:
       tags:
       - A2A
       summary: Stream Message
-      description: '[DEPRECATED] Stream a message to an Agno Agent, Team, or Workflow. The Agent, Team or Workflow is identified via the ''agentId'' field in params.message or X-Agent-ID header. Optional: Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata. Returns real-time updates as newline-delimited JSON (NDJSON).'
+      description: '[DEPRECATED] Stream a message to an Agno Agent, Team, or Workflow. The Agent, Team
+        or Workflow is identified via the ''agentId'' field in params.message or X-Agent-ID header. Optional:
+        Pass user ID via X-User-ID header (recommended) or ''userId'' in params.message.metadata. Returns
+        real-time updates as newline-delimited JSON (NDJSON).'
       operationId: stream_message
       responses:
         '200':
@@ -742,7 +759,8 @@ components:
       - artifactId
       - parts
       title: Artifact
-      description: Represents a file, data structure, or other resource generated by an agent during a task.
+      description: Represents a file, data structure, or other resource generated by an agent during a
+        task.
     FileWithBytes:
       properties:
         bytes:
@@ -861,3 +879,6 @@ components:
     HTTPBearer:
       type: http
       scheme: bearer
+servers:
+- url: https://api.agno.com
+  description: Base URL reconciled from apis.yml

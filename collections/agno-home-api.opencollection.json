@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agno API Reference A2A Home API",
+    "version": "2.5.6"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Home",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "API Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.agno.com/"
+          },
+          "docs": "Get basic information about this AgentOS API instance, including:\n\n- API metadata and version\n- Available capabilities overview\n- Links to key endpoints and documentation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
