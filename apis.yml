@@ -31,6 +31,15 @@ tags:
   - Multi-Agent Systems
   - Python Framework
   - LLM
+  - Machine-Learning
+  - Agentic AI
+  - Open-Source
+  - Agent Runtime
+tags_raw:
+  - AI Agents
+  - Multi-Agent Systems
+  - Python Framework
+  - LLM
   - Machine Learning
   - Agentic AI
   - Open Source
@@ -154,6 +163,8 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
+  - Homes
+  tags_raw:
   - Home
   properties:
   - type: OpenAPI
@@ -250,6 +261,8 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -274,6 +287,8 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
+  - WhatsApp
+  tags_raw:
   - Whatsapp
   properties:
   - type: OpenAPI
