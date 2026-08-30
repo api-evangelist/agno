@@ -91,6 +91,8 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
+  - AG-UI
+  tags_raw:
   - AGUI
   properties:
   - type: OpenAPI
@@ -299,7 +301,7 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
-  - WhatsApp
+  - Whatsapp
   tags_raw:
   - Whatsapp
   properties:
