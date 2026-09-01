@@ -301,7 +301,7 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
-  - Whatsapp
+  - WhatsApp
   tags_raw:
   - Whatsapp
   properties:
