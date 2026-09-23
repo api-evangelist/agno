@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Evals API
+  title: Agno API Reference Evals API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -11,8 +11,7 @@ paths:
       tags:
       - Evals
       summary: List Evaluation Runs
-      description: Retrieve paginated evaluation runs with filtering and sorting options. Filter by agent,
-        team, workflow, model, or evaluation type.
+      description: Retrieve paginated evaluation runs with filtering and sorting options. Filter by agent, team, workflow, model, or evaluation type.
       operationId: get_eval_runs
       security:
       - HTTPBearer: []
@@ -272,8 +271,7 @@ paths:
       tags:
       - Evals
       summary: Execute Evaluation
-      description: Run evaluation tests on agents or teams. Supports accuracy, agent-as-judge, performance,
-        and reliability evaluations. Requires either agent_id or team_id, but not both.
+      description: Run evaluation tests on agents or teams. Supports accuracy, agent-as-judge, performance, and reliability evaluations. Requires either agent_id or team_id, but not both.
       operationId: run_eval
       security:
       - HTTPBearer: []
@@ -541,28 +539,39 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    SortOrder:
+    EvalType:
       type: string
       enum:
-      - asc
-      - desc
-      title: SortOrder
-    PaginatedResponse_EvalSchema_:
+      - accuracy
+      - agent_as_judge
+      - performance
+      - reliability
+      title: EvalType
+    DeleteEvalRunsRequest:
       properties:
-        data:
+        eval_run_ids:
           items:
-            $ref: '#/components/schemas/EvalSchema'
+            type: string
           type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
+          minItems: 1
+          title: Eval Run Ids
+          description: List of evaluation run IDs to delete
       type: object
       required:
-      - data
-      - meta
-      title: PaginatedResponse[EvalSchema]
+      - eval_run_ids
+      title: DeleteEvalRunsRequest
+    UpdateEvalRunRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 1
+          title: Name
+          description: New name for the evaluation run
+      type: object
+      required:
+      - name
+      title: UpdateEvalRunRequest
     EvalSchema:
       properties:
         id:
@@ -646,6 +655,57 @@ components:
       - eval_type
       - eval_data
       title: EvalSchema
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    SortOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: SortOrder
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    EvalFilterType:
+      type: string
+      enum:
+      - agent
+      - team
+      - workflow
+      title: EvalFilterType
     PaginationInfo:
       properties:
         page:
@@ -680,101 +740,6 @@ components:
           default: 0
       type: object
       title: PaginationInfo
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    UpdateEvalRunRequest:
-      properties:
-        name:
-          type: string
-          maxLength: 255
-          minLength: 1
-          title: Name
-          description: New name for the evaluation run
-      type: object
-      required:
-      - name
-      title: UpdateEvalRunRequest
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    EvalFilterType:
-      type: string
-      enum:
-      - agent
-      - team
-      - workflow
-      title: EvalFilterType
     EvalRunInput:
       properties:
         agent_id:
@@ -885,27 +850,41 @@ components:
       - eval_type
       - input
       title: EvalRunInput
-    DeleteEvalRunsRequest:
+    PaginatedResponse_EvalSchema_:
       properties:
-        eval_run_ids:
+        data:
           items:
-            type: string
+            $ref: '#/components/schemas/EvalSchema'
           type: array
-          minItems: 1
-          title: Eval Run Ids
-          description: List of evaluation run IDs to delete
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
       type: object
       required:
-      - eval_run_ids
-      title: DeleteEvalRunsRequest
-    EvalType:
-      type: string
-      enum:
-      - accuracy
-      - agent_as_judge
-      - performance
-      - reliability
-      title: EvalType
+      - data
+      - meta
+      title: PaginatedResponse[EvalSchema]
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     NotFoundResponse:
       properties:
         detail:
@@ -925,10 +904,26 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml

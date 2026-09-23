@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Slack API
+  title: Agno API Reference Slack API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -14,26 +14,19 @@ paths:
       description: 'Receives incoming Slack events (messages, mentions, thread starts).
 
 
-        **URL Verification:** On first setup, Slack sends a `url_verification` challenge. The endpoint
-        echoes back the challenge string.
+        **URL Verification:** On first setup, Slack sends a `url_verification` challenge. The endpoint echoes back the challenge string.
 
 
-        **Event Processing:** Normal events are acknowledged immediately with `{"status": "ok"}` and processed
-        in the background. This prevents Slack''s 3-second retry timeout.
+        **Event Processing:** Normal events are acknowledged immediately with `{"status": "ok"}` and processed in the background. This prevents Slack''s 3-second retry timeout.
 
 
-        **Retry Handling:** Events with `X-Slack-Retry-Num` header are duplicates and return 200 without
-        reprocessing.
+        **Retry Handling:** Events with `X-Slack-Retry-Num` header are duplicates and return 200 without reprocessing.
 
 
-        **Setup:** Configure this URL in your [Slack App](https://api.slack.com/apps) under **Event Subscriptions
-        > Request URL**.
+        **Setup:** Configure this URL in your Slack App under **Event Subscriptions > Request URL**.
 
 
-        See the [setup guide](/agent-os/interfaces/slack/setup) for creating a Slack App or use the [manifest](/agent-os/interfaces/slack/setup#2-create-the-slack-app)
-        for quick setup.
-
-        '
+        See the setup guide for creating a Slack App or use the manifest for quick setup.'
       operationId: slack_events_simple_team
       parameters:
       - name: X-Slack-Request-Timestamp
@@ -85,14 +78,10 @@ paths:
         - `submit_pause` - Submit form data for a paused workflow
 
 
-        **Setup:** Configure this URL in your [Slack App](https://api.slack.com/apps) under **Interactivity
-        & Shortcuts > Request URL**.
+        **Setup:** Configure this URL in your Slack App under **Interactivity & Shortcuts > Request URL**.
 
 
-        See the [setup guide](/agent-os/interfaces/slack/setup) for step-by-step instructions or the [HITL
-        guide](/agent-os/interfaces/slack/hitl) for approval workflows.
-
-        '
+        See the setup guide for step-by-step instructions or the HITL guide for approval workflows.'
       operationId: slack_interactions
       requestBody:
         required: true
@@ -105,8 +94,7 @@ paths:
               properties:
                 payload:
                   type: string
-                  description: URL-encoded JSON interaction payload (Slack sends interactive component
-                    data as a single form field)
+                  description: URL-encoded JSON interaction payload (Slack sends interactive component data as a single form field)
       parameters:
       - name: X-Slack-Request-Timestamp
         in: header
@@ -133,6 +121,14 @@ paths:
           description: Invalid Slack signature - signing secret mismatch
 components:
   schemas:
+    SlackEventResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          default: ok
+      type: object
+      title: SlackEventResponse
     SlackChallengeResponse:
       properties:
         challenge:
@@ -143,18 +139,7 @@ components:
       required:
       - challenge
       title: SlackChallengeResponse
-    SlackEventResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-          default: ok
-      type: object
-      title: SlackEventResponse
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml

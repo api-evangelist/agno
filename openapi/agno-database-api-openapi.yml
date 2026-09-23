@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Database API
+  title: Agno API Reference Database API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -11,8 +11,7 @@ paths:
       tags:
       - Database
       summary: Migrate All Databases
-      description: Migrate all database schemas to the given target version. If a target version is not
-        provided, all databases will be migrated to the latest version.
+      description: Migrate all database schemas to the given target version. If a target version is not provided, all databases will be migrated to the latest version.
       operationId: migrate_all_databases
       security:
       - HTTPBearer: []
@@ -68,8 +67,7 @@ paths:
       tags:
       - Database
       summary: Migrate Database
-      description: Migrate the given database schema to the given target version. If a target version
-        is not provided, the database will be migrated to the latest version.
+      description: Migrate the given database schema to the given target version. If a target version is not provided, the database will be migrated to the latest version.
       operationId: migrate_database
       security:
       - HTTPBearer: []
@@ -147,44 +145,6 @@ components:
       example:
         detail: Bad request
         error_code: BAD_REQUEST
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
     UnauthenticatedResponse:
       properties:
         detail:
@@ -204,6 +164,25 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     NotFoundResponse:
       properties:
         detail:
@@ -223,10 +202,26 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml

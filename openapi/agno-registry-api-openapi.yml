@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Registry API
+  title: Agno API Reference Registry API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -96,6 +96,22 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
+    PaginatedResponse_RegistryContentResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RegistryContentResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[RegistryContentResponse]
     RegistryContentResponse:
       properties:
         name:
@@ -124,6 +140,57 @@ components:
       - name
       - type
       title: RegistryContentResponse
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    RegistryResourceType:
+      type: string
+      enum:
+      - tool
+      - model
+      - db
+      - vector_db
+      - schema
+      - function
+      - agent
+      - team
+      title: RegistryResourceType
+      description: Types of resources that can be stored in a registry.
     PaginationInfo:
       properties:
         page:
@@ -158,25 +225,6 @@ components:
           default: 0
       type: object
       title: PaginationInfo
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     ValidationErrorResponse:
       properties:
         detail:
@@ -196,73 +244,6 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    RegistryResourceType:
-      type: string
-      enum:
-      - tool
-      - model
-      - db
-      - vector_db
-      - schema
-      - function
-      - agent
-      - team
-      title: RegistryResourceType
-      description: Types of resources that can be stored in a registry.
-    PaginatedResponse_RegistryContentResponse_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RegistryContentResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[RegistryContentResponse]
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
     NotFoundResponse:
       properties:
         detail:
@@ -282,10 +263,26 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml

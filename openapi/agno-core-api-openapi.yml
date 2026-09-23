@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Core API
+  title: Agno API Reference Core API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -104,8 +104,7 @@ paths:
       tags:
       - Core
       summary: Get Available Models
-      description: Retrieve a list of all unique models currently used by agents and teams in this OS
-        instance. This includes the model ID and provider information for each model.
+      description: Retrieve a list of all unique models currently used by agents and teams in this OS instance. This includes the model ID and provider information for each model.
       operationId: get_models
       responses:
         '200':
@@ -156,27 +155,7 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    DatabaseConfig_MemoryDomainConfig_:
-      properties:
-        db_id:
-          type: string
-          title: Db Id
-        domain_config:
-          anyOf:
-          - $ref: '#/components/schemas/MemoryDomainConfig'
-          - type: 'null'
-        tables:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tables
-      type: object
-      required:
-      - db_id
-      title: DatabaseConfig[MemoryDomainConfig]
-    TracesConfig:
+    MetricsConfig:
       properties:
         display_name:
           anyOf:
@@ -186,56 +165,39 @@ components:
         dbs:
           anyOf:
           - items:
-              $ref: '#/components/schemas/DatabaseConfig_TracesDomainConfig_'
+              $ref: '#/components/schemas/DatabaseConfig_MetricsDomainConfig_'
             type: array
           - type: 'null'
           title: Dbs
       type: object
-      title: TracesConfig
+      title: MetricsConfig
+      description: Configuration for the Metrics domain of the AgentOS
+    TracesDomainConfig:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+      type: object
+      title: TracesDomainConfig
       description: Configuration for the Traces domain of the AgentOS
-    InternalServerErrorResponse:
+    Model:
       properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
+        id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    KnowledgeConfig:
-      properties:
-        display_name:
+          title: Id
+          description: Model identifier
+        provider:
           anyOf:
           - type: string
           - type: 'null'
-          title: Display Name
-        dbs:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/KnowledgeDatabaseConfig'
-            type: array
-          - type: 'null'
-          title: Dbs
-        knowledge_instances:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/KnowledgeInstanceConfig'
-            type: array
-          - type: 'null'
-          title: Knowledge Instances
+          title: Provider
+          description: Model provider name
       type: object
-      title: KnowledgeConfig
-      description: Configuration for the Knowledge domain of the AgentOS
+      title: Model
     DatabaseConfig_EvalsDomainConfig_:
       properties:
         db_id:
@@ -256,34 +218,41 @@ components:
       required:
       - db_id
       title: DatabaseConfig[EvalsDomainConfig]
-    MetricsDomainConfig:
+    KnowledgeInstanceConfig:
       properties:
-        display_name:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
           anyOf:
           - type: string
           - type: 'null'
-          title: Display Name
+          title: Description
+        db_id:
+          type: string
+          title: Db Id
+        table:
+          type: string
+          title: Table
       type: object
-      title: MetricsDomainConfig
-      description: Configuration for the Metrics domain of the AgentOS
-    MemoryDomainConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-      type: object
-      title: MemoryDomainConfig
-      description: Configuration for the Memory domain of the AgentOS
-    DatabaseConfig_SessionDomainConfig_:
+      required:
+      - id
+      - name
+      - db_id
+      - table
+      title: KnowledgeInstanceConfig
+      description: Configuration for a single knowledge instance
+    DatabaseConfig_MemoryDomainConfig_:
       properties:
         db_id:
           type: string
           title: Db Id
         domain_config:
           anyOf:
-          - $ref: '#/components/schemas/SessionDomainConfig'
+          - $ref: '#/components/schemas/MemoryDomainConfig'
           - type: 'null'
         tables:
           anyOf:
@@ -295,65 +264,7 @@ components:
       type: object
       required:
       - db_id
-      title: DatabaseConfig[SessionDomainConfig]
-    MetricsConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-        dbs:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DatabaseConfig_MetricsDomainConfig_'
-            type: array
-          - type: 'null'
-          title: Dbs
-      type: object
-      title: MetricsConfig
-      description: Configuration for the Metrics domain of the AgentOS
-    EvalsConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-        available_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Available Models
-        dbs:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DatabaseConfig_EvalsDomainConfig_'
-            type: array
-          - type: 'null'
-          title: Dbs
-      type: object
-      title: EvalsConfig
-      description: Configuration for the Evals domain of the AgentOS
-    MemoryConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-        dbs:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/DatabaseConfig_MemoryDomainConfig_'
-            type: array
-          - type: 'null'
-          title: Dbs
-      type: object
-      title: MemoryConfig
-      description: Configuration for the Memory domain of the AgentOS
+      title: DatabaseConfig[MemoryDomainConfig]
     UnauthenticatedResponse:
       properties:
         detail:
@@ -373,7 +284,35 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    KnowledgeDomainConfig:
+    AgentSummaryResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: Unique identifier for the agent
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the agent
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the agent
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+          description: Database identifier
+      type: object
+      title: AgentSummaryResponse
+    SessionDomainConfig:
       properties:
         display_name:
           anyOf:
@@ -381,28 +320,25 @@ components:
           - type: 'null'
           title: Display Name
       type: object
-      title: KnowledgeDomainConfig
-      description: Configuration for the Knowledge domain of the AgentOS
-    InterfaceResponse:
+      title: SessionDomainConfig
+      description: Configuration for the Session domain of the AgentOS
+    MemoryConfig:
       properties:
-        type:
-          type: string
-          title: Type
-          description: Type of the interface
-        version:
-          type: string
-          title: Version
-          description: Version of the interface
-        route:
-          type: string
-          title: Route
-          description: API route path
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        dbs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DatabaseConfig_MemoryDomainConfig_'
+            type: array
+          - type: 'null'
+          title: Dbs
       type: object
-      required:
-      - type
-      - version
-      - route
-      title: InterfaceResponse
+      title: MemoryConfig
+      description: Configuration for the Memory domain of the AgentOS
     NotFoundResponse:
       properties:
         detail:
@@ -422,6 +358,25 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
     TeamSummaryResponse:
       properties:
         id:
@@ -456,78 +411,26 @@ components:
           description: Team execution mode (coordinate, route, broadcast, tasks)
       type: object
       title: TeamSummaryResponse
-    DatabaseConfig_TracesDomainConfig_:
+    InterfaceResponse:
       properties:
-        db_id:
+        type:
           type: string
-          title: Db Id
-        domain_config:
-          anyOf:
-          - $ref: '#/components/schemas/TracesDomainConfig'
-          - type: 'null'
-        tables:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tables
-      type: object
-      required:
-      - db_id
-      title: DatabaseConfig[TracesDomainConfig]
-    BadRequestResponse:
-      properties:
-        detail:
+          title: Type
+          description: Type of the interface
+        version:
           type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    ValidationErrorResponse:
-      properties:
-        detail:
+          title: Version
+          description: Version of the interface
+        route:
           type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
+          title: Route
+          description: API route path
       type: object
       required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    ChatConfig:
-      properties:
-        quick_prompts:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Quick Prompts
-      type: object
-      required:
-      - quick_prompts
-      title: ChatConfig
-      description: Configuration for the Chat page of the AgentOS
+      - type
+      - version
+      - route
+      title: InterfaceResponse
     ConfigResponse:
       properties:
         os_id:
@@ -635,22 +538,101 @@ components:
       - interfaces
       title: ConfigResponse
       description: Response schema for the general config endpoint
-    Model:
+    MetricsDomainConfig:
       properties:
-        id:
+        display_name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Id
-          description: Model identifier
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          description: Model provider name
+          title: Display Name
       type: object
-      title: Model
+      title: MetricsDomainConfig
+      description: Configuration for the Metrics domain of the AgentOS
+    EvalsDomainConfig:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        available_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Available Models
+      type: object
+      title: EvalsDomainConfig
+      description: Configuration for the Evals domain of the AgentOS
+    EvalsConfig:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        available_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Available Models
+        dbs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DatabaseConfig_EvalsDomainConfig_'
+            type: array
+          - type: 'null'
+          title: Dbs
+      type: object
+      title: EvalsConfig
+      description: Configuration for the Evals domain of the AgentOS
+    DatabaseConfig_TracesDomainConfig_:
+      properties:
+        db_id:
+          type: string
+          title: Db Id
+        domain_config:
+          anyOf:
+          - $ref: '#/components/schemas/TracesDomainConfig'
+          - type: 'null'
+        tables:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tables
+      type: object
+      required:
+      - db_id
+      title: DatabaseConfig[TracesDomainConfig]
+    KnowledgeConfig:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        dbs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/KnowledgeDatabaseConfig'
+            type: array
+          - type: 'null'
+          title: Dbs
+        knowledge_instances:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/KnowledgeInstanceConfig'
+            type: array
+          - type: 'null'
+          title: Knowledge Instances
+      type: object
+      title: KnowledgeConfig
+      description: Configuration for the Knowledge domain of the AgentOS
     SessionConfig:
       properties:
         display_name:
@@ -668,6 +650,62 @@ components:
       type: object
       title: SessionConfig
       description: Configuration for the Session domain of the AgentOS
+    DatabaseConfig_SessionDomainConfig_:
+      properties:
+        db_id:
+          type: string
+          title: Db Id
+        domain_config:
+          anyOf:
+          - $ref: '#/components/schemas/SessionDomainConfig'
+          - type: 'null'
+        tables:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tables
+      type: object
+      required:
+      - db_id
+      title: DatabaseConfig[SessionDomainConfig]
+    TracesConfig:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        dbs:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/DatabaseConfig_TracesDomainConfig_'
+            type: array
+          - type: 'null'
+          title: Dbs
+      type: object
+      title: TracesConfig
+      description: Configuration for the Traces domain of the AgentOS
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     KnowledgeDatabaseConfig:
       properties:
         db_id:
@@ -688,6 +726,26 @@ components:
       - db_id
       title: KnowledgeDatabaseConfig
       description: Configuration for a knowledge database with its tables
+    DatabaseConfig_MetricsDomainConfig_:
+      properties:
+        db_id:
+          type: string
+          title: Db Id
+        domain_config:
+          anyOf:
+          - $ref: '#/components/schemas/MetricsDomainConfig'
+          - type: 'null'
+        tables:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tables
+      type: object
+      required:
+      - db_id
+      title: DatabaseConfig[MetricsDomainConfig]
     WorkflowSummaryResponse:
       properties:
         id:
@@ -733,34 +791,26 @@ components:
           description: Stage of the loaded config (draft/published)
       type: object
       title: WorkflowSummaryResponse
-    KnowledgeInstanceConfig:
+    BadRequestResponse:
       properties:
-        id:
+        detail:
           type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-        description:
+          title: Detail
+          description: Error detail message
+        error_code:
           anyOf:
           - type: string
           - type: 'null'
-          title: Description
-        db_id:
-          type: string
-          title: Db Id
-        table:
-          type: string
-          title: Table
+          title: Error Code
+          description: Error code for categorization
       type: object
       required:
-      - id
-      - name
-      - db_id
-      - table
-      title: KnowledgeInstanceConfig
-      description: Configuration for a single knowledge instance
-    SessionDomainConfig:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    KnowledgeDomainConfig:
       properties:
         display_name:
           anyOf:
@@ -768,87 +818,33 @@ components:
           - type: 'null'
           title: Display Name
       type: object
-      title: SessionDomainConfig
-      description: Configuration for the Session domain of the AgentOS
-    DatabaseConfig_MetricsDomainConfig_:
+      title: KnowledgeDomainConfig
+      description: Configuration for the Knowledge domain of the AgentOS
+    MemoryDomainConfig:
       properties:
-        db_id:
-          type: string
-          title: Db Id
-        domain_config:
+        display_name:
           anyOf:
-          - $ref: '#/components/schemas/MetricsDomainConfig'
+          - type: string
           - type: 'null'
-        tables:
-          anyOf:
-          - items:
+          title: Display Name
+      type: object
+      title: MemoryDomainConfig
+      description: Configuration for the Memory domain of the AgentOS
+    ChatConfig:
+      properties:
+        quick_prompts:
+          additionalProperties:
+            items:
               type: string
             type: array
-          - type: 'null'
-          title: Tables
+          type: object
+          title: Quick Prompts
       type: object
       required:
-      - db_id
-      title: DatabaseConfig[MetricsDomainConfig]
-    TracesDomainConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-      type: object
-      title: TracesDomainConfig
-      description: Configuration for the Traces domain of the AgentOS
-    EvalsDomainConfig:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-        available_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Available Models
-      type: object
-      title: EvalsDomainConfig
-      description: Configuration for the Evals domain of the AgentOS
-    AgentSummaryResponse:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-          description: Unique identifier for the agent
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the agent
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the agent
-        db_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Db Id
-          description: Database identifier
-      type: object
-      title: AgentSummaryResponse
+      - quick_prompts
+      title: ChatConfig
+      description: Configuration for the Chat page of the AgentOS
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml

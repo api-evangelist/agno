@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Agno API Reference A2A Metrics API
+  title: Agno API Reference Metrics API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:
@@ -11,8 +11,7 @@ paths:
       tags:
       - Metrics
       summary: Get AgentOS Metrics
-      description: Retrieve AgentOS metrics and analytics data for a specified date range. If no date
-        range is specified, returns all available metrics.
+      description: Retrieve AgentOS metrics and analytics data for a specified date range. If no date range is specified, returns all available metrics.
       operationId: get_metrics
       security:
       - HTTPBearer: []
@@ -128,9 +127,7 @@ paths:
       tags:
       - Metrics
       summary: Refresh Metrics
-      description: Manually trigger recalculation of system metrics from raw data. This operation analyzes
-        system activity logs and regenerates aggregated metrics. Useful for ensuring metrics are up-to-date
-        or after system maintenance.
+      description: Manually trigger recalculation of system metrics from raw data. This operation analyzes system activity logs and regenerates aggregated metrics. Useful for ensuring metrics are up-to-date or after system maintenance.
       operationId: refresh_metrics
       security:
       - HTTPBearer: []
@@ -223,6 +220,63 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    MetricsResponse:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/DayAggregatedMetrics'
+          type: array
+          title: Metrics
+          description: List of daily aggregated metrics
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Timestamp of the most recent metrics update
+      type: object
+      required:
+      - metrics
+      title: MetricsResponse
     DayAggregatedMetrics:
       properties:
         id:
@@ -308,25 +362,6 @@ components:
       - updated_at
       title: DayAggregatedMetrics
       description: Aggregated metrics for a given day
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     ValidationErrorResponse:
       properties:
         detail:
@@ -346,44 +381,6 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
     NotFoundResponse:
       properties:
         detail:
@@ -403,29 +400,26 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
-    MetricsResponse:
+    InternalServerErrorResponse:
       properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/DayAggregatedMetrics'
-          type: array
-          title: Metrics
-          description: List of daily aggregated metrics
-        updated_at:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
           anyOf:
           - type: string
-            format: date-time
           - type: 'null'
-          title: Updated At
-          description: Timestamp of the most recent metrics update
+          title: Error Code
+          description: Error code for categorization
       type: object
       required:
-      - metrics
-      title: MetricsResponse
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
   securitySchemes:
     HTTPBearer:
       type: http
       scheme: bearer
-servers:
-- url: https://api.agno.com
-  description: Base URL reconciled from apis.yml
