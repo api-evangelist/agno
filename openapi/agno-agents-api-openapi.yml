@@ -546,28 +546,84 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    ModelResponse:
+    Body_create_agent_run:
       properties:
-        name:
+        message:
+          type: string
+          title: Message
+        stream:
+          type: boolean
+          title: Stream
+          default: true
+        session_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Name
-          description: Name of the model
-        model:
+          title: Session Id
+        user_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Model
-          description: Model identifier
-        provider:
+          title: User Id
+        files:
+          anyOf:
+          - items:
+              type: string
+              contentMediaType: application/octet-stream
+            type: array
+          - type: 'null'
+          title: Files
+        version:
           anyOf:
           - type: string
           - type: 'null'
-          title: Provider
-          description: Model provider name
+          title: Version
+        background:
+          type: boolean
+          title: Background
+          default: false
       type: object
-      title: ModelResponse
+      required:
+      - message
+      title: Body_create_agent_run
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
     AgentResponse:
       properties:
         id:
@@ -692,7 +748,7 @@ components:
           title: Stage
       type: object
       title: AgentResponse
-    BadRequestResponse:
+    ValidationErrorResponse:
       properties:
         detail:
           type: string
@@ -707,29 +763,10 @@ components:
       type: object
       required:
       - detail
-      title: BadRequestResponse
+      title: ValidationErrorResponse
       example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     Body_continue_agent_run:
       properties:
         tools:
@@ -752,84 +789,28 @@ components:
           default: true
       type: object
       title: Body_continue_agent_run
-    ValidationErrorResponse:
+    ModelResponse:
       properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Error Code
-          description: Error code for categorization
+          title: Name
+          description: Name of the model
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model identifier
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          description: Model provider name
       type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
-    Body_create_agent_run:
-      properties:
-        message:
-          type: string
-          title: Message
-        stream:
-          type: boolean
-          title: Stream
-          default: true
-        session_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Id
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        files:
-          anyOf:
-          - items:
-              type: string
-              contentMediaType: application/octet-stream
-            type: array
-          - type: 'null'
-          title: Files
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        background:
-          type: boolean
-          title: Background
-          default: false
-      type: object
-      required:
-      - message
-      title: Body_create_agent_run
+      title: ModelResponse
     InternalServerErrorResponse:
       properties:
         detail:
@@ -849,6 +830,25 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
   securitySchemes:
     HTTPBearer:
       type: http

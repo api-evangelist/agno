@@ -879,57 +879,12 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    UserMemoryCreateSchema:
-      properties:
-        memory:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: Memory
-          description: Memory content text
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID who owns this memory
-        topics:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Topics
-          description: Topics or tags to categorize the memory
-      type: object
-      required:
-      - memory
-      title: UserMemoryCreateSchema
-      description: Define the payload expected for creating a new user memory
-    UserStatsSchema:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: User ID
-        total_memories:
-          type: integer
-          minimum: 0
-          title: Total Memories
-          description: Total number of memories for this user
-        last_memory_updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Memory Updated At
-          description: Timestamp of the most recent memory update
-      type: object
-      required:
-      - user_id
-      - total_memories
-      title: UserStatsSchema
-      description: Schema for user memory statistics
+    SortOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: SortOrder
     UserMemorySchema:
       properties:
         memory_id:
@@ -978,22 +933,6 @@ components:
       - memory_id
       - memory
       title: UserMemorySchema
-    PaginatedResponse_UserStatsSchema_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/UserStatsSchema'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[UserStatsSchema]
     OptimizeMemoriesResponse:
       properties:
         memories:
@@ -1044,6 +983,68 @@ components:
       - reduction_percentage
       title: OptimizeMemoriesResponse
       description: Schema for memory optimization response
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    UserStatsSchema:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: User ID
+        total_memories:
+          type: integer
+          minimum: 0
+          title: Total Memories
+          description: Total number of memories for this user
+        last_memory_updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Memory Updated At
+          description: Timestamp of the most recent memory update
+      type: object
+      required:
+      - user_id
+      - total_memories
+      title: UserStatsSchema
+      description: Schema for user memory statistics
     OptimizeMemoriesRequest:
       properties:
         user_id:
@@ -1066,12 +1067,22 @@ components:
       - user_id
       title: OptimizeMemoriesRequest
       description: Schema for memory optimization request
-    SortOrder:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: SortOrder
+    PaginatedResponse_UserStatsSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserStatsSchema'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[UserStatsSchema]
     PaginatedResponse_UserMemorySchema_:
       properties:
         data:
@@ -1088,7 +1099,7 @@ components:
       - data
       - meta
       title: PaginatedResponse[UserMemorySchema]
-    UnauthenticatedResponse:
+    ValidationErrorResponse:
       properties:
         detail:
           type: string
@@ -1103,29 +1114,37 @@ components:
       type: object
       required:
       - detail
-      title: UnauthenticatedResponse
+      title: ValidationErrorResponse
       example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    BadRequestResponse:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    UserMemoryCreateSchema:
       properties:
-        detail:
+        memory:
           type: string
-          title: Detail
-          description: Error detail message
-        error_code:
+          maxLength: 5000
+          minLength: 1
+          title: Memory
+          description: Memory content text
+        user_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Error Code
-          description: Error code for categorization
+          title: User Id
+          description: User ID who owns this memory
+        topics:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Topics
+          description: Topics or tags to categorize the memory
       type: object
       required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
+      - memory
+      title: UserMemoryCreateSchema
+      description: Define the payload expected for creating a new user memory
     DeleteMemoriesRequest:
       properties:
         memory_ids:
@@ -1179,44 +1198,6 @@ components:
           default: 0
       type: object
       title: PaginationInfo
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
     InternalServerErrorResponse:
       properties:
         detail:
@@ -1236,6 +1217,25 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
   securitySchemes:
     HTTPBearer:
       type: http

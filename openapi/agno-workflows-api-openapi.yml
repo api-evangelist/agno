@@ -350,216 +350,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    ModelResponse:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the model
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model identifier
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          description: Model provider name
-      type: object
-      title: ModelResponse
-    AgentResponse:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        db_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Db Id
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Role
-        model:
-          anyOf:
-          - $ref: '#/components/schemas/ModelResponse'
-          - type: 'null'
-        tools:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Tools
-        sessions:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Sessions
-        knowledge:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Knowledge
-        memory:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Memory
-        reasoning:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Reasoning
-        default_tools:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Default Tools
-        system_message:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: System Message
-        extra_messages:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Extra Messages
-        response_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Response Settings
-        introduction:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Introduction
-        streaming:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Streaming
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        input_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Input Schema
-        is_component:
-          type: boolean
-          title: Is Component
-          default: false
-        current_version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Version
-        stage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stage
-      type: object
-      title: AgentResponse
-    WorkflowSummaryResponse:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-          description: Unique identifier for the workflow
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the workflow
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the workflow
-        db_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Db Id
-          description: Database identifier
-        is_component:
-          type: boolean
-          title: Is Component
-          description: Whether this workflow was created via Builder
-          default: false
-        current_version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Version
-          description: Current published version number
-        stage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stage
-          description: Stage of the loaded config (draft/published)
-      type: object
-      title: WorkflowSummaryResponse
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     UnauthenticatedResponse:
       properties:
         detail:
@@ -730,25 +520,6 @@ components:
           title: Stage
       type: object
       title: TeamResponse
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
     Body_create_workflow_run:
       properties:
         message:
@@ -777,6 +548,130 @@ components:
       required:
       - message
       title: Body_create_workflow_run
+    AgentResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Role
+        model:
+          anyOf:
+          - $ref: '#/components/schemas/ModelResponse'
+          - type: 'null'
+        tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Tools
+        sessions:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Sessions
+        knowledge:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Knowledge
+        memory:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Memory
+        reasoning:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Reasoning
+        default_tools:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Default Tools
+        system_message:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: System Message
+        extra_messages:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra Messages
+        response_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Response Settings
+        introduction:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Introduction
+        streaming:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Streaming
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        input_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input Schema
+        is_component:
+          type: boolean
+          title: Is Component
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+      type: object
+      title: AgentResponse
     WorkflowResponse:
       properties:
         id:
@@ -860,6 +755,92 @@ components:
           description: Stage of the loaded config (draft/published)
       type: object
       title: WorkflowResponse
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    WorkflowSummaryResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: Unique identifier for the workflow
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the workflow
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the workflow
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+          description: Database identifier
+        is_component:
+          type: boolean
+          title: Is Component
+          description: Whether this workflow was created via Builder
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+          description: Current published version number
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+          description: Stage of the loaded config (draft/published)
+      type: object
+      title: WorkflowSummaryResponse
+    ModelResponse:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the model
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model identifier
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          description: Model provider name
+      type: object
+      title: ModelResponse
     InternalServerErrorResponse:
       properties:
         detail:
@@ -879,6 +860,25 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
   securitySchemes:
     HTTPBearer:
       type: http

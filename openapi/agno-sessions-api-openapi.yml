@@ -1216,6 +1216,90 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
+    UpdateSessionRequest:
+      properties:
+        session_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Name
+          description: Updated session name
+        session_state:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session State
+          description: Updated session state
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Updated metadata
+        summary:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Summary
+          description: Session summary
+      type: object
+      title: UpdateSessionRequest
+    SessionType:
+      type: string
+      enum:
+      - agent
+      - team
+      - workflow
+      title: SessionType
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
+    SortOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: SortOrder
+    DeleteSessionRequest:
+      properties:
+        session_ids:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Session Ids
+          description: List of session IDs to delete
+        session_types:
+          items:
+            $ref: '#/components/schemas/SessionType'
+          type: array
+          minItems: 1
+          title: Session Types
+          description: Types of sessions to delete
+      type: object
+      required:
+      - session_ids
+      - session_types
+      title: DeleteSessionRequest
     WorkflowRunSchema:
       properties:
         run_id:
@@ -1388,7 +1472,7 @@ components:
       required:
       - run_id
       title: WorkflowRunSchema
-    UnauthenticatedResponse:
+    ValidationErrorResponse:
       properties:
         detail:
           type: string
@@ -1403,10 +1487,10 @@ components:
       type: object
       required:
       - detail
-      title: UnauthenticatedResponse
+      title: ValidationErrorResponse
       example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     PaginationInfo:
       properties:
         page:
@@ -1441,162 +1525,6 @@ components:
           default: 0
       type: object
       title: PaginationInfo
-    DeleteSessionRequest:
-      properties:
-        session_ids:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Session Ids
-          description: List of session IDs to delete
-        session_types:
-          items:
-            $ref: '#/components/schemas/SessionType'
-          type: array
-          minItems: 1
-          title: Session Types
-          description: Types of sessions to delete
-      type: object
-      required:
-      - session_ids
-      - session_types
-      title: DeleteSessionRequest
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    TeamSessionDetailSchema:
-      properties:
-        session_id:
-          type: string
-          title: Session Id
-          description: Unique session identifier
-        session_name:
-          type: string
-          title: Session Name
-          description: Human-readable session name
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID associated with the session
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-          description: Team ID used in this session
-        session_summary:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session Summary
-          description: Summary of team interactions
-        session_state:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session State
-          description: Current state of the session
-        metrics:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metrics
-          description: Session metrics
-        team_data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Team Data
-          description: Team-specific data
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          description: Additional metadata
-        chat_history:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Chat History
-          description: Complete chat history
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-          description: Session creation timestamp
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-          description: Last update timestamp
-        total_tokens:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total Tokens
-          description: Total tokens used in this session
-      type: object
-      required:
-      - session_id
-      - session_name
-      title: TeamSessionDetailSchema
-    SortOrder:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: SortOrder
     TeamRunSchema:
       properties:
         run_id:
@@ -1783,6 +1711,16 @@ components:
       required:
       - run_id
       title: TeamRunSchema
+    Body_rename_session:
+      properties:
+        session_name:
+          type: string
+          title: Session Name
+          description: New name for the session
+      type: object
+      required:
+      - session_name
+      title: Body_rename_session
     PaginatedResponse_SessionSchema_:
       properties:
         data:
@@ -1799,13 +1737,121 @@ components:
       - data
       - meta
       title: PaginatedResponse[SessionSchema]
-    SessionType:
-      type: string
-      enum:
-      - agent
-      - team
-      - workflow
-      title: SessionType
+    AgentSessionDetailSchema:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: User ID associated with the session
+        agent_session_id:
+          type: string
+          title: Agent Session Id
+          description: Unique agent session identifier
+        session_id:
+          type: string
+          title: Session Id
+          description: Session identifier
+        session_name:
+          type: string
+          title: Session Name
+          description: Human-readable session name
+        session_summary:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session Summary
+          description: Summary of session interactions
+        session_state:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session State
+          description: Current state of the session
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+          description: Agent ID used in this session
+        total_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total Tokens
+          description: Total tokens used in this session
+        agent_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Agent Data
+          description: Agent-specific data
+        metrics:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metrics
+          description: Session metrics
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Additional metadata
+        chat_history:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Chat History
+          description: Complete chat history
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+          description: Session creation timestamp
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Last update timestamp
+      type: object
+      required:
+      - agent_session_id
+      - session_id
+      - session_name
+      title: AgentSessionDetailSchema
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
     CreateSessionRequest:
       properties:
         session_id:
@@ -1860,6 +1906,135 @@ components:
           description: Workflow ID if this is a workflow session
       type: object
       title: CreateSessionRequest
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    TeamSessionDetailSchema:
+      properties:
+        session_id:
+          type: string
+          title: Session Id
+          description: Unique session identifier
+        session_name:
+          type: string
+          title: Session Name
+          description: Human-readable session name
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: User ID associated with the session
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+          description: Team ID used in this session
+        session_summary:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session Summary
+          description: Summary of team interactions
+        session_state:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session State
+          description: Current state of the session
+        metrics:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metrics
+          description: Session metrics
+        team_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Team Data
+          description: Team-specific data
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Additional metadata
+        chat_history:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Chat History
+          description: Complete chat history
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+          description: Session creation timestamp
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Last update timestamp
+        total_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total Tokens
+          description: Total tokens used in this session
+      type: object
+      required:
+      - session_id
+      - session_name
+      title: TeamSessionDetailSchema
     SessionSchema:
       properties:
         session_id:
@@ -1896,35 +2071,81 @@ components:
       - session_id
       - session_name
       title: SessionSchema
-    ValidationErrorResponse:
+    WorkflowSessionDetailSchema:
       properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
+        user_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    Body_rename_session:
-      properties:
+          title: User Id
+          description: User ID associated with the session
+        workflow_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Workflow Id
+          description: Workflow ID used in this session
+        workflow_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Workflow Name
+          description: Name of the workflow
+        session_id:
+          type: string
+          title: Session Id
+          description: Unique session identifier
         session_name:
           type: string
           title: Session Name
-          description: New name for the session
+          description: Human-readable session name
+        session_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session Data
+          description: Complete session data
+        session_state:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Session State
+          description: Current workflow state
+        workflow_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Workflow Data
+          description: Workflow-specific data
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+          description: Additional metadata
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+          description: Session creation timestamp
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Last update timestamp
       type: object
       required:
+      - session_id
       - session_name
-      title: Body_rename_session
+      title: WorkflowSessionDetailSchema
     RunSchema:
       properties:
         run_id:
@@ -2117,227 +2338,6 @@ components:
       required:
       - run_id
       title: RunSchema
-    AgentSessionDetailSchema:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID associated with the session
-        agent_session_id:
-          type: string
-          title: Agent Session Id
-          description: Unique agent session identifier
-        session_id:
-          type: string
-          title: Session Id
-          description: Session identifier
-        session_name:
-          type: string
-          title: Session Name
-          description: Human-readable session name
-        session_summary:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session Summary
-          description: Summary of session interactions
-        session_state:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session State
-          description: Current state of the session
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-          description: Agent ID used in this session
-        total_tokens:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total Tokens
-          description: Total tokens used in this session
-        agent_data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Agent Data
-          description: Agent-specific data
-        metrics:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metrics
-          description: Session metrics
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          description: Additional metadata
-        chat_history:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Chat History
-          description: Complete chat history
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-          description: Session creation timestamp
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-          description: Last update timestamp
-      type: object
-      required:
-      - agent_session_id
-      - session_id
-      - session_name
-      title: AgentSessionDetailSchema
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    WorkflowSessionDetailSchema:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID associated with the session
-        workflow_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Workflow Id
-          description: Workflow ID used in this session
-        workflow_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Workflow Name
-          description: Name of the workflow
-        session_id:
-          type: string
-          title: Session Id
-          description: Unique session identifier
-        session_name:
-          type: string
-          title: Session Name
-          description: Human-readable session name
-        session_data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session Data
-          description: Complete session data
-        session_state:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session State
-          description: Current workflow state
-        workflow_data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Workflow Data
-          description: Workflow-specific data
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          description: Additional metadata
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-          description: Session creation timestamp
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-          description: Last update timestamp
-      type: object
-      required:
-      - session_id
-      - session_name
-      title: WorkflowSessionDetailSchema
-    UpdateSessionRequest:
-      properties:
-        session_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Name
-          description: Updated session name
-        session_state:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Session State
-          description: Updated session state
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          description: Updated metadata
-        summary:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Summary
-          description: Session summary
-      type: object
-      title: UpdateSessionRequest
   securitySchemes:
     HTTPBearer:
       type: http

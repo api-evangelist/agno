@@ -40,9 +40,8 @@ tags:
 - Multi-Agent Systems
 - Python Framework
 - LLM
-- Machine-Learning
-- Agentic AI
-- Open-Source
+- Machine Learning
+- Open Source
 - Agent Runtime
 tags_raw:
 - AI Agents
@@ -53,6 +52,8 @@ tags_raw:
 - Agentic AI
 - Open Source
 - Agent Runtime
+- Machine-Learning
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/agno/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
@@ -312,8 +313,6 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
-  - WhatsApp
-  tags_raw:
   - Whats App
   properties:
   - type: OpenAPI

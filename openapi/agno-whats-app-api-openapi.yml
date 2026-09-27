@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Agno API Reference Whatsapp API
+  title: Agno API Reference WhatsApp API
   description: The all-in-one, private, secure agent platform that runs in your cloud.
   version: 2.5.6
 tags:

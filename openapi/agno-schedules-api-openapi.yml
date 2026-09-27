@@ -328,73 +328,38 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ScheduleUpdate:
+    PaginatedResponse_ScheduleResponse_:
       properties:
-        name:
-          anyOf:
-          - type: string
-            maxLength: 255
-          - type: 'null'
-          title: Name
-        cron_expr:
-          anyOf:
-          - type: string
-            maxLength: 128
-          - type: 'null'
-          title: Cron Expr
-        endpoint:
-          anyOf:
-          - type: string
-            maxLength: 512
-          - type: 'null'
-          title: Endpoint
-        method:
-          anyOf:
-          - type: string
-            maxLength: 10
-          - type: 'null'
-          title: Method
-        description:
-          anyOf:
-          - type: string
-            maxLength: 1024
-          - type: 'null'
-          title: Description
-        payload:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Payload
-        timezone:
-          anyOf:
-          - type: string
-            maxLength: 64
-          - type: 'null'
-          title: Timezone
-        timeout_seconds:
-          anyOf:
-          - type: integer
-            maximum: 86400
-            minimum: 1
-          - type: 'null'
-          title: Timeout Seconds
-        max_retries:
-          anyOf:
-          - type: integer
-            maximum: 10
-            minimum: 0
-          - type: 'null'
-          title: Max Retries
-        retry_delay_seconds:
-          anyOf:
-          - type: integer
-            maximum: 3600
-            minimum: 1
-          - type: 'null'
-          title: Retry Delay Seconds
+        data:
+          items:
+            $ref: '#/components/schemas/ScheduleResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
       type: object
-      title: ScheduleUpdate
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ScheduleResponse]
+    PaginatedResponse_ScheduleRunResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ScheduleRunResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ScheduleRunResponse]
     ScheduleResponse:
       properties:
         id:
@@ -466,6 +431,32 @@ components:
       - retry_delay_seconds
       - enabled
       title: ScheduleResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -475,82 +466,40 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    PaginatedResponse_ScheduleResponse_:
+    PaginationInfo:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ScheduleResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[ScheduleResponse]
-    ScheduleCreate:
-      properties:
-        name:
-          type: string
-          maxLength: 255
-          title: Name
-        cron_expr:
-          type: string
-          maxLength: 128
-          title: Cron Expr
-        endpoint:
-          type: string
-          maxLength: 512
-          title: Endpoint
-        method:
-          type: string
-          maxLength: 10
-          title: Method
-          default: POST
-        description:
-          anyOf:
-          - type: string
-            maxLength: 1024
-          - type: 'null'
-          title: Description
-        payload:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Payload
-        timezone:
-          type: string
-          maxLength: 64
-          title: Timezone
-          default: UTC
-        timeout_seconds:
+        page:
           type: integer
-          maximum: 86400
-          minimum: 1
-          title: Timeout Seconds
-          default: 3600
-        max_retries:
-          type: integer
-          maximum: 10
           minimum: 0
-          title: Max Retries
+          title: Page
+          description: Current page number (0-indexed)
           default: 0
-        retry_delay_seconds:
+        limit:
           type: integer
-          maximum: 3600
           minimum: 1
-          title: Retry Delay Seconds
-          default: 60
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
       type: object
-      required:
-      - name
-      - cron_expr
-      - endpoint
-      title: ScheduleCreate
+      title: PaginationInfo
     ScheduleRunResponse:
       properties:
         id:
@@ -627,82 +576,6 @@ components:
       - attempt
       - status
       title: ScheduleRunResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    PaginationInfo:
-      properties:
-        page:
-          type: integer
-          minimum: 0
-          title: Page
-          description: Current page number (0-indexed)
-          default: 0
-        limit:
-          type: integer
-          minimum: 1
-          title: Limit
-          description: Number of items per page
-          default: 20
-        total_pages:
-          type: integer
-          minimum: 0
-          title: Total Pages
-          description: Total number of pages
-          default: 0
-        total_count:
-          type: integer
-          minimum: 0
-          title: Total Count
-          description: Total count of items
-          default: 0
-        search_time_ms:
-          type: number
-          minimum: 0
-          title: Search Time Ms
-          description: Search execution time in milliseconds
-          default: 0
-      type: object
-      title: PaginationInfo
-    PaginatedResponse_ScheduleRunResponse_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ScheduleRunResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[ScheduleRunResponse]
     ScheduleStateResponse:
       properties:
         id:
@@ -731,6 +604,133 @@ components:
       - enabled
       title: ScheduleStateResponse
       description: Trimmed response for state-changing operations (enable/disable).
+    ScheduleUpdate:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 255
+          - type: 'null'
+          title: Name
+        cron_expr:
+          anyOf:
+          - type: string
+            maxLength: 128
+          - type: 'null'
+          title: Cron Expr
+        endpoint:
+          anyOf:
+          - type: string
+            maxLength: 512
+          - type: 'null'
+          title: Endpoint
+        method:
+          anyOf:
+          - type: string
+            maxLength: 10
+          - type: 'null'
+          title: Method
+        description:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Description
+        payload:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Payload
+        timezone:
+          anyOf:
+          - type: string
+            maxLength: 64
+          - type: 'null'
+          title: Timezone
+        timeout_seconds:
+          anyOf:
+          - type: integer
+            maximum: 86400
+            minimum: 1
+          - type: 'null'
+          title: Timeout Seconds
+        max_retries:
+          anyOf:
+          - type: integer
+            maximum: 10
+            minimum: 0
+          - type: 'null'
+          title: Max Retries
+        retry_delay_seconds:
+          anyOf:
+          - type: integer
+            maximum: 3600
+            minimum: 1
+          - type: 'null'
+          title: Retry Delay Seconds
+      type: object
+      title: ScheduleUpdate
+    ScheduleCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          title: Name
+        cron_expr:
+          type: string
+          maxLength: 128
+          title: Cron Expr
+        endpoint:
+          type: string
+          maxLength: 512
+          title: Endpoint
+        method:
+          type: string
+          maxLength: 10
+          title: Method
+          default: POST
+        description:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Description
+        payload:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Payload
+        timezone:
+          type: string
+          maxLength: 64
+          title: Timezone
+          default: UTC
+        timeout_seconds:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          title: Timeout Seconds
+          default: 3600
+        max_retries:
+          type: integer
+          maximum: 10
+          minimum: 0
+          title: Max Retries
+          default: 0
+        retry_delay_seconds:
+          type: integer
+          maximum: 3600
+          minimum: 1
+          title: Retry Delay Seconds
+          default: 60
+      type: object
+      required:
+      - name
+      - cron_expr
+      - endpoint
+      title: ScheduleCreate
   securitySchemes:
     HTTPBearer:
       type: http

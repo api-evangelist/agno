@@ -739,39 +739,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    ConfigUpdate:
-      properties:
-        config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Config
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Label
-        stage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stage
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-        links:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Links
-      type: object
-      title: ConfigUpdate
     ComponentConfigResponse:
       properties:
         component_id:
@@ -813,80 +780,6 @@ components:
       - config
       - created_at
       title: ComponentConfigResponse
-    ConfigCreate:
-      properties:
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-          description: The configuration data
-        version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version
-          description: Optional version number
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Label
-          description: Optional label (e.g., 'stable')
-        stage:
-          type: string
-          title: Stage
-          description: 'Stage: ''draft'' or ''published'''
-          default: draft
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Notes
-          description: Optional notes
-        links:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Links
-          description: Optional links to child components
-        set_current:
-          type: boolean
-          title: Set Current
-          description: Set as current version
-          default: true
-      type: object
-      required:
-      - config
-      title: ConfigCreate
-    ComponentType:
-      type: string
-      enum:
-      - agent
-      - team
-      - workflow
-      title: ComponentType
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     UnauthenticatedResponse:
       properties:
         detail:
@@ -906,128 +799,6 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    ComponentResponse:
-      properties:
-        component_id:
-          type: string
-          title: Component Id
-        component_type:
-          $ref: '#/components/schemas/ComponentType'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        current_version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Version
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        created_at:
-          type: integer
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Updated At
-      type: object
-      required:
-      - component_id
-      - component_type
-      - created_at
-      title: ComponentResponse
-    ComponentUpdate:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        component_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Component Type
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        current_version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Version
-      type: object
-      title: ComponentUpdate
-    PaginationInfo:
-      properties:
-        page:
-          type: integer
-          minimum: 0
-          title: Page
-          description: Current page number (0-indexed)
-          default: 0
-        limit:
-          type: integer
-          minimum: 1
-          title: Limit
-          description: Number of items per page
-          default: 20
-        total_pages:
-          type: integer
-          minimum: 0
-          title: Total Pages
-          description: Total number of pages
-          default: 0
-        total_count:
-          type: integer
-          minimum: 0
-          title: Total Count
-          description: Total count of items
-          default: 0
-        search_time_ms:
-          type: number
-          minimum: 0
-          title: Search Time Ms
-          description: Search execution time in milliseconds
-          default: 0
-      type: object
-      title: PaginationInfo
-    PaginatedResponse_ComponentResponse_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ComponentResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[ComponentResponse]
     ComponentCreate:
       properties:
         name:
@@ -1090,25 +861,6 @@ components:
       - name
       - component_type
       title: ComponentCreate
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
     NotFoundResponse:
       properties:
         detail:
@@ -1128,6 +880,205 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
+    ConfigUpdate:
+      properties:
+        config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Config
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+        links:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Links
+      type: object
+      title: ConfigUpdate
+    ConfigCreate:
+      properties:
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+          description: The configuration data
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+          description: Optional version number
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+          description: Optional label (e.g., 'stable')
+        stage:
+          type: string
+          title: Stage
+          description: 'Stage: ''draft'' or ''published'''
+          default: draft
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Notes
+          description: Optional notes
+        links:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Links
+          description: Optional links to child components
+        set_current:
+          type: boolean
+          title: Set Current
+          description: Set as current version
+          default: true
+      type: object
+      required:
+      - config
+      title: ConfigCreate
+    PaginatedResponse_ComponentResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ComponentResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[ComponentResponse]
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    ComponentUpdate:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        component_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Component Type
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+      type: object
+      title: ComponentUpdate
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
     InternalServerErrorResponse:
       properties:
         detail:
@@ -1147,6 +1098,55 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
+    ComponentResponse:
+      properties:
+        component_id:
+          type: string
+          title: Component Id
+        component_type:
+          $ref: '#/components/schemas/ComponentType'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        created_at:
+          type: integer
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - component_id
+      - component_type
+      - created_at
+      title: ComponentResponse
+    ComponentType:
+      type: string
+      enum:
+      - agent
+      - team
+      - workflow
+      title: ComponentType
   securitySchemes:
     HTTPBearer:
       type: http
