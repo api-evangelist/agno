@@ -534,25 +534,6 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
     TeamResponse:
       properties:
         id:
@@ -685,6 +666,28 @@ components:
           title: Stage
       type: object
       title: TeamResponse
+    ModelResponse:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the model
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model identifier
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          description: Model provider name
+      type: object
+      title: ModelResponse
     AgentResponse:
       properties:
         id:
@@ -809,85 +812,6 @@ components:
           title: Stage
       type: object
       title: AgentResponse
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    ModelResponse:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the model
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model identifier
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          description: Model provider name
-      type: object
-      title: ModelResponse
-    InternalServerErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: InternalServerErrorResponse
-      example:
-        detail: Internal server error
-        error_code: INTERNAL_SERVER_ERROR
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     Body_create_team_run:
       properties:
         message:
@@ -932,6 +856,82 @@ components:
       required:
       - message
       title: Body_create_team_run
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    InternalServerErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: InternalServerErrorResponse
+      example:
+        detail: Internal server error
+        error_code: INTERNAL_SERVER_ERROR
   securitySchemes:
     HTTPBearer:
       type: http

@@ -350,6 +350,51 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
+    WorkflowSummaryResponse:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: Unique identifier for the workflow
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the workflow
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the workflow
+        db_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Db Id
+          description: Database identifier
+        is_component:
+          type: boolean
+          title: Is Component
+          description: Whether this workflow was created via Builder
+          default: false
+        current_version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Current Version
+          description: Current published version number
+        stage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Stage
+          description: Stage of the loaded config (draft/published)
+      type: object
+      title: WorkflowSummaryResponse
     UnauthenticatedResponse:
       properties:
         detail:
@@ -369,25 +414,6 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
     TeamResponse:
       properties:
         id:
@@ -520,34 +546,28 @@ components:
           title: Stage
       type: object
       title: TeamResponse
-    Body_create_workflow_run:
+    ModelResponse:
       properties:
-        message:
-          type: string
-          title: Message
-        stream:
-          type: boolean
-          title: Stream
-          default: true
-        session_id:
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Session Id
-        user_id:
+          title: Name
+          description: Name of the model
+        model:
           anyOf:
           - type: string
           - type: 'null'
-          title: User Id
-        version:
+          title: Model
+          description: Model identifier
+        provider:
           anyOf:
-          - type: integer
+          - type: string
           - type: 'null'
-          title: Version
+          title: Provider
+          description: Model provider name
       type: object
-      required:
-      - message
-      title: Body_create_workflow_run
+      title: ModelResponse
     AgentResponse:
       properties:
         id:
@@ -672,6 +692,53 @@ components:
           title: Stage
       type: object
       title: AgentResponse
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    Body_create_workflow_run:
+      properties:
+        message:
+          type: string
+          title: Message
+        stream:
+          type: boolean
+          title: Stream
+          default: true
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+      type: object
+      required:
+      - message
+      title: Body_create_workflow_run
     WorkflowResponse:
       properties:
         id:
@@ -755,6 +822,25 @@ components:
           description: Stage of the loaded config (draft/published)
       type: object
       title: WorkflowResponse
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
     ValidationErrorResponse:
       properties:
         detail:
@@ -774,73 +860,6 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
-    WorkflowSummaryResponse:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-          description: Unique identifier for the workflow
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the workflow
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Description of the workflow
-        db_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Db Id
-          description: Database identifier
-        is_component:
-          type: boolean
-          title: Is Component
-          description: Whether this workflow was created via Builder
-          default: false
-        current_version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Version
-          description: Current published version number
-        stage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Stage
-          description: Stage of the loaded config (draft/published)
-      type: object
-      title: WorkflowSummaryResponse
-    ModelResponse:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the model
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model identifier
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          description: Model provider name
-      type: object
-      title: ModelResponse
     InternalServerErrorResponse:
       properties:
         detail:
@@ -860,25 +879,6 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
   securitySchemes:
     HTTPBearer:
       type: http

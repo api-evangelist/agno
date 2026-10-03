@@ -115,79 +115,6 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
-    PaginatedResponse_RegistryContentResponse_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RegistryContentResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[RegistryContentResponse]
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
     PaginationInfo:
       properties:
         page:
@@ -222,6 +149,107 @@ components:
           default: 0
       type: object
       title: PaginationInfo
+    RegistryContentResponse:
+      properties:
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/RegistryResourceType'
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - name
+      - type
+      title: RegistryContentResponse
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    PaginatedResponse_RegistryContentResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RegistryContentResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[RegistryContentResponse]
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     InternalServerErrorResponse:
       properties:
         detail:
@@ -254,34 +282,6 @@ components:
       - team
       title: RegistryResourceType
       description: Types of resources that can be stored in a registry.
-    RegistryContentResponse:
-      properties:
-        name:
-          type: string
-          title: Name
-        type:
-          $ref: '#/components/schemas/RegistryResourceType'
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - name
-      - type
-      title: RegistryContentResponse
   securitySchemes:
     HTTPBearer:
       type: http

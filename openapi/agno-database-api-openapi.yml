@@ -145,6 +145,25 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
     NotFoundResponse:
       properties:
         detail:
@@ -202,25 +221,6 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
   securitySchemes:
     HTTPBearer:
       type: http
