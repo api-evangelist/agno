@@ -313,6 +313,8 @@ apis:
   humanURL: https://docs.agno.com/features/api
   baseURL: https://api.agno.com
   tags:
+  - WhatsApp
+  tags_raw:
   - Whats App
   properties:
   - type: OpenAPI
