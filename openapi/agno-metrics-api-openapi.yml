@@ -220,63 +220,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    MetricsResponse:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/DayAggregatedMetrics'
-          type: array
-          title: Metrics
-          description: List of daily aggregated metrics
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-          description: Timestamp of the most recent metrics update
-      type: object
-      required:
-      - metrics
-      title: MetricsResponse
     DayAggregatedMetrics:
       properties:
         id:
@@ -362,25 +305,6 @@ components:
       - updated_at
       title: DayAggregatedMetrics
       description: Aggregated metrics for a given day
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
     ValidationErrorResponse:
       properties:
         detail:
@@ -400,6 +324,82 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    MetricsResponse:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/DayAggregatedMetrics'
+          type: array
+          title: Metrics
+          description: List of daily aggregated metrics
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Timestamp of the most recent metrics update
+      type: object
+      required:
+      - metrics
+      title: MetricsResponse
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
     InternalServerErrorResponse:
       properties:
         detail:

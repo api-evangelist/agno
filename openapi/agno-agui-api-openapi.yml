@@ -44,6 +44,188 @@ paths:
               schema: {}
 components:
   schemas:
+    ToolMessage:
+      properties:
+        id:
+          type: string
+          title: Id
+        role:
+          type: string
+          const: tool
+          title: Role
+          default: tool
+        content:
+          type: string
+          title: Content
+        toolCallId:
+          type: string
+          title: Toolcallid
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        encryptedValue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encryptedvalue
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - content
+      - toolCallId
+      title: ToolMessage
+      description: A tool result message.
+    FunctionCall:
+      properties:
+        name:
+          type: string
+          title: Name
+        arguments:
+          type: string
+          title: Arguments
+      additionalProperties: true
+      type: object
+      required:
+      - name
+      - arguments
+      title: FunctionCall
+      description: Name and arguments of a function call.
+    ActivityMessage:
+      properties:
+        id:
+          type: string
+          title: Id
+        role:
+          type: string
+          const: activity
+          title: Role
+          default: activity
+        activityType:
+          type: string
+          title: Activitytype
+        content:
+          additionalProperties: true
+          type: object
+          title: Content
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - activityType
+      - content
+      title: ActivityMessage
+      description: An activity progress message emitted between chat messages.
+    BinaryInputContent:
+      properties:
+        type:
+          type: string
+          const: binary
+          title: Type
+          default: binary
+        mimeType:
+          type: string
+          title: Mimetype
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+        data:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+      additionalProperties: true
+      type: object
+      required:
+      - mimeType
+      title: BinaryInputContent
+      description: A binary payload reference in a multimodal user message.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SystemMessage:
+      properties:
+        id:
+          type: string
+          title: Id
+        role:
+          type: string
+          const: system
+          title: Role
+          default: system
+        content:
+          type: string
+          title: Content
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        encryptedValue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encryptedvalue
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - content
+      title: SystemMessage
+      description: A system message.
+    Context:
+      properties:
+        description:
+          type: string
+          title: Description
+        value:
+          type: string
+          title: Value
+      additionalProperties: true
+      type: object
+      required:
+      - description
+      - value
+      title: Context
+      description: Additional context for the agent.
+    Tool:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        parameters:
+          title: Parameters
+      additionalProperties: true
+      type: object
+      required:
+      - name
+      - description
+      - parameters
+      title: Tool
+      description: A tool definition.
     UserMessage:
       properties:
         id:
@@ -85,52 +267,6 @@ components:
       - content
       title: UserMessage
       description: A user message supporting text or multimodal content.
-    TextInputContent:
-      properties:
-        type:
-          type: string
-          const: text
-          title: Type
-          default: text
-        text:
-          type: string
-          title: Text
-      additionalProperties: true
-      type: object
-      required:
-      - text
-      title: TextInputContent
-      description: A text fragment in a multimodal user message.
-    SystemMessage:
-      properties:
-        id:
-          type: string
-          title: Id
-        role:
-          type: string
-          const: system
-          title: Role
-          default: system
-        content:
-          type: string
-          title: Content
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        encryptedValue:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Encryptedvalue
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - content
-      title: SystemMessage
-      description: A system message.
     AssistantMessage:
       properties:
         id:
@@ -169,58 +305,6 @@ components:
       - id
       title: AssistantMessage
       description: An assistant message.
-    ToolMessage:
-      properties:
-        id:
-          type: string
-          title: Id
-        role:
-          type: string
-          const: tool
-          title: Role
-          default: tool
-        content:
-          type: string
-          title: Content
-        toolCallId:
-          type: string
-          title: Toolcallid
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-        encryptedValue:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Encryptedvalue
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - content
-      - toolCallId
-      title: ToolMessage
-      description: A tool result message.
-    Tool:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        parameters:
-          title: Parameters
-      additionalProperties: true
-      type: object
-      required:
-      - name
-      - description
-      - parameters
-      title: Tool
-      description: A tool definition.
     DeveloperMessage:
       properties:
         id:
@@ -251,166 +335,6 @@ components:
       - content
       title: DeveloperMessage
       description: A developer message.
-    BinaryInputContent:
-      properties:
-        type:
-          type: string
-          const: binary
-          title: Type
-          default: binary
-        mimeType:
-          type: string
-          title: Mimetype
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Url
-        data:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Data
-        filename:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filename
-      additionalProperties: true
-      type: object
-      required:
-      - mimeType
-      title: BinaryInputContent
-      description: A binary payload reference in a multimodal user message.
-    ReasoningMessage:
-      properties:
-        id:
-          type: string
-          title: Id
-        role:
-          type: string
-          const: reasoning
-          title: Role
-          default: reasoning
-        content:
-          type: string
-          title: Content
-        encryptedValue:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Encryptedvalue
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - content
-      title: ReasoningMessage
-      description: A reasoning message containing the agent's internal reasoning process.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ToolCall:
-      properties:
-        id:
-          type: string
-          title: Id
-        type:
-          type: string
-          const: function
-          title: Type
-          default: function
-        function:
-          $ref: '#/components/schemas/FunctionCall'
-        encryptedValue:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Encryptedvalue
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - function
-      title: ToolCall
-      description: A tool call, modelled after OpenAI tool calls.
-    Context:
-      properties:
-        description:
-          type: string
-          title: Description
-        value:
-          type: string
-          title: Value
-      additionalProperties: true
-      type: object
-      required:
-      - description
-      - value
-      title: Context
-      description: Additional context for the agent.
-    ActivityMessage:
-      properties:
-        id:
-          type: string
-          title: Id
-        role:
-          type: string
-          const: activity
-          title: Role
-          default: activity
-        activityType:
-          type: string
-          title: Activitytype
-        content:
-          additionalProperties: true
-          type: object
-          title: Content
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - activityType
-      - content
-      title: ActivityMessage
-      description: An activity progress message emitted between chat messages.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     RunAgentInput:
       properties:
         threadId:
@@ -472,21 +396,97 @@ components:
       - forwardedProps
       title: RunAgentInput
       description: Input for running an agent.
-    FunctionCall:
+    TextInputContent:
       properties:
-        name:
+        type:
           type: string
-          title: Name
-        arguments:
+          const: text
+          title: Type
+          default: text
+        text:
           type: string
-          title: Arguments
+          title: Text
       additionalProperties: true
       type: object
       required:
-      - name
-      - arguments
-      title: FunctionCall
-      description: Name and arguments of a function call.
+      - text
+      title: TextInputContent
+      description: A text fragment in a multimodal user message.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ToolCall:
+      properties:
+        id:
+          type: string
+          title: Id
+        type:
+          type: string
+          const: function
+          title: Type
+          default: function
+        function:
+          $ref: '#/components/schemas/FunctionCall'
+        encryptedValue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encryptedvalue
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - function
+      title: ToolCall
+      description: A tool call, modelled after OpenAI tool calls.
+    ReasoningMessage:
+      properties:
+        id:
+          type: string
+          title: Id
+        role:
+          type: string
+          const: reasoning
+          title: Role
+          default: reasoning
+        content:
+          type: string
+          title: Content
+        encryptedValue:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encryptedvalue
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - content
+      title: ReasoningMessage
+      description: A reasoning message containing the agent's internal reasoning process.
   securitySchemes:
     HTTPBearer:
       type: http

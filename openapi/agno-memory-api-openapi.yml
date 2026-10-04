@@ -879,25 +879,180 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    DeleteMemoriesRequest:
+    UserMemorySchema:
       properties:
-        memory_ids:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Memory Ids
-          description: List of memory IDs to delete
+        memory_id:
+          type: string
+          title: Memory Id
+          description: Unique identifier for the memory
+        memory:
+          type: string
+          title: Memory
+          description: Memory content text
+        topics:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Topics
+          description: Topics or tags associated with the memory
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+          description: Agent ID associated with this memory
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+          description: Team ID associated with this memory
         user_id:
           anyOf:
           - type: string
           - type: 'null'
           title: User Id
-          description: User ID to filter memories for deletion
+          description: User ID who owns this memory
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+          description: Timestamp when memory was last updated
       type: object
       required:
-      - memory_ids
-      title: DeleteMemoriesRequest
+      - memory_id
+      - memory
+      title: UserMemorySchema
+    UserStatsSchema:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: User ID
+        total_memories:
+          type: integer
+          minimum: 0
+          title: Total Memories
+          description: Total number of memories for this user
+        last_memory_updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Memory Updated At
+          description: Timestamp of the most recent memory update
+      type: object
+      required:
+      - user_id
+      - total_memories
+      title: UserStatsSchema
+      description: Schema for user memory statistics
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
+    OptimizeMemoriesRequest:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: User ID to optimize memories for
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model to use for optimization in format 'provider:model_id' (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022', 'google:gemini-2.0-flash-exp'). If not specified, uses MemoryManager's default model (gpt-4o).
+        apply:
+          type: boolean
+          title: Apply
+          description: If True, apply optimization changes to database. If False, return preview only without saving.
+          default: true
+      type: object
+      required:
+      - user_id
+      title: OptimizeMemoriesRequest
+      description: Schema for memory optimization request
+    UserMemoryCreateSchema:
+      properties:
+        memory:
+          type: string
+          maxLength: 5000
+          minLength: 1
+          title: Memory
+          description: Memory content text
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: User ID who owns this memory
+        topics:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Topics
+          description: Topics or tags to categorize the memory
+      type: object
+      required:
+      - memory
+      title: UserMemoryCreateSchema
+      description: Define the payload expected for creating a new user memory
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
     OptimizeMemoriesResponse:
       properties:
         memories:
@@ -948,6 +1103,44 @@ components:
       - reduction_percentage
       title: OptimizeMemoriesResponse
       description: Schema for memory optimization response
+    SortOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: SortOrder
+    PaginatedResponse_UserMemorySchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserMemorySchema'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[UserMemorySchema]
+    PaginatedResponse_UserStatsSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserStatsSchema'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[UserStatsSchema]
     UnauthenticatedResponse:
       properties:
         detail:
@@ -967,142 +1160,6 @@ components:
       example:
         detail: Unauthenticated access
         error_code: UNAUTHENTICATED
-    UserMemorySchema:
-      properties:
-        memory_id:
-          type: string
-          title: Memory Id
-          description: Unique identifier for the memory
-        memory:
-          type: string
-          title: Memory
-          description: Memory content text
-        topics:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Topics
-          description: Topics or tags associated with the memory
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-          description: Agent ID associated with this memory
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-          description: Team ID associated with this memory
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID who owns this memory
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-          description: Timestamp when memory was last updated
-      type: object
-      required:
-      - memory_id
-      - memory
-      title: UserMemorySchema
-    PaginatedResponse_UserStatsSchema_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/UserStatsSchema'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[UserStatsSchema]
-    OptimizeMemoriesRequest:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: User ID to optimize memories for
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model to use for optimization in format 'provider:model_id' (e.g., 'openai:gpt-4o-mini', 'anthropic:claude-3-5-sonnet-20241022', 'google:gemini-2.0-flash-exp'). If not specified, uses MemoryManager's default model (gpt-4o).
-        apply:
-          type: boolean
-          title: Apply
-          description: If True, apply optimization changes to database. If False, return preview only without saving.
-          default: true
-      type: object
-      required:
-      - user_id
-      title: OptimizeMemoriesRequest
-      description: Schema for memory optimization request
-    PaginatedResponse_UserMemorySchema_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/UserMemorySchema'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[UserMemorySchema]
-    PaginationInfo:
-      properties:
-        page:
-          type: integer
-          minimum: 0
-          title: Page
-          description: Current page number (0-indexed)
-          default: 0
-        limit:
-          type: integer
-          minimum: 1
-          title: Limit
-          description: Number of items per page
-          default: 20
-        total_pages:
-          type: integer
-          minimum: 0
-          title: Total Pages
-          description: Total number of pages
-          default: 0
-        total_count:
-          type: integer
-          minimum: 0
-          title: Total Count
-          description: Total count of items
-          default: 0
-        search_time_ms:
-          type: number
-          minimum: 0
-          title: Search Time Ms
-          description: Search execution time in milliseconds
-          default: 0
-      type: object
-      title: PaginationInfo
     BadRequestResponse:
       properties:
         detail:
@@ -1122,63 +1179,6 @@ components:
       example:
         detail: Bad request
         error_code: BAD_REQUEST
-    SortOrder:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: SortOrder
-    UserStatsSchema:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: User ID
-        total_memories:
-          type: integer
-          minimum: 0
-          title: Total Memories
-          description: Total number of memories for this user
-        last_memory_updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Memory Updated At
-          description: Timestamp of the most recent memory update
-      type: object
-      required:
-      - user_id
-      - total_memories
-      title: UserStatsSchema
-      description: Schema for user memory statistics
-    UserMemoryCreateSchema:
-      properties:
-        memory:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: Memory
-          description: Memory content text
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: User ID who owns this memory
-        topics:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Topics
-          description: Topics or tags to categorize the memory
-      type: object
-      required:
-      - memory
-      title: UserMemoryCreateSchema
-      description: Define the payload expected for creating a new user memory
     NotFoundResponse:
       properties:
         detail:
@@ -1198,25 +1198,25 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
-    ValidationErrorResponse:
+    DeleteMemoriesRequest:
       properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
+        memory_ids:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Memory Ids
+          description: List of memory IDs to delete
+        user_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Error Code
-          description: Error code for categorization
+          title: User Id
+          description: User ID to filter memories for deletion
       type: object
       required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
+      - memory_ids
+      title: DeleteMemoriesRequest
     InternalServerErrorResponse:
       properties:
         detail:

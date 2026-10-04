@@ -96,7 +96,20 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    UnauthenticatedResponse:
+    RegistryResourceType:
+      type: string
+      enum:
+      - tool
+      - model
+      - db
+      - vector_db
+      - schema
+      - function
+      - agent
+      - team
+      title: RegistryResourceType
+      description: Types of resources that can be stored in a registry.
+    ValidationErrorResponse:
       properties:
         detail:
           type: string
@@ -111,10 +124,10 @@ components:
       type: object
       required:
       - detail
-      title: UnauthenticatedResponse
+      title: ValidationErrorResponse
       example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     PaginationInfo:
       properties:
         page:
@@ -149,6 +162,60 @@ components:
           default: 0
       type: object
       title: PaginationInfo
+    PaginatedResponse_RegistryContentResponse_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RegistryContentResponse'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[RegistryContentResponse]
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
     RegistryContentResponse:
       properties:
         name:
@@ -177,41 +244,6 @@ components:
       - name
       - type
       title: RegistryContentResponse
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    PaginatedResponse_RegistryContentResponse_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RegistryContentResponse'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[RegistryContentResponse]
     NotFoundResponse:
       properties:
         detail:
@@ -231,25 +263,6 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
     InternalServerErrorResponse:
       properties:
         detail:
@@ -269,19 +282,6 @@ components:
       example:
         detail: Internal server error
         error_code: INTERNAL_SERVER_ERROR
-    RegistryResourceType:
-      type: string
-      enum:
-      - tool
-      - model
-      - db
-      - vector_db
-      - schema
-      - function
-      - agent
-      - team
-      title: RegistryResourceType
-      description: Types of resources that can be stored in a registry.
   securitySchemes:
     HTTPBearer:
       type: http

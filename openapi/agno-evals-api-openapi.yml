@@ -539,18 +539,19 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    UpdateEvalRunRequest:
+    DeleteEvalRunsRequest:
       properties:
-        name:
-          type: string
-          maxLength: 255
-          minLength: 1
-          title: Name
-          description: New name for the evaluation run
+        eval_run_ids:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Eval Run Ids
+          description: List of evaluation run IDs to delete
       type: object
       required:
-      - name
-      title: UpdateEvalRunRequest
+      - eval_run_ids
+      title: DeleteEvalRunsRequest
     EvalRunInput:
       properties:
         agent_id:
@@ -661,99 +662,6 @@ components:
       - eval_type
       - input
       title: EvalRunInput
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    PaginationInfo:
-      properties:
-        page:
-          type: integer
-          minimum: 0
-          title: Page
-          description: Current page number (0-indexed)
-          default: 0
-        limit:
-          type: integer
-          minimum: 1
-          title: Limit
-          description: Number of items per page
-          default: 20
-        total_pages:
-          type: integer
-          minimum: 0
-          title: Total Pages
-          description: Total number of pages
-          default: 0
-        total_count:
-          type: integer
-          minimum: 0
-          title: Total Count
-          description: Total count of items
-          default: 0
-        search_time_ms:
-          type: number
-          minimum: 0
-          title: Search Time Ms
-          description: Search execution time in milliseconds
-          default: 0
-      type: object
-      title: PaginationInfo
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    EvalType:
-      type: string
-      enum:
-      - accuracy
-      - agent_as_judge
-      - performance
-      - reliability
-      title: EvalType
-    SortOrder:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: SortOrder
-    EvalFilterType:
-      type: string
-      enum:
-      - agent
-      - team
-      - workflow
-      title: EvalFilterType
     EvalSchema:
       properties:
         id:
@@ -837,38 +745,6 @@ components:
       - eval_type
       - eval_data
       title: EvalSchema
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
-    DeleteEvalRunsRequest:
-      properties:
-        eval_run_ids:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Eval Run Ids
-          description: List of evaluation run IDs to delete
-      type: object
-      required:
-      - eval_run_ids
-      title: DeleteEvalRunsRequest
     ValidationErrorResponse:
       properties:
         detail:
@@ -888,6 +764,18 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
+    UpdateEvalRunRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 1
+          title: Name
+          description: New name for the evaluation run
+      type: object
+      required:
+      - name
+      title: UpdateEvalRunRequest
     PaginatedResponse_EvalSchema_:
       properties:
         data:
@@ -904,6 +792,118 @@ components:
       - data
       - meta
       title: PaginatedResponse[EvalSchema]
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    SortOrder:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: SortOrder
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    EvalType:
+      type: string
+      enum:
+      - accuracy
+      - agent_as_judge
+      - performance
+      - reliability
+      title: EvalType
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    EvalFilterType:
+      type: string
+      enum:
+      - agent
+      - team
+      - workflow
+      title: EvalFilterType
     InternalServerErrorResponse:
       properties:
         detail:

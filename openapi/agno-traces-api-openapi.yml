@@ -763,58 +763,140 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    TraceSessionStats:
+    TraceSummary:
       properties:
-        session_id:
+        trace_id:
           type: string
+          title: Trace Id
+          description: Unique trace identifier
+        name:
+          type: string
+          title: Name
+          description: Trace name (usually root span name)
+        status:
+          type: string
+          title: Status
+          description: Overall status (OK, ERROR, UNSET)
+        duration:
+          type: string
+          title: Duration
+          description: Human-readable total duration
+        start_time:
+          type: string
+          format: date-time
+          title: Start Time
+          description: Trace start time (Pydantic auto-serializes to ISO 8601)
+        end_time:
+          type: string
+          format: date-time
+          title: End Time
+          description: Trace end time (Pydantic auto-serializes to ISO 8601)
+        total_spans:
+          type: integer
+          title: Total Spans
+          description: Total number of spans in this trace
+        error_count:
+          type: integer
+          title: Error Count
+          description: Number of spans with errors
+        input:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Input
+          description: Input to the agent
+        run_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Run Id
+          description: Associated run ID
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Session Id
-          description: Session identifier
+          description: Associated session ID
         user_id:
           anyOf:
           - type: string
           - type: 'null'
           title: User Id
-          description: User ID associated with the session
+          description: Associated user ID
         agent_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Agent Id
-          description: Agent ID(s) used in the session
+          description: Associated agent ID
         team_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Team Id
-          description: Team ID associated with the session
+          description: Associated team ID
         workflow_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Workflow Id
-          description: Workflow ID associated with the session
-        total_traces:
-          type: integer
-          title: Total Traces
-          description: Total number of traces in this session
-        first_trace_at:
+          description: Associated workflow ID
+        created_at:
           type: string
           format: date-time
-          title: First Trace At
-          description: Time of first trace (Pydantic auto-serializes to ISO 8601)
-        last_trace_at:
-          type: string
-          format: date-time
-          title: Last Trace At
-          description: Time of last trace (Pydantic auto-serializes to ISO 8601)
+          title: Created At
+          description: Time when trace was created (Pydantic auto-serializes to ISO 8601)
       type: object
       required:
-      - session_id
-      - total_traces
-      - first_trace_at
-      - last_trace_at
-      title: TraceSessionStats
-      description: Aggregated trace statistics grouped by session
+      - trace_id
+      - name
+      - status
+      - duration
+      - start_time
+      - end_time
+      - total_spans
+      - error_count
+      - created_at
+      title: TraceSummary
+      description: Summary information for trace list view
+    PaginatedResponse_TraceSessionStats_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TraceSessionStats'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[TraceSessionStats]
+    FilterSchemaResponse:
+      properties:
+        fields:
+          items:
+            $ref: '#/components/schemas/FilterFieldSchema'
+          type: array
+          title: Fields
+          description: Available filterable fields
+        logical_operators:
+          items:
+            type: string
+          type: array
+          title: Logical Operators
+          description: Logical operators for combining filter clauses
+          default:
+          - AND
+          - OR
+      type: object
+      required:
+      - fields
+      title: FilterSchemaResponse
+      description: Response for the filter schema endpoint. Tells the FE what fields, operators, and values are available.
     TraceNode:
       properties:
         id:
@@ -904,213 +986,6 @@ components:
       - status
       title: TraceNode
       description: Recursive node structure for rendering trace hierarchy in the frontend
-    FilterSchemaResponse:
-      properties:
-        fields:
-          items:
-            $ref: '#/components/schemas/FilterFieldSchema'
-          type: array
-          title: Fields
-          description: Available filterable fields
-        logical_operators:
-          items:
-            type: string
-          type: array
-          title: Logical Operators
-          description: Logical operators for combining filter clauses
-          default:
-          - AND
-          - OR
-      type: object
-      required:
-      - fields
-      title: FilterSchemaResponse
-      description: Response for the filter schema endpoint. Tells the FE what fields, operators, and values are available.
-    UnauthenticatedResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: UnauthenticatedResponse
-      example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    FilterFieldSchema:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: Column/field name used in filter expressions
-        label:
-          type: string
-          title: Label
-          description: Human-readable display label for the UI
-        type:
-          type: string
-          title: Type
-          description: 'Field data type: string, number, datetime, enum'
-        operators:
-          items:
-            type: string
-          type: array
-          title: Operators
-          description: List of valid filter operators for this field
-        values:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Values
-          description: Allowed enum values (for autocomplete/dropdown)
-      type: object
-      required:
-      - key
-      - label
-      - type
-      - operators
-      title: FilterFieldSchema
-      description: Schema describing a single filterable field for the frontend filter bar.
-    TraceSearchRequest:
-      properties:
-        filter:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Filter
-          description: 'FilterExpr DSL as JSON dict. Supports operators: EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH, AND, OR, NOT.'
-        group_by:
-          $ref: '#/components/schemas/TraceSearchGroupBy'
-          description: 'Grouping mode: ''run'' returns individual TraceDetail, ''session'' returns aggregated TraceSessionStats.'
-          default: run
-        page:
-          type: integer
-          minimum: 1
-          title: Page
-          description: Page number (1-indexed)
-          default: 1
-        limit:
-          type: integer
-          maximum: 100
-          minimum: 1
-          title: Limit
-          description: Number of traces per page (max 100)
-          default: 20
-      type: object
-      title: TraceSearchRequest
-      description: "Request body for POST /traces/search with advanced filtering.\n\nThe filter field accepts a FilterExpr DSL dict supporting composable queries\nwith AND/OR/NOT logic and operators like EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH.\n\nExample for run grouping (default):\n    {\n        \"filter\": {\n            \"op\": \"AND\",\n            \"conditions\": [\n                {\"op\": \"EQ\", \"key\": \"status\", \"value\": \"OK\"},\n                {\"op\": \"CONTAINS\", \"key\": \"user_id\", \"value\": \"admin\"}\n            ]\n        },\n        \"group_by\": \"run\",\n        \"page\": 1,\n        \"limit\": 20\n    }\n\nExample for session grouping:\n    {\n        \"filter\": {\"op\": \"EQ\", \"key\": \"agent_id\", \"value\": \"my-agent\"},\n        \"group_by\": \"session\",\n        \"page\": 1,\n        \"limit\": 20\n    }"
-    PaginationInfo:
-      properties:
-        page:
-          type: integer
-          minimum: 0
-          title: Page
-          description: Current page number (0-indexed)
-          default: 0
-        limit:
-          type: integer
-          minimum: 1
-          title: Limit
-          description: Number of items per page
-          default: 20
-        total_pages:
-          type: integer
-          minimum: 0
-          title: Total Pages
-          description: Total number of pages
-          default: 0
-        total_count:
-          type: integer
-          minimum: 0
-          title: Total Count
-          description: Total count of items
-          default: 0
-        search_time_ms:
-          type: number
-          minimum: 0
-          title: Search Time Ms
-          description: Search execution time in milliseconds
-          default: 0
-      type: object
-      title: PaginationInfo
-    PaginatedResponse_TraceSessionStats_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TraceSessionStats'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[TraceSessionStats]
-    BadRequestResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: BadRequestResponse
-      example:
-        detail: Bad request
-        error_code: BAD_REQUEST
-    PaginatedResponse_TraceSummary_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TraceSummary'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[TraceSummary]
-    PaginatedResponse_TraceDetail_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TraceDetail'
-          type: array
-          title: Data
-          description: List of items for the current page
-        meta:
-          $ref: '#/components/schemas/PaginationInfo'
-          description: Pagination metadata
-      type: object
-      required:
-      - data
-      - meta
-      title: PaginatedResponse[TraceDetail]
     TraceDetail:
       properties:
         trace_id:
@@ -1226,128 +1101,6 @@ components:
       - tree
       title: TraceDetail
       description: Detailed trace information with hierarchical span tree
-    TraceSearchGroupBy:
-      type: string
-      enum:
-      - run
-      - session
-      title: TraceSearchGroupBy
-      description: Grouping options for trace search results.
-    NotFoundResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: NotFoundResponse
-      example:
-        detail: Not found
-        error_code: NOT_FOUND
-    TraceSummary:
-      properties:
-        trace_id:
-          type: string
-          title: Trace Id
-          description: Unique trace identifier
-        name:
-          type: string
-          title: Name
-          description: Trace name (usually root span name)
-        status:
-          type: string
-          title: Status
-          description: Overall status (OK, ERROR, UNSET)
-        duration:
-          type: string
-          title: Duration
-          description: Human-readable total duration
-        start_time:
-          type: string
-          format: date-time
-          title: Start Time
-          description: Trace start time (Pydantic auto-serializes to ISO 8601)
-        end_time:
-          type: string
-          format: date-time
-          title: End Time
-          description: Trace end time (Pydantic auto-serializes to ISO 8601)
-        total_spans:
-          type: integer
-          title: Total Spans
-          description: Total number of spans in this trace
-        error_count:
-          type: integer
-          title: Error Count
-          description: Number of spans with errors
-        input:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Input
-          description: Input to the agent
-        run_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Run Id
-          description: Associated run ID
-        session_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Id
-          description: Associated session ID
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: Associated user ID
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-          description: Associated agent ID
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-          description: Associated team ID
-        workflow_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Workflow Id
-          description: Associated workflow ID
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Time when trace was created (Pydantic auto-serializes to ISO 8601)
-      type: object
-      required:
-      - trace_id
-      - name
-      - status
-      - duration
-      - start_time
-      - end_time
-      - total_spans
-      - error_count
-      - created_at
-      title: TraceSummary
-      description: Summary information for trace list view
     ValidationErrorResponse:
       properties:
         detail:
@@ -1367,6 +1120,253 @@ components:
       example:
         detail: Validation error
         error_code: VALIDATION_ERROR
+    PaginatedResponse_TraceDetail_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TraceDetail'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[TraceDetail]
+    TraceSessionStats:
+      properties:
+        session_id:
+          type: string
+          title: Session Id
+          description: Session identifier
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: User ID associated with the session
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+          description: Agent ID(s) used in the session
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+          description: Team ID associated with the session
+        workflow_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Workflow Id
+          description: Workflow ID associated with the session
+        total_traces:
+          type: integer
+          title: Total Traces
+          description: Total number of traces in this session
+        first_trace_at:
+          type: string
+          format: date-time
+          title: First Trace At
+          description: Time of first trace (Pydantic auto-serializes to ISO 8601)
+        last_trace_at:
+          type: string
+          format: date-time
+          title: Last Trace At
+          description: Time of last trace (Pydantic auto-serializes to ISO 8601)
+      type: object
+      required:
+      - session_id
+      - total_traces
+      - first_trace_at
+      - last_trace_at
+      title: TraceSessionStats
+      description: Aggregated trace statistics grouped by session
+    PaginatedResponse_TraceSummary_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TraceSummary'
+          type: array
+          title: Data
+          description: List of items for the current page
+        meta:
+          $ref: '#/components/schemas/PaginationInfo'
+          description: Pagination metadata
+      type: object
+      required:
+      - data
+      - meta
+      title: PaginatedResponse[TraceSummary]
+    PaginationInfo:
+      properties:
+        page:
+          type: integer
+          minimum: 0
+          title: Page
+          description: Current page number (0-indexed)
+          default: 0
+        limit:
+          type: integer
+          minimum: 1
+          title: Limit
+          description: Number of items per page
+          default: 20
+        total_pages:
+          type: integer
+          minimum: 0
+          title: Total Pages
+          description: Total number of pages
+          default: 0
+        total_count:
+          type: integer
+          minimum: 0
+          title: Total Count
+          description: Total count of items
+          default: 0
+        search_time_ms:
+          type: number
+          minimum: 0
+          title: Search Time Ms
+          description: Search execution time in milliseconds
+          default: 0
+      type: object
+      title: PaginationInfo
+    FilterFieldSchema:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: Column/field name used in filter expressions
+        label:
+          type: string
+          title: Label
+          description: Human-readable display label for the UI
+        type:
+          type: string
+          title: Type
+          description: 'Field data type: string, number, datetime, enum'
+        operators:
+          items:
+            type: string
+          type: array
+          title: Operators
+          description: List of valid filter operators for this field
+        values:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Values
+          description: Allowed enum values (for autocomplete/dropdown)
+      type: object
+      required:
+      - key
+      - label
+      - type
+      - operators
+      title: FilterFieldSchema
+      description: Schema describing a single filterable field for the frontend filter bar.
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    BadRequestResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: BadRequestResponse
+      example:
+        detail: Bad request
+        error_code: BAD_REQUEST
+    NotFoundResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: NotFoundResponse
+      example:
+        detail: Not found
+        error_code: NOT_FOUND
+    TraceSearchRequest:
+      properties:
+        filter:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Filter
+          description: 'FilterExpr DSL as JSON dict. Supports operators: EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH, AND, OR, NOT.'
+        group_by:
+          $ref: '#/components/schemas/TraceSearchGroupBy'
+          description: 'Grouping mode: ''run'' returns individual TraceDetail, ''session'' returns aggregated TraceSessionStats.'
+          default: run
+        page:
+          type: integer
+          minimum: 1
+          title: Page
+          description: Page number (1-indexed)
+          default: 1
+        limit:
+          type: integer
+          maximum: 100
+          minimum: 1
+          title: Limit
+          description: Number of traces per page (max 100)
+          default: 20
+      type: object
+      title: TraceSearchRequest
+      description: "Request body for POST /traces/search with advanced filtering.\n\nThe filter field accepts a FilterExpr DSL dict supporting composable queries\nwith AND/OR/NOT logic and operators like EQ, NEQ, GT, GTE, LT, LTE, IN, CONTAINS, STARTSWITH.\n\nExample for run grouping (default):\n    {\n        \"filter\": {\n            \"op\": \"AND\",\n            \"conditions\": [\n                {\"op\": \"EQ\", \"key\": \"status\", \"value\": \"OK\"},\n                {\"op\": \"CONTAINS\", \"key\": \"user_id\", \"value\": \"admin\"}\n            ]\n        },\n        \"group_by\": \"run\",\n        \"page\": 1,\n        \"limit\": 20\n    }\n\nExample for session grouping:\n    {\n        \"filter\": {\"op\": \"EQ\", \"key\": \"agent_id\", \"value\": \"my-agent\"},\n        \"group_by\": \"session\",\n        \"page\": 1,\n        \"limit\": 20\n    }"
+    TraceSearchGroupBy:
+      type: string
+      enum:
+      - run
+      - session
+      title: TraceSearchGroupBy
+      description: Grouping options for trace search results.
     InternalServerErrorResponse:
       properties:
         detail:

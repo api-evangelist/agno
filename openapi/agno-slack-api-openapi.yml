@@ -121,14 +121,6 @@ paths:
           description: Invalid Slack signature - signing secret mismatch
 components:
   schemas:
-    SlackEventResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-          default: ok
-      type: object
-      title: SlackEventResponse
     SlackChallengeResponse:
       properties:
         challenge:
@@ -139,6 +131,14 @@ components:
       required:
       - challenge
       title: SlackChallengeResponse
+    SlackEventResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          default: ok
+      type: object
+      title: SlackEventResponse
   securitySchemes:
     HTTPBearer:
       type: http

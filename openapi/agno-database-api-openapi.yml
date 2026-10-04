@@ -126,6 +126,25 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
+    ValidationErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: ValidationErrorResponse
+      example:
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     UnauthenticatedResponse:
       properties:
         detail:
@@ -183,25 +202,6 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
     InternalServerErrorResponse:
       properties:
         detail:

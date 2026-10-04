@@ -546,7 +546,29 @@ paths:
                 $ref: '#/components/schemas/InternalServerErrorResponse'
 components:
   schemas:
-    UnauthenticatedResponse:
+    Body_continue_agent_run:
+      properties:
+        tools:
+          type: string
+          title: Tools
+          default: ''
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        stream:
+          type: boolean
+          title: Stream
+          default: true
+      type: object
+      title: Body_continue_agent_run
+    ValidationErrorResponse:
       properties:
         detail:
           type: string
@@ -561,72 +583,10 @@ components:
       type: object
       required:
       - detail
-      title: UnauthenticatedResponse
+      title: ValidationErrorResponse
       example:
-        detail: Unauthenticated access
-        error_code: UNAUTHENTICATED
-    ModelResponse:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name of the model
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model identifier
-        provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Provider
-          description: Model provider name
-      type: object
-      title: ModelResponse
-    Body_create_agent_run:
-      properties:
-        message:
-          type: string
-          title: Message
-        stream:
-          type: boolean
-          title: Stream
-          default: true
-        session_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Id
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        files:
-          anyOf:
-          - items:
-              type: string
-              contentMediaType: application/octet-stream
-            type: array
-          - type: 'null'
-          title: Files
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-        background:
-          type: boolean
-          title: Background
-          default: false
-      type: object
-      required:
-      - message
-      title: Body_create_agent_run
+        detail: Validation error
+        error_code: VALIDATION_ERROR
     AgentResponse:
       properties:
         id:
@@ -751,12 +711,15 @@ components:
           title: Stage
       type: object
       title: AgentResponse
-    Body_continue_agent_run:
+    Body_create_agent_run:
       properties:
-        tools:
+        message:
           type: string
-          title: Tools
-          default: ''
+          title: Message
+        stream:
+          type: boolean
+          title: Stream
+          default: true
         session_id:
           anyOf:
           - type: string
@@ -767,12 +730,68 @@ components:
           - type: string
           - type: 'null'
           title: User Id
-        stream:
+        files:
+          anyOf:
+          - items:
+              type: string
+              contentMediaType: application/octet-stream
+            type: array
+          - type: 'null'
+          title: Files
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        background:
           type: boolean
-          title: Stream
-          default: true
+          title: Background
+          default: false
       type: object
-      title: Body_continue_agent_run
+      required:
+      - message
+      title: Body_create_agent_run
+    UnauthenticatedResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+          description: Error detail message
+        error_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Code
+          description: Error code for categorization
+      type: object
+      required:
+      - detail
+      title: UnauthenticatedResponse
+      example:
+        detail: Unauthenticated access
+        error_code: UNAUTHENTICATED
+    ModelResponse:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the model
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model identifier
+        provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider
+          description: Model provider name
+      type: object
+      title: ModelResponse
     BadRequestResponse:
       properties:
         detail:
@@ -811,25 +830,6 @@ components:
       example:
         detail: Not found
         error_code: NOT_FOUND
-    ValidationErrorResponse:
-      properties:
-        detail:
-          type: string
-          title: Detail
-          description: Error detail message
-        error_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Code
-          description: Error code for categorization
-      type: object
-      required:
-      - detail
-      title: ValidationErrorResponse
-      example:
-        detail: Validation error
-        error_code: VALIDATION_ERROR
     InternalServerErrorResponse:
       properties:
         detail:
