@@ -1,97 +1,72 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-provider: Agno
-providerId: agno
-url: https://www.agno.com/pricing
-created: '2026-06-12'
-modified: '2026-06-12'
-reconciled: true
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.agno.com/pricing
+sources:
+- https://www.agno.com/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: tiered-subscription
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-10-07'
+  evidence: The runtime is free and open source. Serving your agents costs nothing on any plan, at any
+    scale.
+  free_edition: Free
+  managed_tier: Pro
+published: true
+note: 'Add-ons listed: $30/mo per additional seat, $95/mo per additional live connection, $300/mo for
+  SAML SSO. Runtime SDK/AgentOS stated as free and open source; no licence name given.'
+plan_count: 3
+currency: USD
 plans:
+- name: Free
+  price_text: $0/month
+  price: 0
+  currency: USD
+  period: month
+  included_quota: Control plane for local AgentOS, unlimited usage & retention, community support
+- name: Pro
+  price_text: $150/month
+  price: 150
+  currency: USD
+  period: month
+  included_quota: 1 live AgentOS connection, 3 team seats, basic RBAC, email support
+  overage: $30/mo per additional seat; $95/mo per additional live connection; $300/mo for SAML SSO
+- name: Enterprise
+  price_text: Custom
+  period: none
+  included_quota: Everything in Pro plus governance, end-user management, SLA
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - hybrid
+  units: []
+  plans:
   - name: Free
-    description: For building agent systems locally with open-source multi-agent framework and AgentOS Control Plane for local use
-    type: free
-    url: https://www.agno.com/pricing
-    quotas:
-      - name: AgentOS Control Plane
-        description: Local AgentOS Control Plane for development use
-        type: boolean
-        value: true
-      - name: Live Connections
-        description: Number of live AgentOS connections to production deployments
-        metric: connections
-        limit: 0
-        timeFrame: unlimited
-      - name: Seats
-        description: Number of team seats included
-        metric: seats
-        limit: 1
-        timeFrame: unlimited
-    features:
-      - Open-source multi-agent system building
-      - Agent, team, and workflow chat capabilities
-      - Session monitoring and metrics
-      - Knowledge and memory management
-      - System evaluations
-      - Pre-built production codebases
-      - Community support access
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
   - name: Pro
-    description: For managing production systems with live AgentOS and team collaboration
-    type: paid
-    url: https://www.agno.com/pricing
-    pricing:
-      - name: Base Plan
-        description: Monthly subscription for Pro plan
-        type: metered
-        unit: month
-        amount: 150.00
-        currency: USD
-      - name: Additional Seats
-        description: Additional team seats beyond the 4 included
-        type: metered
-        unit: seat/month
-        amount: 30.00
-        currency: USD
-      - name: Additional Live Connections
-        description: Additional live AgentOS connections beyond the 1 included
-        type: metered
-        unit: connection/month
-        amount: 95.00
-        currency: USD
-    quotas:
-      - name: Live Connections
-        description: Number of live AgentOS connections to production deployments
-        metric: connections
-        limit: 1
-        timeFrame: unlimited
-      - name: Seats
-        description: Number of team seats included
-        metric: seats
-        limit: 4
-        timeFrame: unlimited
-      - name: Usage
-        description: Agent usage, monitoring, retention, knowledge, memories, and chats
-        type: boolean
-        value: true
-    features:
-      - Everything in Free
-      - Control Plane for live AgentOS
-      - Unlimited usage, monitoring, retention, knowledge, memories, and chats
-      - Additional seats at $30/month each
-      - Additional live connections at $95/month each
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
   - name: Enterprise
-    description: For mission critical, custom solutions requiring dedicated support and custom infrastructure
-    type: enterprise
-    url: https://www.agno.com/pricing
-    pricing:
-      - name: Custom Pricing
-        description: Contact Agno for custom enterprise pricing
-        type: boolean
-        value: true
-    features:
-      - Everything in Pro
-      - Dedicated Slack channel
-      - Dedicated technical lead
-      - Support SLA
-      - Custom SSO and RBAC
-      - Custom agent solutions
-      - Self-hosted Control Plane option
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
